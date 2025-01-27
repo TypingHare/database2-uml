@@ -1,0 +1,14 @@
+### macOS ###
+.DS_Store
+
+### Windows ###
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### JetBrains and VSCode ###
+.idea
+.vscode
+
+### PHP Composer ###
+vendor
