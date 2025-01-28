@@ -48,15 +48,15 @@ All contributors to this repository are required to adhere to the following guid
 
      - `feat(auth): add login functionality`
      - `fix(api): resolve 500 error on data fetch`
-     - ``docs(readme): update installation instructions`
+     - `docs(readme): update installation instructions`
 
 3. **Comment**
 
-   * All global variables, functions, and classes in PHP must be documented using **docstrings**. Use comments to provide clarity about the purpose, functionality, and context of the code.
+   * All global variables, functions, and classes in PHP must be documented using **PHPDoc comments**. Use comments to provide clarity about the purpose, functionality, and context of the code.
 
    * Class methods should include comments with at least one descriptive sentence, except for trivial methods like getters and setters.
 
-   * You may add your name in the docstring as an **`@author`** tag for files, classes, functions, or variables you create. Adding your name establishes responsibility for the corresponding code section and discourages unauthorized updates by other developers. If you need to modify a section of code under another developer's scope, request permission and have your name added to the **`@author`** tag.
+   * You may add your name in the PHPDoc comments as an **`@author`** tag for files, classes, functions, or variables you create. Adding your name establishes responsibility for the corresponding code section and discourages unauthorized updates by other developers. If you need to modify a section of code under another developer's scope, request permission and have your name added to the **`@author`** tag.
 
      ```php
      /**
@@ -70,5 +70,5 @@ All contributors to this repository are required to adhere to the following guid
 
 4. **Code Style**
 
-   * All PHP code should conform to the [PHP coding standardsto maintain consistency and readability across the codebase. Overrides to the PHP Standards:
+   * All PHP code should conform to the [PHP coding standards](https://www.drupal.org/docs/develop/standards/php/php-coding-standards) to maintain consistency and readability across the codebase. Overrides to the PHP Standards:
      - Use **4 spaces** for indentation instead of 2 spaces to improve code clarity.
