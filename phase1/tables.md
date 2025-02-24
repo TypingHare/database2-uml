@@ -1,7 +1,7 @@
 ### Tables
 
 * **Student** (<u>sid</u>, type, name, email, gpa, total_credits)
-    * The field `type` is enumerated: `UNDERGRAD`, `MASTER` and `PHD`.
+    * The field `type` is enumerated: `UNDERGRAD`, `MASTER,` and `PHD`.
 * **Instructor** (<u>id</u>, name)
 * **Course** (<u>code</u>, title, credits)
 * **Section** (<u>section_id</u>, course_code, timeslot_id, building, room, section_num, semester, year)
@@ -26,9 +26,9 @@
 * **IsTA** (<u>sid</u>, <u>section_id</u>)
     * The `sid` field serves as a foreign key that references the `sid` column in the **Student** table.
     * The `section_id` field serves as a foreign key that references the `id` column in the **Section** table.
-    * Constraint: the student associated with `sid` must be either: a PhD student (the `type` field is `PHD`).
+    * Constraint: the student associated with `sid` must be a PhD student (the `type` field is `PHD`).
 * **IsGrader** (<u>sid</u>, <u>section_id</u>)
     * The `sid` field serves as a foreign key that references the `sid` column in the **Student** table.
     * The `section_id` field serves as a foreign key that references the `id` column in the **Section** table.
-    * Constraint 1: the student associated with `sid` must be either a master student (the `type` field is `MASTER`) or a undergraduate student (the `type` field is `UNDERGRAD`).
-    * Constraint 2: the student associated with `sid` must get `A-` in the course. The score can be obtained by retrieving from the **Takes** course with the same `sid` and `section_id`.
+    * Constraint 1: the student associated with `sid` must be either a master's student (the `type` field is `MASTER`) or an undergraduate student (the `type` field is `UNDERGRAD`).
+    * Constraint 2: the student associated with `sid` must get an `A-` in the course. The score can be obtained by retrieving from the **Takes** course with the same `sid` and `section_id`.
