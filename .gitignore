@@ -12,3 +12,6 @@ Desktop.ini
 
 ### PHP Composer ###
 vendor
+
+### Local files ###
+local
