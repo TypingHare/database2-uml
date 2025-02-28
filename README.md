@@ -8,6 +8,14 @@ This repository houses the coursework for the Database II course at UMass Lowell
 
 - [James Chen](zhuojian_chen@student.uml.edu)
 
+## Environment Requirements
+
+* PHP - `8.2.x`
+* MariaDB - `15.x`
+* Apache (httpd) - `2.4.x`
+* GNU Make - `3.x`
+* PHP CS Fixer - `3.70.x`
+
 ## Contribution Guidelines
 
 All contributors to this repository are required to adhere to the following guidelines:
