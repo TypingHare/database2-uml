@@ -19,7 +19,7 @@ use ReflectionClass;
  */
 function connect_database(): PDO
 {
-    $database_config = require_once __DIR__ . "/../config/database.config.php";
+    $database_config = get_config('database');
     $host = $database_config['host'];
     $dbname = $database_config['dbname'];
     $username = $database_config['username'];
