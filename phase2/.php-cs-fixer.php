@@ -2,8 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+        __DIR__ . '/phase2/src',
     ]);
 
 $config = new PhpCsFixer\Config();
@@ -12,5 +11,5 @@ return $config->setRules([
     'array_syntax' => ['syntax' => 'short'],
     'ordered_imports' => ['sort_algorithm' => 'alpha'],
     'no_unused_imports' => true,
-])
-    ->setFinder($finder);
+    'line_length' => ['max' => 80],
+])->setFinder($finder);
