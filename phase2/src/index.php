@@ -80,5 +80,3 @@
  */
 
 require_once __DIR__ . '/common/initialize.php';
-
-var_dump($_SERVER['REQUEST_URI']);

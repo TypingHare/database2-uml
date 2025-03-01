@@ -62,6 +62,7 @@ class AccountService
      */
     public function createAccount(string $email, string $password, string $type): Account
     {
+        // Check if the email has been registered
         try {
             $this->getAccountByEmail($email);
             throw new AccountAlreadyExistException(
@@ -78,5 +79,26 @@ class AccountService
             $it->password = $password;
             $it->type = $type;
         });
+    }
+
+    /**
+     * Updates an account's password in the database.
+     *
+     * @param string $email The email address of the account to update.
+     * @param string $password The new password to set.
+     * @return Account The updated account object.
+     * @throws AccountNotFoundException If no account with the provided email
+     * exists.
+     * @author James Chen
+     */
+    public function updateAccount(string $email, string $password): Account
+    {
+        $account = $this->getAccountByEmail($email);
+        $account->password = $password;
+
+        $stmt = pdo_prepare("UPDATE account SET password = :password WHERE email = :email");
+        execute($stmt, ["email" => $email, "password" => $password]);
+
+        return $account;
     }
 }
