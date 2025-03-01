@@ -4,6 +4,7 @@ namespace common;
 
 use InvalidArgumentException;
 use PDO;
+use PDOStatement;
 use ReflectionClass;
 
 /**
@@ -103,4 +104,56 @@ function convert_records_to_models(iterable $records, string $modelClass): array
     }
 
     return $models;
+}
+
+/**
+ * Returns a singleton PDO instance to avoid multiple connections.
+ *
+ * This function ensures that only one instance of the PDO object is created
+ * and reused throughout the application, preventing unnecessary database
+ * connections.
+ *
+ * @return PDO The PDO database connection instance.
+ */
+function get_pdo(): PDO
+{
+    static $pdo;
+    if (!$pdo) {
+        $pdo = connect_database();
+    }
+
+    return $pdo;
+}
+
+/**
+ * Prepares an SQL statement using the singleton PDO instance.
+ *
+ * This function simplifies SQL statement preparation by automatically using
+ * the shared PDO instance, reducing redundant connection handling.
+ *
+ * @param string $query The SQL query to prepare.
+ * @param array $options Optional array of attributes for the PDOStatement.
+ * @return PDOStatement The prepared statement ready for execution.
+ */
+function pdo_prepare(string $query, array $options = []): PDOStatement
+{
+    return get_pdo()->prepare($query, $options);
+}
+
+function bind_params(PDOStatement $stmt, array $params): PDOStatement
+{
+    foreach ($params as $key => $value) {
+        $stmt->bindValue(':' . $key, $value);
+    }
+
+    return $stmt;
+}
+
+function execute(PDOStatement $stmt, array $params = []): bool
+{
+    if ($params !== []) {
+        bind_params($stmt, $params);
+    }
+
+    return $stmt->execute();
 }

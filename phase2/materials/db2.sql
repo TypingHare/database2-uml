@@ -1,3 +1,5 @@
+# noinspection SpellCheckingInspectionForFile
+
 USE DB2;
 
 create table account

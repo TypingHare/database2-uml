@@ -3,8 +3,9 @@
 namespace service;
 
 use model\Student;
-use function common\connect_database;
 use function common\convert_records_to_models;
+use function common\execute;
+use function common\pdo_prepare;
 
 class StudentService
 {
@@ -15,8 +16,9 @@ class StudentService
      */
     public function getAllStudents(): array
     {
-        $pdo = connect_database();
-        $records = $pdo->query("SELECT * FROM student")->fetchAll();
-        return convert_records_to_models($records, Student::class);
+        $stmt = pdo_prepare("SELECT * FROM student");
+        execute($stmt);
+
+        return convert_records_to_models($stmt->fetchAll(), Student::class);
     }
 }
