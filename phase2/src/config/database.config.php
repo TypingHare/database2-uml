@@ -10,5 +10,5 @@ return [
     'host' => 'localhost',
     'dbname' => 'db2',
     'username' => 'root',
-    'password' => 'monster_hunter2025',
+    'password' => '',
 ];
