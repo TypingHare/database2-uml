@@ -4,7 +4,6 @@ namespace common;
 
 use InvalidArgumentException;
 use PDO;
-use PDOException;
 use PDOStatement;
 use ReflectionClass;
 

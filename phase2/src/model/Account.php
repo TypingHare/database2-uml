@@ -3,9 +3,11 @@
 namespace model;
 
 use model\attribute\Column;
+use model\attribute\Entity;
 use model\attribute\Primary;
 use model\attribute\Type;
 
+#[Entity('account')]
 class Account
 {
     #[Primary]

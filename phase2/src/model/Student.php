@@ -3,10 +3,12 @@
 namespace model;
 
 use model\attribute\Column;
+use model\attribute\Entity;
 use model\attribute\Foreign;
 use model\attribute\Primary;
 use model\attribute\Type;
 
+#[Entity('student')]
 class Student
 {
     #[Primary]
