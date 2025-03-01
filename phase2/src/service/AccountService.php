@@ -5,7 +5,6 @@ namespace service;
 use model\Account;
 use function common\connect_database;
 use function common\convert_records_to_models;
-use function common\populate_model;
 
 class AccountService
 {
