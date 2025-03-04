@@ -4,6 +4,11 @@ namespace model\attribute;
 
 use Attribute;
 
+/**
+ * Represents a foreign key in the entity.
+ *
+ * @author James Chen
+ */
 #[Attribute]
 class Foreign
 {

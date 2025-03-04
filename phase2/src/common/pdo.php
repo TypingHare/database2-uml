@@ -114,6 +114,7 @@ function convert_records_to_models(iterable $records, string $modelClass): array
  * connections.
  *
  * @return PDO The PDO database connection instance.
+ * @author James Chen
  */
 function get_pdo(): PDO
 {
@@ -134,12 +135,27 @@ function get_pdo(): PDO
  * @param string $query The SQL query to prepare.
  * @param array $options Optional array of attributes for the PDOStatement.
  * @return PDOStatement The prepared statement ready for execution.
+ * @author James Chen
  */
 function pdo_prepare(string $query, array $options = []): PDOStatement
 {
     return get_pdo()->prepare($query, $options);
 }
 
+/**
+ * Binds parameters to the given SQL statement.
+ *
+ * This function iterates through an array of parameters and binds each
+ * parameter to the prepared PDO statement using bindValue(). The keys in the
+ * parameters array are used as the parameter names in the SQL statement with a
+ * colon prefix.
+ *
+ * @param PDOStatement $stmt The prepared PDO statement to bind parameters to.
+ * @param array $params An associative array of parameters where keys correspond
+ * to the named parameters in the SQL statement.
+ * @return PDOStatement The PDO statement with bound parameters.
+ * @author James Chen
+ */
 function bind_params(PDOStatement $stmt, array $params): PDOStatement
 {
     foreach ($params as $key => $value) {
@@ -149,6 +165,20 @@ function bind_params(PDOStatement $stmt, array $params): PDOStatement
     return $stmt;
 }
 
+/**
+ * Executes an SQL statement.
+ *
+ * This function executes a prepared PDO statement, optionally binding
+ * parameters using the bind_params() function if parameters are provided. If
+ * the $params array is not empty, the parameters will be bound to the statement
+ * before execution.
+ *
+ * @param PDOStatement $stmt The prepared PDO statement to execute.
+ * @param array $params Optional associative array of parameters to bind to the
+ * statement.
+ * @return bool True on success, false on failure.
+ * @author James Chen
+ */
 function execute(PDOStatement $stmt, array $params = []): bool
 {
     if ($params !== []) {

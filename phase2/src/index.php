@@ -80,3 +80,8 @@
  */
 
 require_once __DIR__ . '/common/initialize.php';
+
+use service\AccountService;
+
+const account_service = new AccountService();
+var_dump(account_service->getAllAccounts());

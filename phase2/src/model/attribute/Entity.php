@@ -4,6 +4,11 @@ namespace model\attribute;
 
 use Attribute;
 
+/**
+ * Represents an entity.
+ *
+ * @author James Chen
+ */
 #[Attribute]
 class Entity
 {

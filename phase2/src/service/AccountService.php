@@ -40,7 +40,11 @@ class AccountService
      */
     public function getAccountByEmail(string $email): Account
     {
-        $stmt = pdo_prepare("SELECT * FROM account WHERE email = :email LIMIT 1");
+        $stmt = pdo_prepare("
+            SELECT * FROM account 
+            WHERE email = :email 
+            LIMIT 1
+        ");
         execute($stmt, ["email" => $email]);
 
         if ($stmt->rowCount() === 0) {
@@ -71,14 +75,19 @@ class AccountService
         } catch (AccountNotFoundException) {
         }
 
-        $stmt = pdo_prepare("INSERT INTO account (email, password, type) VALUES (:email, :password, :type)");
-        execute($stmt, ["email" => $email, "password" => $password, "type" => $type]);
+        $stmt = pdo_prepare("
+            INSERT INTO account (email, password, type) 
+            VALUES (:email, :password, :type)
+        ");
+        $data = [
+            "email" => $email,
+            "password" => $password,
+            "type" => $type
+        ];
+        execute($stmt, $data);
 
-        return apply(new Account(), function ($it) use ($email, $password, $type) {
-            $it->email = $email;
-            $it->password = $password;
-            $it->type = $type;
-        });
+        /** @var Account */
+        return populate_model(new Account(), $data);
     }
 
     /**
@@ -96,7 +105,11 @@ class AccountService
         $account = $this->getAccountByEmail($email);
         $account->password = $password;
 
-        $stmt = pdo_prepare("UPDATE account SET password = :password WHERE email = :email");
+        $stmt = pdo_prepare("
+            UPDATE account 
+            SET password = :password 
+            WHERE email = :email
+        ");
         execute($stmt, ["email" => $email, "password" => $password]);
 
         return $account;
