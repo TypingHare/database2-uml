@@ -1,0 +1,7 @@
+# .htaccess Configuration
+# Place this file in the Apache document root directory to enable custom error
+# handling.
+
+# Redirect all 404 errors (page not found) to `/index.php`
+# This allows for custom handling of non-existent URLs through your application.
+ErrorDocument 404 /index.php
