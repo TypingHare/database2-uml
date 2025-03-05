@@ -1,5 +1,11 @@
 <?php /** @noinspection ALL */
 
+/**
+ * PHP CS Fixer configuration file.
+ *
+ * @author James Chen
+ */
+
 $finder = PhpCsFixer\Finder::create()
     ->in([
         __DIR__ . '/phase2/src',
