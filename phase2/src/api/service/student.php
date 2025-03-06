@@ -21,6 +21,26 @@ function get_all_students(): array
 }
 
 /**
+ * Fetches a student record by their email
+ *
+ * @param string $email The student's email.
+ * @return array|null A student object; null if no student is found.
+ * @author James Chen
+ */
+function get_student_by_email(string $email): array|null
+{
+    $stmt = pdo_prepare(
+        "
+            SELECT * FROM student
+            WHERE email = :email
+        "
+    );
+    execute($stmt, ["email" => $email]);
+
+    return $stmt->rowCount() === 0 ? null : $stmt->fetch();
+}
+
+/**
  * Fetches a student record by their student ID.
  *
  * @param string $student_id The student ID.

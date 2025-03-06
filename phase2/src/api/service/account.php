@@ -17,7 +17,7 @@ function get_account_by_email(string $email): array|null
     $stmt = pdo_prepare(
         "
             SELECT * FROM account
-            WHERE email = :email 
+            WHERE email = :email
             LIMIT 1
         "
     );
