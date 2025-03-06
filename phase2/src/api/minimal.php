@@ -56,13 +56,16 @@ function handle(string $method, callable $callback): void
  * Redirects the user to a different URL by sending a Location header.
  *
  * @param string $url The destination URL path.
+ * @param array $params The query parameters (or GET parameters).
  * @param string $prefix Optional prefix to prepend to the URL.
  * @return void This function does not return a value.
  * @author James Chen
  */
-function redirect(string $url, string $prefix = '../../'): void
+function redirect(string $url, array $params = [], string $prefix = '../'): void
 {
-    header("Location: " . $prefix . $url);
+    $query_string = $params ? '?' . http_build_query($params, '', '&'): '';
+
+    header("Location: " . $prefix . $url . $query_string);
 }
 
 /**
