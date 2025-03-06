@@ -1,5 +1,6 @@
 <?php
 
 echo json_encode([
-    'message' => 'Page/Api not found.'
+    'status' => 'error',
+    'message' => 'Page or Api not found: ' . $_SERVER['REQUEST_URI']
 ]);
