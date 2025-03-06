@@ -53,6 +53,7 @@ function create_student(
     string $name,
     string $deptName,
 ): array {
+    // Generate a non-duplicate student ID
     $students = get_all_students();
     $student_ids = array_column($students, 'student_id');
     do {
@@ -99,9 +100,8 @@ function generate_student_id(): string
  * @author James Chen
  */
 handle(HttpMethod::POST, function ($data) {
-    create_account($data["email"], $data["password"], AccountType::STUDENT);
-    $student = create_student($data["email"], $data["name"], $data["dept_name"]);
+    $account = create_account($data["email"], $data["password"], AccountType::STUDENT);
+    $student = create_student($account["email"], $data["name"], $data["dept_name"]);
     success('Created the account successfully.');
-
-    redirect('student_info.php?student_id=' . $student["student_id"]);
+    redirect('student_dashboard.php?student_id=' . $student["student_id"]);
 });
