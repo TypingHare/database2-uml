@@ -34,3 +34,23 @@ readonly class AccountType
     public const INSTRUCTOR = 'instructor';
     public const STUDENT = 'student';
 }
+
+/**
+ * Represents the different types of students.
+ *
+ * @author James Chen
+ */
+readonly class StudentType
+{
+    public const UNDERGRADUATE = 'undergraduate';
+    public const MASTER = 'master';
+    public const PHD = 'phd';
+}
+
+readonly class StudentClassStanding
+{
+    public const FRESHMAN = 'freshman';
+    public const SOPHOMORE = 'sophomore';
+    public const JUNIOR = 'junior';
+    public const SENIOR = 'senior';
+}

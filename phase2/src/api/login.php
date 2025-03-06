@@ -3,9 +3,21 @@
 require_once 'minimal.php';
 
 /**
+ * User authentication endpoint.
  *
+ * This API validates user credentials and redirects to the appropriate dashboard
+ * based on account type (admin, instructor, or student). The function verifies
+ * that the email exists in the system and that the provided password matches
+ * the stored credentials before performing redirection.
  *
  * @api
+ * @example
+ *
+ *     $data = [
+ *        'email' => 'user@example.com',
+ *        'password' => 'password123'
+ *     ];
+ *
  * @author James Chen
  */
 handle(HttpMethod::POST, function ($data) {
@@ -29,11 +41,16 @@ handle(HttpMethod::POST, function ($data) {
             redirect('admin_dashboard.php');
             break;
         case AccountType::INSTRUCTOR:
-            redirect('instructor_dashboard.php');
+            $instructor = get_instructor_by_email($account['email']);
+            redirect('instructor_dashboard.php', [
+                'instructor_id' => $instructor['instructor_id']
+            ]);
             break;
         case AccountType::STUDENT:
             $student = get_student_by_email($account['email']);
-            redirect('student_dashboard.php', ['student_id' => $student['student_id']]);
+            redirect('student_dashboard.php', [
+                'student_id' => $student['student_id']
+            ]);
             break;
         default:
             throw new RuntimeException('Unknown account type: ' . $account['type']);

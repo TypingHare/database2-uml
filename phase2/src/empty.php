@@ -1,7 +1,11 @@
 <?php
 
 /**
- * This file.
+ * This file serves as a client file template. You can copy this template to
+ * your newly created file, and add elements in the specific div.
+ *
+ * Make sure to include a brief introduction to the file and change the author
+ * name.
  *
  * @author James Chen
  */
@@ -10,7 +14,7 @@
 
 <html lang="en">
 <head>
-  <title>Change Password</title>
+  <title>[Title]</title>
 </head>
 <body style="height: 100%;">
 

@@ -53,6 +53,11 @@ function create_student(
     string $name,
     string $deptName,
 ): array {
+    function generate_student_id(): string
+    {
+        return str_pad(mt_rand(0, 9999999999), 10, '0', STR_PAD_LEFT);
+    }
+
     // Generate a non-duplicate student ID
     $students = get_all_students();
     $student_ids = array_column($students, 'student_id');
@@ -77,31 +82,97 @@ function create_student(
     return $data;
 }
 
-/**
- * Generates a student ID, which consists of 10 digits. The 10 digits are
- * completely random.
- *
- * @return string a valid student ID.
- * @author James Chen
- */
-function generate_student_id(): string
+function create_undergraduate(string $student_id): array
 {
-    return str_pad(mt_rand(0, 9999999999), 10, '0', STR_PAD_LEFT);
+    $stmt = pdo_prepare(
+        "
+            INSERT INTO undergraduate (student_id, total_credits, class_standing)
+            VALUES (:student_id, :total_credits, :class_standing)
+        "
+    );
+    $data = [
+        'student_id' => $student_id,
+        'total_credits' => 0,
+        'class_standing' => StudentClassStanding::FRESHMAN
+    ];
+    execute($stmt, $data);
+
+    return $data;
+}
+
+function create_master(string $student_id): array
+{
+    $stmt = pdo_prepare(
+        "
+            INSERT INTO master (student_id, total_credits)
+            VALUES (:student_id, :total_credits)
+        "
+    );
+    $data = [
+        'student_id' => $student_id,
+        'total_credits' => 0
+    ];
+    execute($stmt, $data);
+
+    return $data;
+}
+
+function create_phd(string $student_id): array
+{
+    $stmt = pdo_prepare(
+        "
+            INSERT INTO PhD (student_id, qualifier)
+            VALUES (:student_id, :qualifier)
+        "
+    );
+    $data = [
+        'student_id' => $student_id,
+        'qualifier' => ''
+    ];
+    execute($stmt, $data);
+
+    return $data;
 }
 
 /**
- * Creates a student account. This includes creating an account with a "student"
- * account type as well as creating a student record.
+ * Student account creating endpoint.
+ *
+ * This API Creates a student account. This includes creating an account record
+ * with a "student" account type, creating a student record,
  *
  * If the student account is created successfully, redirect the user to the
  * `student_info` page.
  *
  * @api
+ * @see StudentType
+ * @example
+ *
+ *     $data = [
+ *         'email' => 'user@example.com',
+ *         'name' => 'Alice',
+ *         'dept_name => 'example department name',
+ *         'student_type' => 'undergraduate'
+ *     ];
+ *
  * @author James Chen
  */
 handle(HttpMethod::POST, function ($data) {
     $account = create_account($data["email"], $data["password"], AccountType::STUDENT);
     $student = create_student($account["email"], $data["name"], $data["dept_name"]);
+    switch ($account['student_type']) {
+        case StudentType::UNDERGRADUATE:
+            create_undergraduate($student['student_id']);
+            break;
+        case StudentType::MASTER:
+            create_master($student['student_id']);
+            break;
+        case StudentType::PHD:
+            create_phd($student['student_id']);
+            break;
+    }
+
     success('Created the account successfully.');
-    redirect('student_dashboard.php?student_id=' . $student["student_id"]);
+    redirect('student_dashboard.php', [
+        'student_id' => $student["student_id"]
+    ]);
 });

@@ -2,46 +2,28 @@
 
 if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     try {
-        // Connect to database and get the PDO (PHP Data Object)
-        $config = require __DIR__ . '/common/config.php';
-        $database_config = $config['database'];
-        $host = $database_config['host'];
-        $dbname = $database_config['dbname'];
-        $username = $database_config['username'];
-        $password = $database_config['password'];
-
-        $pdo = new PDO(
-            "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
-            $username,
-            $password,
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false
-            ]
-        );
-
         // Get all time slots
-        $stmt = $pdo->prepare(
+        $stmt = pdo_prepare(
             "
                 SELECT time_slot_id FROM time_slot
             "
         );
-        $stmt->execute();
+        execute($stmt);
         $last_time_slot = $stmt->fetchAll();
         $time_slot_ids = array_column($last_time_slot, 'time_slot_id');
         $time_slot_ids = array_map(fn ($str) => (int)substr($str, 2), $time_slot_ids);
         $max_id = max($time_slot_ids);
 
         // Create a new time slot
-        $stmt = $pdo->prepare(
+        $stmt = pdo_prepare(
             "
                 INSERT INTO time_slot (time_slot_id, day, start_time, end_time)
                 VALUES (:time_slot_id, :day, :start_time, :end_time)
             "
         );
 
-        $stmt = $pdo->prepare(
+        // Creates a section
+        $stmt = pdo_prepare(
             "
                 INSERT INTO section (
                     course_id, 

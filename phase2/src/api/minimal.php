@@ -36,6 +36,11 @@ foreach (scandir($service_dir) as $file) {
  *         // Handle GET request with $data from $_GET
  *     });
  *
+ * @example
+ *
+ *     handle(HttpMethod::POST, function ($data) {
+ *          // Handle POST request with $data from $_POST
+ *      });
  * @author James Chen
  */
 function handle(string $method, callable $callback): void
@@ -63,7 +68,7 @@ function handle(string $method, callable $callback): void
  */
 function redirect(string $url, array $params = [], string $prefix = '../'): void
 {
-    $query_string = $params ? '?' . http_build_query($params, '', '&'): '';
+    $query_string = $params ? '?' . http_build_query($params, '', '&') : '';
 
     header("Location: " . $prefix . $url . $query_string);
 }
