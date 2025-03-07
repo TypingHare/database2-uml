@@ -14,14 +14,26 @@ require_once __DIR__ . '/../minimal.php';
  */
 function get_account_by_email(string $email): array|null
 {
-    $stmt = pdo_prepare(
+    $stmt = pdo_instance()->prepare(
         "
             SELECT * FROM account
-            WHERE email = :email 
+            WHERE email = :email
             LIMIT 1
         "
     );
     execute($stmt, ["email" => $email]);
 
     return $stmt->rowCount() === 0 ? null : $stmt->fetch();
+}
+
+function change_password(string $email, string $new_password): void
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            UPDATE account 
+            SET password = :password 
+            WHERE email = :email
+        "
+    );
+    execute($stmt, ['email' => $email, 'password' => $new_password]);
 }

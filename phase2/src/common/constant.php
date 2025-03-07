@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnused */
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
@@ -19,8 +20,6 @@ readonly class HttpMethod
 {
     public const GET = 'GET';
     public const POST = 'POST';
-    public const PUT = 'PUT';
-    public const DELETE = 'DELETE';
 }
 
 /**
@@ -33,4 +32,29 @@ readonly class AccountType
     public const ADMIN = 'admin';
     public const INSTRUCTOR = 'instructor';
     public const STUDENT = 'student';
+}
+
+/**
+ * Represents the different types of students.
+ *
+ * @author James Chen
+ */
+readonly class StudentType
+{
+    public const UNDERGRADUATE = 'undergraduate';
+    public const MASTER = 'master';
+    public const PHD = 'PhD';
+}
+
+/**
+ * Represents student class standing.
+ *
+ * @author James Chen
+ */
+readonly class StudentClassStanding
+{
+    public const FRESHMAN = 'freshman';
+    public const SOPHOMORE = 'sophomore';
+    public const JUNIOR = 'junior';
+    public const SENIOR = 'senior';
 }

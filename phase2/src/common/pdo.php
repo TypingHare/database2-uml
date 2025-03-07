@@ -59,7 +59,7 @@ function pdo_connect(): PDO
  * @return PDO The PDO database connection instance.
  * @author James Chen
  */
-function get_pdo(): PDO
+function pdo_instance(): PDO
 {
     static $pdo;
     if (!$pdo) {
@@ -67,28 +67,6 @@ function get_pdo(): PDO
     }
 
     return $pdo;
-}
-
-/**
- * Prepares an SQL statement using the singleton PDO instance.
- *
- * This function simplifies SQL statement preparation by automatically using
- * the shared PDO instance, reducing redundant connection handling.
- *
- * @param string $query The SQL query to prepare.
- * @param array $options Optional array of attributes for the PDOStatement.
- * @return PDOStatement The prepared statement ready for execution.
- * @example
- *
- *     $stmt = pdo_prepare("SELECT * FROM account");
- *     $stmt->execute();
- *     $rows = $stmt->fetchAll();
- *
- * @author James Chen
- */
-function pdo_prepare(string $query, array $options = []): PDOStatement
-{
-    return get_pdo()->prepare($query, $options);
 }
 
 /**

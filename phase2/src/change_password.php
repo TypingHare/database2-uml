@@ -6,6 +6,43 @@
  * @author James Chen
  */
 
+require_once 'minimal.php';
+
+/**
+ * Change account password.
+ *
+ * This API
+ *
+ * @api
+ * @example
+ *
+ *     $data = [
+ *         'email' => 'user@example.com',
+ *         'old_password' = '123456',
+ *         'new_password' = '654321',
+ *     ];
+ *
+ * @author James Chen
+ */
+handle(HttpMethod::POST, function ($data) {
+    $email = $data["email"];
+    $account = get_account_by_email($email);
+    if ($account === null) {
+        throw new RuntimeException(
+            "Account associated with [$email] does not exist."
+        );
+    }
+
+    if ($data["old_password"] !== $account["password"]) {
+        throw new RuntimeException(
+            "Old password does not match [$email]."
+        );
+    }
+
+    change_password($email, $data["new_password"]);
+    success("Changed password successfully.");
+});
+
 ?>
 
 <html lang="en">
@@ -14,11 +51,11 @@
 </head>
 <body style="height: 100%;">
 
-<div style="display: flex; justify-content: center; margin-top: 10rem;">
+<div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
     <h3>Change Password</h3>
 
-    <form action="api/change_password.php" method="POST">
+    <form action="change_password.php" method="POST">
       <div>
         <label for="email">Email: </label>
         <input type="email" name="email" id="email" required />

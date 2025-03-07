@@ -31,6 +31,7 @@ readonly class SuccessResponse
         http_response_code($this->code);
         return json_encode([
             'status' => 'success',
+            'url' => $_SERVER['REQUEST_URI'],
             'message' => $this->message,
         ]);
     }
@@ -64,6 +65,7 @@ readonly class ErrorResponse
         http_response_code($this->code);
         return json_encode([
             'status' => 'error',
+            'url' => $_SERVER['REQUEST_URI'],
             'message' => $this->message,
         ]);
     }

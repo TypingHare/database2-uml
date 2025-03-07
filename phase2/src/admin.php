@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This web page allows students to check their information.
+ * This web page allows admin to check their information and perform operations.
  *
  * @author James Chen
  */
 
-require_once 'api/service/student.php';
+require_once 'service/student.php';
 
 $student = get_student_by_id($_GET['student_id']);
 
@@ -16,9 +16,9 @@ $student = get_student_by_id($_GET['student_id']);
 <head>
   <title>Student INFO</title>
 </head>
-<body style="height: 100%;">
+<body>
 
-<div style="display: flex; justify-content: center; margin-top: 10rem;">
+<div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
     <p>
       <b>Student ID: </b> <?php echo($student['student_id']); ?>
