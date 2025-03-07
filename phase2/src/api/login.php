@@ -38,7 +38,7 @@ handle(HttpMethod::POST, function ($data) {
 
     switch ($account['type']) {
         case AccountType::ADMIN:
-            redirect('admin_dashboard.php');
+            redirect('admin.php');
             break;
         case AccountType::INSTRUCTOR:
             $instructor = get_instructor_by_email($account['email']);
@@ -48,7 +48,7 @@ handle(HttpMethod::POST, function ($data) {
             break;
         case AccountType::STUDENT:
             $student = get_student_by_email($account['email']);
-            redirect('student_dashboard.php', [
+            redirect('student.php', [
                 'student_id' => $student['student_id']
             ]);
             break;

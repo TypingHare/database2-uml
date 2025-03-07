@@ -2,9 +2,9 @@
 # Place this file in the Apache document root directory to enable custom error
 # handling.
 
-# Redirect all 404 errors (page not found) to `/index.php`
+# Redirect all 404 errors (page not found) to `/page_not_found.php`
 # This allows for custom handling of non-existent URLs through your application.
-ErrorDocument 404 /index.php
+ErrorDocument 404 /page_not_found.php
 
 # Ensure the URL is preserved (no external redirect)
 <IfModule mod_rewrite.c>
@@ -15,5 +15,5 @@ ErrorDocument 404 /index.php
     RewriteCond %{REQUEST_FILENAME} !-d
 
     # Simple internal redirection
-    RewriteRule . /index.php [L]
+    RewriteRule . /page_not_found.php [L]
 </IfModule>

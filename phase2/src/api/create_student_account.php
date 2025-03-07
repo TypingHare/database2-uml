@@ -172,7 +172,7 @@ handle(HttpMethod::POST, function ($data) {
     }
 
     success('Created the account successfully.');
-    redirect('student_dashboard.php', [
+    redirect('student.php', [
         'student_id' => $student["student_id"]
     ]);
 });
