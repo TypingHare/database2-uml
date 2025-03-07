@@ -11,7 +11,7 @@ require_once __DIR__ . '/../minimal.php';
  */
 function get_instructor_by_email(string $email): array|null
 {
-    $stmt = pdo_prepare(
+    $stmt = pdo_instance()->prepare(
         "
             SELECT * FROM instructor 
             WHERE email = :email
@@ -31,7 +31,7 @@ function get_instructor_by_email(string $email): array|null
  */
 function get_instructor_by_id(string $instructor_id): array|null
 {
-    $stmt = pdo_prepare(
+    $stmt = pdo_instance()->prepare(
         "
             SELECT * FROM instructor 
             WHERE instructor_id = :instructor_id

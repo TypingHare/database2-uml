@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file serves as a client file template. You can copy this template to
+ * This file serves as a pagwe file template. You can copy this template to
  * your newly created file, and add elements in the specific div.
  *
  * Make sure to include a brief introduction to the file and change the author
@@ -18,7 +18,7 @@
 </head>
 <body style="height: 100%;">
 
-<div style="display: flex; justify-content: center; margin-top: 10rem;">
+<div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
     <!-- Add elements inside this div. -->
   </div>

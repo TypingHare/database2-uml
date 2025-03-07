@@ -10,7 +10,7 @@ require_once __DIR__ . '/../minimal.php';
  */
 function get_all_departments(): array
 {
-    $stmt = pdo_prepare(
+    $stmt = pdo_instance()->prepare(
         "
             SELECT * FROM department
         "

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnused */
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
@@ -19,8 +20,6 @@ readonly class HttpMethod
 {
     public const GET = 'GET';
     public const POST = 'POST';
-    public const PUT = 'PUT';
-    public const DELETE = 'DELETE';
 }
 
 /**
@@ -44,9 +43,14 @@ readonly class StudentType
 {
     public const UNDERGRADUATE = 'undergraduate';
     public const MASTER = 'master';
-    public const PHD = 'phd';
+    public const PHD = 'PhD';
 }
 
+/**
+ * Represents student class standing.
+ *
+ * @author James Chen
+ */
 readonly class StudentClassStanding
 {
     public const FRESHMAN = 'freshman';

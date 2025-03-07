@@ -7,7 +7,7 @@
  * @author James Chen
  */
 
-require_once 'api/service/instructor.php';
+require_once 'service/instructor.php';
 
 $instructor = get_instructor_by_id($_GET['instructor_id']);
 
@@ -19,7 +19,7 @@ $instructor = get_instructor_by_id($_GET['instructor_id']);
 </head>
 <body>
 
-<div style="display: flex; justify-content: center; margin-top: 10rem;">
+<div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
     <p>
       <b>Instructor ID: </b> <?php echo($instructor['instructor_id']); ?>
