@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpNoReturnAttributeCanBeAddedInspection */
 
 /**
  * This file serves as the core of the Minimal framework.
@@ -68,10 +69,30 @@ function handle(string $method, callable $callback): void
 }
 
 /**
+ * Builds a URL with query parameters.
+ *
+ * This function takes a base URL and an optional associative array of query
+ * parameters, then appends them as a query string to the URL.
+ *
+ * @param string $url The base URL.
+ * @param array $params Optional associative array of query parameters.
+ * @return string The constructed URL with query parameters.
+ * @author James Chen
+ */
+function build_url(string $url, array $params = []): string
+{
+    $query_string = $params ? '?' . http_build_query($params, '', '&') : '';
+    return $url . $query_string;
+}
+
+/**
  * Redirects the user to a different URL by sending a Location header.
  *
  * This function sets the `Location` header to a given URL. When the browser
  * receives the response, it will immediately redirect the user to that URL.
+ *
+ * This function will immediately exit the PHP program. In other words, any code
+ * after this function will be skipped.
  *
  * @param string $url The destination URL path.
  * @param array $params The query parameters (or GET parameters).
@@ -79,11 +100,13 @@ function handle(string $method, callable $callback): void
  * @return void
  * @author James Chen
  */
-function redirect(string $url, array $params = [], string $prefix = ''): void
-{
-    $query_string = $params ? '?' . http_build_query($params, '', '&') : '';
-
-    header("Location: " . $prefix . $url . $query_string);
+function redirect(
+    string $url,
+    array  $params = [],
+    string $prefix = ''
+): void {
+    header("Location: " . $prefix . build_url($url, $params));
+    exit(0);
 }
 
 /**
@@ -101,26 +124,43 @@ function redirect(string $url, array $params = [], string $prefix = ''): void
 
 function redirect_to_error_page(
     string $error_message,
-    string $error_page = 'error.php'
+    string $error_page = Page::ERROR
 ): void {
-    redirect($error_page, [
-        'error_message' => $error_message,
-    ]);
+    redirect($error_page, ['error_message' => $error_message]);
 }
 
 /**
- * Prints a success response.
+ * Displays a success response.
  *
  * This function creates a new SuccessResponse object with the provided message
  * and status code, then outputs it directly to the response stream.
  *
  * @param string $message The success message to display to the user.
- * @param int $code HTTP status code for the response, defaults to 200 (OK).
+ * @param int $code HTTP status code for the response.
  * @return void
- * @see SuccessResponse Related class that handles formatting the response.
+ * @see SuccessResponse
  * @author James Chen
  */
 function success(string $message, int $code = 200): void
 {
     echo new SuccessResponse($message, $code);
+}
+
+/**
+ * Handles an error by displaying an error response and redirecting to an error
+ * page.
+ *
+ * This function creates and echoes an `ErrorResponse` object with the provided
+ * message and HTTP status code, then redirects the user to an error page.
+ *
+ * @param string $message The error message to display.
+ * @param int $code The HTTP status code.
+ * @return void
+ * @see ErrorResponse
+ * @author James Chen
+ */
+function error(string $message, int $code = 500): void
+{
+    echo new ErrorResponse($message, $code);
+    redirect_to_error_page($message);
 }

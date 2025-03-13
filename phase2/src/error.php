@@ -18,11 +18,7 @@ $error_message = $_GET['error_message'];
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <p>
-      <b style="color: red;">
-        [Error] <?php echo $error_message; ?>
-      </b>
-    </p>
+    <b style="color: red;">[Error] <?= $error_message ?></b>
   </div>
 </div>
 
