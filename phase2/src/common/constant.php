@@ -58,3 +58,36 @@ readonly class StudentClassStanding
     public const JUNIOR = 'junior';
     public const SENIOR = 'senior';
 }
+
+/**
+ * Represents all pages in the application.
+ *
+ * @author James Chen; Victor R.; Alexis Marx
+ */
+readonly class Page
+{
+    // The error page; when the application encounters an exception, the user
+    // will be redirected to this page with error message displayed
+    public const ERROR = 'error.php';
+
+    // The admin page
+    public const ADMIN = 'admin.php';
+
+    // The instructor page including instructor's information and provide
+    // the following functionalities:
+    public const INSTRUCTOR = 'instructor.php';
+
+    // The student dashboard page including student's information and provide
+    // the following functionalities:
+    //   - Navigate to the change password page
+    public const STUDENT = 'student.php';
+
+    // User can create a student account in this page; after creating an
+    // account, the user will be redirected to the student dashboard page
+    public const CREATE_STUDENT_ACCOUNT = 'create_student_account.php';
+
+    // User can change their account password in this page. After resetting the
+    // password, the user will be redirected back to the dashboard page. The user
+    // can also cancel the process by clicking the "cancel" button
+    public const CHANGE_PASSWORD = 'change_password.php';
+}
