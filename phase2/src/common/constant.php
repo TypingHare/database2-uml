@@ -93,4 +93,7 @@ readonly class Page
 
     // Admin can create a course section in this page.
     public const CREATE_COURSE_SECTION = 'create_course_section.php';
+
+    // Display the student's course history.
+    public const COURSE_HISTORY = 'course_history.php';
 }
