@@ -117,8 +117,7 @@ $student_types = [
         <label for="student_type">Type: </label>
         <select name="student_type" id="student_type">
             <?php foreach ($student_types as $student_type): ?>
-              <option
-                value="<?= htmlspecialchars($student_type); ?>">
+              <option value="<?= htmlspecialchars($student_type); ?>">
                   <?= htmlspecialchars($student_type); ?>
               </option>
             <?php endforeach; ?>
