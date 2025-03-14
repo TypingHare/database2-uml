@@ -8,6 +8,26 @@
 
 require_once 'minimal.php';
 
+/* need to add ability to assign TAs to sections 
+* TA restrictions are
+* - PHD student
+* - section student count > 10
+* - can only TA for 1 section
+* 
+* count of students for each section_id in takes to get class size?
+*/ 
+
+/* need to add ability to assign 1 0r 2 instructor(s) as advisors to phd student
+* Advisor has access to 
+* - start date
+* - end date(optional)
+* - course history
+* - update student information?
+* -
+* can use course history from "Student transcipt"
+* what information can be updated?
+*/ 
+
 ?>
 
 <html lang="en">
