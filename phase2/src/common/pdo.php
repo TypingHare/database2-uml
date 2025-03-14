@@ -39,7 +39,7 @@ function pdo_connect(): PDO
 
             // This sets the default format for returning database results as
             // associative array. This means you can access results like
-            // `$row['column_nam']` instead of numeric indices
+            // `$row['column_name']` instead of numeric indices
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 
             // This disables emulated prepared statements in favor of native
@@ -59,9 +59,9 @@ function pdo_connect(): PDO
  * @return PDO The PDO database connection instance.
  * @author James Chen
  */
-function pdo_instance(): PDO
+function pdo_instance(): PDO // run through this again
 {
-    static $pdo;
+    static $pdo; //static remembers value of $pdo https://www.w3schools.com/php/keyword_static.asp 
     if (!$pdo) {
         $pdo = pdo_connect();
     }

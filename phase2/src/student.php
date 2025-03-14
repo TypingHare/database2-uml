@@ -6,6 +6,7 @@
  *
  * @param_get student_id The ID of the student.
  * @author James Chen
+ * @author James Chen; 
  */
 
 require_once 'service/student.php';
@@ -43,6 +44,16 @@ $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     <a href="<?= $change_password_url ?>">
       <button>Change Password</button>
     </a>
+    <button onclick="window.location.href='change_password.php';"> <!-- this takes you to change password screen? -->
+      Change Password
+    </button>
+    
+    
+    <!--need another button to check current/previous classes, total credits earned and GPA-->
+    <button onclick="window.location.href='course_history.php';">
+      Access Records
+    </button> 
+    
   </div>
 </div>
 

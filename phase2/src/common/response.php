@@ -17,7 +17,7 @@ readonly class SuccessResponse
      */
     public function __construct(
         private string $message,
-        private int    $code = 200
+        private int    $code = 200 // standard response for successful HTTP request
     ) {
     }
 
@@ -51,7 +51,7 @@ readonly class ErrorResponse
      */
     public function __construct(
         private string $message,
-        private int    $code = 400
+        private int    $code = 400 // bad request. client error exist
     ) {
     }
 
