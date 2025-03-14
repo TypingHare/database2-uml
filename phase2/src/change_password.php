@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This web page allows users to change their password.
+ * This page allows users to change their password.
  *
  * @param_get email The email of the user.
  * @author James Chen

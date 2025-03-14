@@ -41,3 +41,15 @@ function get_instructor_by_id(string $instructor_id): array|null
 
     return $stmt->rowCount() === 0 ? null : $stmt->fetch();
 }
+
+function get_all_instructors(): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+        SELECT * FROM instructor
+        "
+    );
+    execute($stmt);
+
+    return $stmt->fetchAll();
+}

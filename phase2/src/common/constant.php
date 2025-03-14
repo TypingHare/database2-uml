@@ -87,7 +87,10 @@ readonly class Page
     public const CREATE_STUDENT_ACCOUNT = 'create_student_account.php';
 
     // User can change their account password in this page. After resetting the
-    // password, the user will be redirected back to the dashboard page. The user
-    // can also cancel the process by clicking the "cancel" button
+    // password, the user will be redirected back to the dashboard page. The
+    // user can also cancel the process by clicking the "cancel" button
     public const CHANGE_PASSWORD = 'change_password.php';
+
+    // Admin can create a course section in this page.
+    public const CREATE_COURSE_SECTION = 'create_course_section.php';
 }

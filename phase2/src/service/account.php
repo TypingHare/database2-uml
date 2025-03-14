@@ -26,6 +26,16 @@ function get_account_by_email(string $email): array|null
     return $stmt->rowCount() === 0 ? null : $stmt->fetch();
 }
 
+/**
+ * Updates the password for a given user account.
+ *
+ * This function updates the password of the user with the specified email
+ * in the database.
+ *
+ * @param string $email The email of the user whose password is being changed.
+ * @param string $new_password The new password.
+ * @return void
+ */
 function change_password(string $email, string $new_password): void
 {
     $stmt = pdo_instance()->prepare(
