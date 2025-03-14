@@ -1,60 +1,20 @@
 <?php
 
+require_once 'minimal.php';
+
 /**
  * HTML template @author James Chen
  *
- * Clicking the "Access Records" button in student.php sends you to the student transcipt page
- * From here, the student will see all current and previous classes as well as a running total
- *of there credits and there cumcumulative gpa.
- * 
- * need to convert each letter grade into
- * A+ = 4 
- * A = 4
- * A- = 3.7
- * B+ = 3.3
- * B = 3
- * B- = 2.7
- * C+ = 2.3
- * C = 2
- * C- = 1.7
- * D+ = 1.3
- * D = 1
- * D- = 0.7
- * F = 0
+ * Clicking the "Access Records" button in student.php sends you to the student
+ * transcript page From here, the student will see all current and previous
+ * classes as well as a running total of their credits and there cumulative gpa.
+ *
+ * @author Victor Ruest
  */
 
- function get_all_courses(): array // not 100% on how these functions should work
- {
-     $stmt = pdo_instance()->prepare(   
-      "SELECT course_name, credits 
-       FROM course 
-       WHERE course_id = (SELECT course_id 
-                          FROM takes 
-                          WHERE student_id = $student['student_id'])";     
-     );
-     execute($stmt);
- 
-     return $stmt->fetchAll();
- }
-
-
-  function total_credits(int credits): int
- {
-     $stmt = pdo_instance()->prepare(   
-      "SELECT sum(credits) 
-       FROM course 
-       WHERE course_id = (SELECT course_id 
-                          FROM takes 
-                          WHERE student_id = :student_id);"
-     );
-     execute($stmt, ['student_id' => $student['id']]);
- 
-     return $stmt->fetchAll();// should I return just credits?
- }
-
 /* need to convert each letter grade into grade points
- * A+ = 4 
- * A = 4
+ * A+ = 4
+ * A = 3.9
  * A- = 3.7 * B+ = 3.3
  * B = 3
  * B- = 2.7
@@ -64,39 +24,78 @@
  * D+ = 1.3
  * D = 1
  * D- = 0.7
- * F = 0 
+ * F = 0
  * Each class = grade points * class credit hours
  * sum all class point
  * sum all credit hours
  * cumulative gpa = (total grade points) / (total credit hours)
 */
 
-function cumulative_gpa($student): array
+function get_cumulative_gpa(int $student_id): float
 {
-    $stmt = pdo_instance()->prepare(   
-     "SELECT grade 
-      FROM takes 
-      WHERE student_id = :student_id
-      "
-    ;
-    execute($stmt, ['student_id' => $student['id']]);
+    $courses = get_all_student_courses($student_id);
+    $completed_courses = array_filter(
+        $courses,
+        fn ($course) => $course['grade'] !== null
+    );
+    $total_credits = array_sum(
+        array_map('intval', array_column($completed_courses, 'credits'))
+    );
 
-    return $stmt->fetchAll();
+    $grade_array = array_map(
+        fn ($course) => convert_letter_grade_to_number($course['grade']) * intval($course['credits']),
+        $completed_courses
+    );
+    $total_grade = array_sum($grade_array);
+
+    return $total_grade / $total_credits;
 }
+
+$student_id = $_GET['student_id'];
+$courses = get_all_student_courses($student_id);
+$total_credits = get_total_credits($student_id);
+$cumulative_gpa = get_cumulative_gpa($student_id);
 
 ?>
 
 <html lang="en">
 <head>
   <title>Student Transcript</title>
+
+  <style>
+      table, th, td {
+          border: 1px solid black;
+      }
+
+      th, td {
+          padding: 0.5rem;
+      }
+  </style>
 </head>
 <body style="height: 100%;">
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
-  <div>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
     <!-- display all current and previous courses -->
-    <!-- display total credits -->
-    <!-- display cumulative GPA -->
+    <table style="width:100%;">
+      <tr>
+        <td>Course ID</td>
+        <td>Course Name</td>
+        <td>Credits</td>
+        <td>Completed</td>
+      </tr>
+        <?php foreach ($courses as $course): ?>
+          <tr>
+            <td><?= $course['course_id'] ?></td>
+            <td><?= $course['course_name'] ?></td>
+            <td><?= $course['credits'] ?></td>
+            <td><?= $course['grade'] !== null ? 'Yes' : 'No' ?></td>
+          </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <div><b>Total Credits: </b><?= $total_credits ?></div>
+    <div><b>Cumulative GPA: </b><?= number_format($cumulative_gpa, 1) ?></div>
   </div>
 </div>
 

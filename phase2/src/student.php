@@ -6,7 +6,7 @@
  *
  * @param_get student_id The ID of the student.
  * @author James Chen
- * @author James Chen; 
+ * @author James Chen;
  */
 
 require_once 'service/student.php';
@@ -15,15 +15,20 @@ if ($_GET['student_id'] == null) {
     error('Missing parameter "student_id"');
 }
 
-$student = get_student_by_id($_GET['student_id']);
+$student_id = $_GET['student_id'];
+$student = get_student_by_id($student_id);
 if ($student === null) {
-    error("Invalid student ID: " . $_GET['student_id']);
+    error("Invalid student ID: " . $student_id);
 }
 
-$student_type = get_student_type($student['student_id']);
+$student_type = get_student_type($student_id);
 $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     'email' => $student['email']
-])
+]);
+
+$access_records_url = build_url(Page::COURSE_HISTORY, [
+    'student_id' => $student_id
+]);
 
 ?>
 
@@ -44,16 +49,10 @@ $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     <a href="<?= $change_password_url ?>">
       <button>Change Password</button>
     </a>
-    <button onclick="window.location.href='change_password.php';"> <!-- this takes you to change password screen? -->
-      Change Password
-    </button>
-    
-    
-    <!--need another button to check current/previous classes, total credits earned and GPA-->
-    <button onclick="window.location.href='course_history.php';">
-      Access Records
-    </button> 
-    
+
+    <a href="<?= $access_records_url ?>">
+      <button>Access Records</button>
+    </a>
   </div>
 </div>
 
