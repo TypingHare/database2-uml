@@ -31,13 +31,14 @@ require_once 'minimal.php';
  * cumulative gpa = (total grade points) / (total credit hours)
 */
 
-function get_cumulative_gpa(int $student_id): float
+function get_cumulative_gpa(string $student_id): float
 {
     $courses = get_all_student_courses($student_id);
     $completed_courses = array_filter(
         $courses,
-        fn ($course) => $course['grade'] !== null
+        fn ($course) => $course['grade'] !== null 
     );
+    var_dump($completed_courses);
     $total_credits = array_sum(
         array_map('intval', array_column($completed_courses, 'credits'))
     );
@@ -48,7 +49,7 @@ function get_cumulative_gpa(int $student_id): float
     );
     $total_grade = array_sum($grade_array);
 
-    return $total_grade / $total_credits;
+    return $total_credits === 0 ? 0. : $total_grade / $total_credits;
 }
 
 $student_id = $_GET['student_id'];

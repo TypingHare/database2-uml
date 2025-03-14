@@ -32,7 +32,11 @@ function get_all_student_courses(string $student_id): array
 function get_total_credits(string $student_id): int
 {
     $courses = get_all_student_courses($student_id);
-    $credits_array = array_column($courses, 'credits');
+    $completed_courses = array_filter(
+        $courses,
+        fn($course) => $course['grade'] !== null
+    );
+    $credits_array = array_column($completed_courses, 'credits');
     return array_sum(array_map('intval', $credits_array));
 }
 
