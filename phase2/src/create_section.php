@@ -14,7 +14,7 @@ include 'minimal.php';
  * @author James Chen
  */
 handle(HttpMethod::POST, function ($data) {
-    $section = create_new_section(
+    create_new_section(
         $data['course_id'],
         "Section" . $data['section_id'],
         $data['semester'],
@@ -23,6 +23,8 @@ handle(HttpMethod::POST, function ($data) {
         $data['classroom_id'],
         $data['time_slot_id']
     );
+
+    redirect(Page::SECTION);
 });
 
 $course_ids = array_column(get_all_courses(), 'course_id');
@@ -113,6 +115,13 @@ $time_slots = get_all_time_slots();
               </option>
             <?php endforeach; ?>
         </select>
+      </div>
+
+      <div>
+        <button type="submit">Submit</button>
+        <a href="<?= Page::SECTION ?>" style="margin-left: 0.5rem;">
+          <button type="button">Cancel</button>
+        </a>
       </div>
     </form>
   </div>

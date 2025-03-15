@@ -121,7 +121,7 @@ $section = get_section($course_id, $section_id, $semester, $year);
       <div>
         <button type="submit">Update</button>
         <a href="<?= Page::SECTION ?>" style="margin-left: 0.5rem">
-          <button>Cancel</button>
+          <button type="button">Cancel</button>
         </a>
       </div>
     </form>

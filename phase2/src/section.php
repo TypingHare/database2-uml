@@ -72,6 +72,12 @@ function get_edit_section_url(array $section): string
           </tr>
         <?php endforeach; ?>
     </table>
+
+    <div style="margin-top: 1rem;">
+      <a href="<?= Page::CREATE_SECTION ?>">
+        <button>Create section</button>
+      </a>
+    </div>
   </div>
 </div>
 
