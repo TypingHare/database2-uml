@@ -318,3 +318,5 @@ insert into undergraduate (student_id, total_credits, class_standing) values ('0
 insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+');
 insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'COMP1020', 'Section101', 'Spring', 2024, 'B-');
 insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'Comp2010', 'Section101', 'Fall', 2023, 'C+');
+insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null);
+                                                     

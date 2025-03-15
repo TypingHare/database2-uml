@@ -33,12 +33,8 @@ require_once 'minimal.php';
 
 function get_cumulative_gpa(string $student_id): float
 {
-    $courses = get_all_student_courses($student_id);
-    $completed_courses = array_filter(
-        $courses,
-        fn ($course) => $course['grade'] !== null 
-    );
-    var_dump($completed_courses);
+    $completed_courses = get_all_completed_courses($student_id);
+    //var_dump($completed_courses);
     $total_credits = array_sum(
         array_map('intval', array_column($completed_courses, 'credits'))
     );
@@ -56,6 +52,8 @@ $student_id = $_GET['student_id'];
 $courses = get_all_student_courses($student_id);
 $total_credits = get_total_credits($student_id);
 $cumulative_gpa = get_cumulative_gpa($student_id);
+
+$finished_courses = get_all_completed_courses($student_id);
 
 ?>
 
@@ -85,7 +83,7 @@ $cumulative_gpa = get_cumulative_gpa($student_id);
         <td>Credits</td>
         <td>Completed</td>
       </tr>
-        <?php foreach ($courses as $course): ?>
+        <?php foreach ($finished_courses as $course): ?>
           <tr>
             <td><?= $course['course_id'] ?></td>
             <td><?= $course['course_name'] ?></td>
