@@ -59,9 +59,9 @@ function pdo_connect(): PDO
  * @return PDO The PDO database connection instance.
  * @author James Chen
  */
-function pdo_instance(): PDO // run through this again
+function pdo_instance(): PDO
 {
-    static $pdo; //static remembers value of $pdo https://www.w3schools.com/php/keyword_static.asp 
+    static $pdo;
     if (!$pdo) {
         $pdo = pdo_connect();
     }

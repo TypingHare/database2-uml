@@ -91,9 +91,24 @@ readonly class Page
     // user can also cancel the process by clicking the "cancel" button
     public const CHANGE_PASSWORD = 'change_password.php';
 
+    // Admin can review all sections in this page.
+    public const SECTION = 'section.php';
+
     // Admin can create a course section in this page.
-    public const CREATE_COURSE_SECTION = 'create_course_section.php';
+    public const CREATE_SECTION = 'create_section.php';
+
+    // Admin can edit a course section in this page.
+    public const EDIT_SECTION = 'edit_section.php';
 
     // Display the student's course history.
     public const COURSE_HISTORY = 'course_history.php';
 }
+
+// I haven't decided yet
+defined('TIME_SLOTS') || define('TIME_SLOTS', [
+    ['08:00:00', '08:50:00'],
+    ['09:00:00', '09:50:00'],
+    ['10:00:00', '11:15:00'],
+    ['11:30:00', '12:20:00'],
+    ['12:30:00', '13:45:00'],
+]);
