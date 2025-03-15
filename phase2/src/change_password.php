@@ -93,7 +93,7 @@ handle(HttpMethod::POST, function ($data) use ($account, $email, $back_page_url)
 
       <div style="display: flex; justify-content: center;">
         <button type="submit">Update</button>
-        <a style="margin-left: 1rem" href="<?= $back_page_url ?>">
+        <a href="<?= $back_page_url ?>" style="margin-left: 0.5rem">
           <button type="button">Cancel</button>
         </a>
       </div>
