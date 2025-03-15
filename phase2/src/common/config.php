@@ -16,4 +16,3 @@ return [
         'password' => '',
     ]
 ];
-//why does this exist?

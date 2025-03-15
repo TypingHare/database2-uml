@@ -13,3 +13,8 @@ function get_all_classrooms(): array
 
     return $stmt->fetchAll();
 }
+
+function classroom_to_string(array $classroom): string
+{
+    return $classroom['building'] . ' ' . $classroom['room_number'];
+}

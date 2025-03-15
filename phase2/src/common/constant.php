@@ -91,8 +91,14 @@ readonly class Page
     // user can also cancel the process by clicking the "cancel" button
     public const CHANGE_PASSWORD = 'change_password.php';
 
+    // Admin can review all sections in this page.
+    public const SECTION = 'section.php';
+
     // Admin can create a course section in this page.
-    public const CREATE_COURSE_SECTION = 'create_course_section.php';
+    public const CREATE_SECTION = 'create_section.php';
+
+    // Admin can edit a course section in this page.
+    public const EDIT_SECTION = 'edit_section.php';
 
     // Display the student's course history.
     public const COURSE_HISTORY = 'course_history.php';
