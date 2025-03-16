@@ -52,6 +52,10 @@ $access_records_url = build_url(Page::COURSE_HISTORY, [
 
       <?php if ($student_type === StudentType::PHD): ?>
         <div>
+          <b>Qualifier: </b>
+            <?= $student_subclass['qualifier'] ?>
+        </div>
+        <div>
           <b>Proposal Defence Date: </b>
             <?= $student_subclass['proposal_defence_date'] ?>
         </div>
