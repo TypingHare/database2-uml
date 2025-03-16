@@ -21,7 +21,7 @@
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <h3>[Page Title]</h3>
+    <h2>[Page Title]</h2>
     <form
       style="display: flex; flex-direction: column; gap: 1rem;"
       action="<?= Page::ERROR ?>"

@@ -27,6 +27,8 @@ handle(HttpMethod::POST, function (array $data) {
         $dissertation_defence_date = $data['dissertation_defence_date'];
         update_phd_info($student_id, $proposal_defence_date, $dissertation_defence_date);
     }
+
+    redirect(Page::STUDENT, ['student_id' => $student_id]);
 });
 
 $student_id = $_GET['student_id'];
@@ -35,6 +37,10 @@ $student_type = get_student_type($student_id);
 $student_subclass = get_student_subclass($student_id, $student_type);
 
 $departments = get_all_departments();
+
+$student_url = build_url(Page::STUDENT, [
+    'student_id' => $student_id
+]);
 
 ?>
 
@@ -46,15 +52,19 @@ $departments = get_all_departments();
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <h3>Edit Information</h3>
-    <div><b>Student ID: </b><?= $student['student_id'] ?></div>
-    <div><b>Email: </b><?= $student['email'] ?></div>
-
+    <h2>Edit Information</h2>
     <form
       style="display: flex; flex-direction: column; gap: 1rem;"
-      action="<?= Page::ERROR ?>"
+      action="<?= Page::EDIT_STUDENT ?>"
       method="POST"
     >
+      <div><b>Student ID: </b><?= $student['student_id'] ?></div>
+      <div><b>Email: </b><?= $student['email'] ?></div>
+
+      <input type="hidden" name="student_id"
+             value="<?= $student['student_id'] ?>">
+      <input type="hidden" name="email" value="<?= $student['email'] ?>">
+
       <label for="name">
         Student Name:
         <input name="name" value="<?= $student['name'] ?>" />
@@ -76,15 +86,22 @@ $departments = get_all_departments();
           <label>
             Proposal Defence Date:
             <input type="date" name="proposal_defence_date"
-                   value="<?= $student['proposal_defence_date'] ?>" />
+                   value="<?= $student_subclass['proposal_defence_date'] ?? "" ?>" />
           </label>
 
           <label>
             Dissertation Defence Date:
             <input type="date" name="dissertation_defence_date"
-                   value="<?= $student['dissertation_defence_date'] ?>">
+                   value="<?= $student_subclass['dissertation_defence_date'] ?? "" ?>">
           </label>
         <?php endif ?>
+
+      <div style="display: flex; justify-content: center;">
+        <button type="submit">Update</button>
+        <a href="<?= $student_url ?>" style="margin-left: 0.5rem;">
+          <button type="button">Cancel</button>
+        </a>
+      </div>
     </form>
   </div>
 </div>

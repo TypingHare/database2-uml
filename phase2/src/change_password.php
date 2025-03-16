@@ -69,7 +69,7 @@ handle(HttpMethod::POST, function ($data) use ($account, $email, $back_page_url)
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <h3>Change password</h3>
+    <h2>Change password</h2>
     <form
       style="display: flex; flex-direction: column; gap: 1rem;"
       action="<?= Page::CHANGE_PASSWORD ?>"
