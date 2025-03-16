@@ -25,7 +25,9 @@ $student_type = get_student_type($student_id);
 $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     'email' => $student['email']
 ]);
-
+$edit_student_url = build_url(Page::EDIT_STUDENT, [
+    'student_id' => $student_id
+]);
 $access_records_url = build_url(Page::COURSE_HISTORY, [
     'student_id' => $student_id
 ]);
@@ -48,6 +50,10 @@ $access_records_url = build_url(Page::COURSE_HISTORY, [
 
     <a href="<?= $change_password_url ?>">
       <button>Change Password</button>
+    </a>
+
+    <a href="<?= $edit_student_url ?>">
+      <button>Edit Student</button>
     </a>
 
     <a href="<?= $access_records_url ?>">

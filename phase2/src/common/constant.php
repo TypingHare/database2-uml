@@ -91,6 +91,9 @@ readonly class Page
     // user can also cancel the process by clicking the "cancel" button
     public const CHANGE_PASSWORD = 'change_password.php';
 
+    // Student can edit their information, such as name and department.
+    public const EDIT_STUDENT = 'edit_student.php';
+
     // Admin can review all sections in this page.
     public const SECTION = 'section.php';
 
