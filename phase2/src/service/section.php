@@ -2,6 +2,12 @@
 
 require_once __DIR__ . '/../minimal.php';
 
+/**
+ * Fetches all sections from the database.
+ *
+ * @return array An array of sections.
+ * @author James Chen
+ */
 function get_all_sections(): array
 {
     $stmt = pdo_instance()->prepare(
@@ -17,6 +23,18 @@ function get_all_sections(): array
     return $stmt->fetchAll();
 }
 
+/**
+ * Fetches a specific section from the database based on course ID, section ID,
+ * semester, and year.
+ *
+ * @param string $course_id The ID of the course.
+ * @param string $section_id The ID of the section.
+ * @param string $semester The semester in which the section is offered.
+ * @param string $year The academic year in which the section is offered.
+ * @return array|null An associative array representing the section details if
+ *                    found, or null if no matching section exists.
+ * @author James Chen
+ */
 function get_section(
     string $course_id,
     string $section_id,
@@ -43,78 +61,170 @@ function get_section(
 }
 
 /**
- * Checks if the given time slot is available for scheduling in the specified
- * semester and year.
+ * Checks if a given time slot in a specific semester and year has exceeded the
+ * allowed number of sections. If the count exceeds the maximum allowed sections
+ * per time slot, an exception is thrown.
  *
- * This function retrieves the list of available time slots for the provided
- * semester and year. If the specified time slot ID is not found in the
- * available time slots, it throws an exception, indicating that the time slot
- * has already been assigned to two or more sections.
- *
- * @param string $semester The semester for which availability is being checked.
- * @param string $year The academic year associated with the semester.
- * @param string $time_slot_id The unique identifier of the time slot to check.
+ * @param string $semester The semester to check.
+ * @param string $year The academic year to check.
+ * @param string $time_slot_id The ID of the time slot to verify.
+ * @param int $max_sections_per_time_slot The maximum allowed sections in a
+ *                                        single time slot. Defaults to 2.
  * @return void
- * @throws RuntimeException If the time slot is not available.
- *
+ * @throws RuntimeException If the number of sections in the given time slot
+ *                          exceeds the allowed limit.
+ * @author James Chen
  */
 function check_time_slot(
     string $semester,
     string $year,
-    string $time_slot_id
+    string $time_slot_id,
+    int    $max_sections_per_time_slot = 2
 ): void {
-    $available_time_slots = get_available_time_slots($semester, $year);
-    if (!in_array($time_slot_id, array_column($available_time_slots, 'time_slot_id'))) {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT COUNT(*)
+            FROM time_slot
+            JOIN section ON time_slot.time_slot_id = section.time_slot_id
+            WHERE semester = :semester
+              AND year = :year
+              AND time_slot.time_slot_id = :time_slot_id
+        "
+    );
+    execute($stmt, [
+        'semester' => $semester,
+        'year' => $year,
+        'time_slot_id' => $time_slot_id
+    ]);
+
+    if ($stmt->fetch()[0] > $max_sections_per_time_slot) {
+        $time_slot = get_time_slot_by_id($time_slot_id);
         throw new RuntimeException(
             "The time slot " .
-            $time_slot_id .
+            time_slot_to_string($time_slot) .
             " has already been taken by two or more sections."
         );
     }
 }
 
 /**
- * Checks if the given instructor is available for teaching in the specified
- * semester and year.
+ * Ensures that an instructor is not assigned to multiple sections in the same
+ * time slot during a specific semester and year. If the instructor is already
+ * assigned to another section in the given time slot, an exception is thrown.
  *
- * This function retrieves the list of available instructors for the provided
- * semester and year. If the specified instructor ID is not found in the
- * available instructors, it throws an exception, indicating that the instructor
- * is already assigned to two or more sections.
- *
- * @param string $semester The semester for which instructor availability is
- *                         being checked.
- * @param string $year The academic year associated with the semester.
- * @param string $instructor_id The unique identifier of the instructor to
- *                              check.
+ * @param string $semester The semester to check.
+ * @param string $year The academic year to check.
+ * @param string $instructor_id The ID of the instructor to verify.
+ * @param int $max_sections_per_instructor The maximum allowed sections for a
+ *                                         single instructor.
  * @return void
- * @throws RuntimeException If the instructor is not available for additional
- *                          sections.
+ * @throws RuntimeException If the instructor is already assigned to another
+ *                          section in the same time slot.
+ * @author James Chen
  */
 function check_instructor(
     string $semester,
     string $year,
     string $instructor_id,
+    int    $max_sections_per_instructor = 2
 ): void {
-    $available_instructors = get_available_instructors($semester, $year);
-    if (!in_array($instructor_id, array_column($available_instructors, 'instructor_id'))) {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT COUNT(*)
+            FROM instructor
+            JOIN section ON instructor.instructor_id = section.instructor_id
+            WHERE semester = :semester
+              AND year = :year
+              AND instructor.instructor_id = :instructor_id
+        "
+    );
+    execute($stmt, [
+        'semester' => $semester,
+        'year' => $year,
+        'instructor_id' => $instructor_id
+    ]);
+
+    if ($stmt->fetch()[0] > $max_sections_per_instructor) {
+        $instructor = get_instructor_by_id($instructor_id);
         throw new RuntimeException(
             "The instructor " .
-            $instructor_id .
+            $instructor['instructor_name'] .
             " has two or more sections in this semester."
         );
     }
 }
 
+/**
+ * Ensures that a classroom is available for a given time slot in a specific
+ * semester and year. If the classroom is already assigned to another section
+ * in the same time slot, an exception is thrown.
+ *
+ * @param string $semester The semester to check.
+ * @param string $year The academic year to check.
+ * @param string $classroom_id The ID of the classroom to verify.
+ * @param string $time_slot_id The ID of the time slot to verify.
+ * @return void
+ * @throws RuntimeException If the classroom is already occupied in the given
+ *                          time slot.
+ * @author James Chen
+ */
 function check_classroom(
     string $semester,
     string $year,
-    string $instructor_id,
     string $classroom_id,
+    string $time_slot_id
 ): void {
     $stmt = pdo_instance()->prepare(
         "
-            SELECT classroom.*
+            SELECT COUNT(*)
+            FROM classroom
+            JOIN section ON classroom.classroom_id = section.section_id
+            WHERE semester = :semester
+              AND year = :year
+              AND instructor_id = :instructor_id
+              AND time_slot_id = :time_slot_id
+        "
+    );
+    execute($stmt, [
+        'semester' => $semester,
+        'year' => $year,
+        'classroom_id' => $classroom_id,
+        'time_slot_id' => $time_slot_id
+    ]);
+
+    if ($stmt->fetch()[0] > 1) {
+        $classroom = get_classroom_by_id($classroom_id);
+        throw new RuntimeException(
+            "The classroom " .
+            classroom_to_string($classroom) .
+            " has two or more sections in the " .
+            $time_slot_id .
+            " time slot."
+        );
+    }
+}
+
+/**
+ * Ensures that an instructor is not assigned to multiple classrooms in the same
+ * semester and year. If the instructor is already teaching in another
+ * classroom, an exception is thrown.
+ *
+ * @param string $semester The semester to check.
+ * @param string $year The academic year to check.
+ * @param string $instructor_id The ID of the instructor to verify.
+ * @return void
+ * @throws RuntimeException If the instructor is assigned to multiple
+ *                          classrooms.
+ * @author James Chen
+ */
+function check_instructor_classroom(
+    string $semester,
+    string $year,
+    string $instructor_id,
+): void {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT classroom.classroom_id
             FROM classroom
             JOIN section ON classroom.classroom_id = section.classroom_id
             WHERE semester = :semester
@@ -128,15 +238,10 @@ function check_classroom(
         'instructor_id' => $instructor_id
     ]);
 
-    if ($stmt->rowCount() === 0) {
-        return;
-    }
-
-    $classroom = $stmt->fetch();
-    if ($classroom['classroom_id'] !== $classroom_id) {
+    $classrooms = array_column($stmt->fetchAll(), 'classroom_id');
+    if (!empty($classrooms) || array_unique($classrooms) != 1) {
         throw new RuntimeException(
-            "The instructor should take the two sections in the same classroom: " .
-            $classroom['classroom_id']
+            "The instructor should take the two sections in the same classroom!"
         );
     }
 }
@@ -155,8 +260,6 @@ function check_classroom(
  * @param string $year The academic year associated with the semester.
  * @param string $instructor_id The unique identifier of the instructor whose
  *                              time slots are being checked.
- * @param string $time_slot_id The unique identifier of the new time slot being
- *                             assigned.
  * @throws RuntimeException If the instructor's time slots are not on the same
  *                          day or not consecutive.
  * @return void
@@ -165,7 +268,6 @@ function check_instructor_time_slot(
     string $semester,
     string $year,
     string $instructor_id,
-    string $time_slot_id,
 ): void {
     $stmt = pdo_instance()->prepare(
         "
@@ -183,16 +285,24 @@ function check_instructor_time_slot(
         'instructor_id' => $instructor_id
     ]);
 
-    if ($stmt->rowCount() === 0) {
+    if ($stmt->rowCount() < 2) {
         return;
     }
 
+    if ($stmt->rowCount() > 2) {
+        throw new RuntimeException(
+            "The instructor is taking more than two time sections."
+        );
+    }
+
     $ts1 = $stmt->fetch();
-    $ts2 = get_time_slot_by_id($time_slot_id);
+    $ts2 = $stmt->fetch();
 
     // The two sections should be at the same days
     if ($ts1['day'] != $ts2['day']) {
-        throw new RuntimeException('The instructor time slots should be at the same day.');
+        throw new RuntimeException(
+            "The instructor time slots must be at the same days."
+        );
     }
 
     $ts1_start_minutes = time_to_minutes($ts1['start_time']);
@@ -201,13 +311,57 @@ function check_instructor_time_slot(
     $ts2_end_minutes = time_to_minutes($ts2['end_time']);
 
     // The two sections cannot be the same
-    if ($ts1_start_minutes === $ts2_start_minutes || $ts1_end_minutes === $ts2_end_minutes) {
-        throw new RuntimeException('The instructor time slots are overlapped.');
+    if (
+        $ts1_start_minutes === $ts2_start_minutes ||
+        $ts1_end_minutes === $ts2_end_minutes
+    ) {
+        throw new RuntimeException(
+            "The instructor time slots are not consecutive."
+        );
     }
 
     // The two sections should be consecutive
-    if (abs($ts1_start_minutes - $ts2_end_minutes) > 15 && abs($ts2_start_minutes - $ts1_end_minutes) > 15) {
-        throw new RuntimeException('The instructor time slots are not consecutive.');
+    if (
+        abs($ts1_start_minutes - $ts2_end_minutes) > 15 &&
+        abs($ts2_start_minutes - $ts1_end_minutes) > 15
+    ) {
+        throw new RuntimeException(
+            "The instructor time slots are not consecutive."
+        );
+    }
+}
+
+/**
+ * Validates the legitimacy of a section based on various constraints.
+ *
+ * This function checks if an instructor, classroom, and time slot are valid
+ * for a given semester and year. It ensures that the instructor and classroom
+ * do not violate scheduling constraints.
+ *
+ * @param string $semester The semester for which the section is being checked.
+ * @param string $year The academic year for which the section is being checked.
+ * @param string $instructor_id The unique identifier of the instructor.
+ * @param string $classroom_id The unique identifier of the classroom.
+ * @param string $time_slot_id The unique identifier of the time slot.
+ *
+ * @throws RuntimeException If any of the validation checks fail.
+ */
+function check_section_legitimacy(
+    string $semester,
+    string $year,
+    string $instructor_id,
+    string $classroom_id,
+    string $time_slot_id,
+): void {
+    try {
+        check_time_slot($semester, $year, $instructor_id, $time_slot_id);
+        check_instructor($semester, $year, $instructor_id, $time_slot_id);
+        check_classroom($semester, $year, $classroom_id, $time_slot_id);
+        check_instructor_classroom($semester, $year, $instructor_id);
+        check_instructor_time_slot($semester, $year, $instructor_id);
+    } catch (RuntimeException $ex) {
+        pdo_instance()->rollBack();
+        throw new RuntimeException($ex->getMessage());
     }
 }
 
@@ -244,11 +398,7 @@ function create_new_section(
     string $classroom_id,
     string $time_slot_id,
 ): array {
-    check_time_slot($semester, $year, $time_slot_id);
-    check_instructor($semester, $year, $instructor_id);
-    check_classroom($semester, $year, $instructor_id, $classroom_id);
-    check_instructor_time_slot($semester, $year, $instructor_id, $time_slot_id);
-
+    pdo_instance()->beginTransaction();
     $stmt = pdo_instance()->prepare(
         "
             INSERT INTO section (
@@ -280,6 +430,8 @@ function create_new_section(
         'time_slot_id' => $time_slot_id,
     ];
     $stmt->execute($data);
+
+    check_section_legitimacy($semester, $year, $instructor_id, $classroom_id, $time_slot_id);
 
     return $data;
 }
@@ -318,10 +470,7 @@ function update_section(
     string $classroom_id,
     string $time_slot_id,
 ): array {
-    check_time_slot($semester, $year, $time_slot_id);
-    check_classroom($semester, $year, $instructor_id, $classroom_id);
-    check_instructor_time_slot($semester, $year, $instructor_id, $time_slot_id);
-
+    pdo_instance()->beginTransaction();
     $stmt = pdo_instance()->prepare(
         "
             UPDATE section
@@ -344,6 +493,8 @@ function update_section(
         'time_slot_id' => $time_slot_id,
     ];
     $stmt->execute($data);
+
+    check_section_legitimacy($semester, $year, $instructor_id, $classroom_id, $time_slot_id);
 
     return $data;
 }
