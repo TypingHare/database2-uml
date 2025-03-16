@@ -5,7 +5,7 @@ require_once __DIR__ . '/../minimal.php';
 /**
  * Fetches all students from the database.
  *
- * @return array An array of departments.
+ * @return array An array of students.
  * @author James Chen
  */
 function get_all_students(): array

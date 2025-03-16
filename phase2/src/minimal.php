@@ -24,6 +24,13 @@ foreach (scandir($service_dir) as $file) {
     }
 }
 
+register_shutdown_function(function () {
+    $pdo = pdo_instance(true);
+    if ($pdo !== null && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+});
+
 /**
  * Handles API endpoint requests for specific HTTP methods.
  *
