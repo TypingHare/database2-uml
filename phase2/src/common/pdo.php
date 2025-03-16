@@ -56,12 +56,17 @@ function pdo_connect(): PDO
  * and reused throughout the application, preventing unnecessary database
  * connections.
  *
- * @return PDO The PDO database connection instance.
+ * @return PDO|null The PDO database connection instance.
  * @author James Chen
  */
-function pdo_instance(): PDO
+function pdo_instance(bool $original = false): PDO|null
 {
     static $pdo;
+
+    if ($original) {
+        return $pdo;
+    }
+
     if (!$pdo) {
         $pdo = pdo_connect();
     }

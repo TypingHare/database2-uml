@@ -61,13 +61,13 @@ $time_slots = get_all_time_slots();
 
       <div>
         <label for="section_id">Section ID: </label>
-        <input name="section_id" id="section_id" placeholder="example: 102" />
+        <input name="section_id" id="section_id" placeholder="example: 101" />
       </div>
 
       <div>
         <span>Semester: </span>
         <input type="radio" name="semester" id="semester-spring"
-               value="Spring" />
+               value="Spring" checked />
         <label for="semester-spring">Spring</label>
 
         <input type="radio" name="semester" id="semester-fall" value="Fall"
