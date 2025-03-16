@@ -42,7 +42,7 @@ $time_slots = get_all_time_slots();
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <h3>Create Course Section</h3>
+    <h2>Create Course Section</h2>
     <form
       style="display: flex; flex-direction: column; gap: 1rem;"
       action="<?= Page::CREATE_SECTION ?>"

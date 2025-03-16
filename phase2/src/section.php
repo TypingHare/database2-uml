@@ -43,7 +43,7 @@ function get_edit_section_url(array $section): string
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <h3>Sections</h3>
+    <h2>Sections</h2>
     <table style="width:100%;">
       <tr>
         <td>Course ID</td>
