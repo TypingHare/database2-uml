@@ -31,13 +31,10 @@ require_once 'minimal.php';
  * cumulative gpa = (total grade points) / (total credit hours)
 */
 
-function get_cumulative_gpa(int $student_id): float
+function get_cumulative_gpa(string $student_id): float
 {
-    $courses = get_all_student_courses($student_id);
-    $completed_courses = array_filter(
-        $courses,
-        fn ($course) => $course['grade'] !== null
-    );
+    $completed_courses = get_all_completed_courses($student_id);
+    //var_dump($completed_courses);
     $total_credits = array_sum(
         array_map('intval', array_column($completed_courses, 'credits'))
     );
@@ -48,13 +45,20 @@ function get_cumulative_gpa(int $student_id): float
     );
     $total_grade = array_sum($grade_array);
 
-    return $total_grade / $total_credits;
+    return $total_credits === 0 ? 0. : $total_grade / $total_credits;
 }
 
 $student_id = $_GET['student_id'];
 $courses = get_all_student_courses($student_id);
 $total_credits = get_total_credits($student_id);
 $cumulative_gpa = get_cumulative_gpa($student_id);
+
+$current_courses = get_all_active_courses($student_id);
+$finished_courses = get_all_completed_courses($student_id);
+
+$student_url = build_url(Page::STUDENT, [
+  'student_id' => $student_id
+]);
 
 ?>
 
@@ -77,27 +81,52 @@ $cumulative_gpa = get_cumulative_gpa($student_id);
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <!-- display all current and previous courses -->
+     <h1> Current Courses <h1>
     <table style="width:100%;">
       <tr>
         <td>Course ID</td>
         <td>Course Name</td>
         <td>Credits</td>
-        <td>Completed</td>
+        <td>Grade</td>
       </tr>
-        <?php foreach ($courses as $course): ?>
+        <?php foreach ($current_courses as $course): ?>
           <tr>
             <td><?= $course['course_id'] ?></td>
             <td><?= $course['course_name'] ?></td>
             <td><?= $course['credits'] ?></td>
-            <td><?= $course['grade'] !== null ? 'Yes' : 'No' ?></td>
+            <td><?= $course['grade'] !== null ? $course['grade'] : 'NA' ?></td>
           </tr>
         <?php endforeach; ?>
     </table>
+
+    <h1> Completed Courses <h1>
+    <table style="width:100%;">
+      <tr>
+        <td>Course ID</td>
+        <td>Course Name</td>
+        <td>Credits</td>
+        <td>Grade</td>
+      </tr>
+        <?php foreach ($finished_courses as $course): ?>
+          <tr>
+            <td><?= $course['course_id'] ?></td>
+            <td><?= $course['course_name'] ?></td>
+            <td><?= $course['credits'] ?></td>
+            <td><?= $course['grade']?></td>
+          </tr>
+        <?php endforeach; ?>
+    </table>
+
+
 
     <div><b>Total Credits: </b><?= $total_credits ?></div>
     <div><b>Cumulative GPA: </b><?= number_format($cumulative_gpa, 1) ?></div>
   </div>
 </div>
+
+<a href="<?= $student_url ?>" style="margin-left: 0.5rem;">
+          <button type="button">Cancel</button>
+        </a>
 
 </body>
 </html>
