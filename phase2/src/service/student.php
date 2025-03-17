@@ -5,7 +5,7 @@ require_once __DIR__ . '/../minimal.php';
 /**
  * Fetches all students from the database.
  *
- * @return array An array of departments.
+ * @return array An array of students.
  * @author James Chen
  */
 function get_all_students(): array
@@ -289,4 +289,71 @@ function get_student_type(string $student_id): string
     }
 
     return '';
+}
+
+function get_student_subclass(
+    string $student_id,
+    string $type,
+): array {
+    $validTypes = [
+        StudentType::UNDERGRADUATE,
+        StudentType::MASTER,
+        StudentType::PHD,
+    ];
+
+    if (!in_array($type, $validTypes, true)) {
+        throw new InvalidArgumentException("Invalid student type: $type");
+    }
+
+    $table = $type;
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * 
+            FROM {$table}
+            Where student_id = :student_id
+        "
+    );
+    execute($stmt, ['student_id' => $student_id]);
+
+    return $stmt->fetch();
+}
+
+function update_student_info(
+    string $student_id,
+    string $name,
+    string $dept_name,
+): void {
+    $stmt = pdo_instance()->prepare(
+        "
+            UPDATE student
+            SET name = :name, 
+                dept_name = :dept_name
+            WHERE student_id = :student_id
+        "
+    );
+    execute($stmt, [
+        "student_id" => $student_id,
+        "name" => $name,
+        "dept_name" => $dept_name
+    ]);
+}
+
+function update_phd_info(
+    string $student_id,
+    string $proposal_defence_date,
+    string $dissertation_defence_date,
+): void {
+    $stmt = pdo_instance()->prepare(
+        "
+            UPDATE PhD
+            SET proposal_defence_date = :proposal_defence_date,
+                dissertation_defence_date = :dissertation_defence_date
+            WHERE student_id = :student_id
+        "
+    );
+    execute($stmt, [
+        "student_id" => $student_id,
+        "proposal_defence_date" => $proposal_defence_date,
+        "dissertation_defence_date" => $dissertation_defence_date
+    ]);
 }

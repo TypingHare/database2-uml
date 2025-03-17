@@ -59,38 +59,11 @@ function time_slot_to_string(array $time_slot): string
 }
 
 /**
- * Retrieves available time slots for a given semester and year.
- * A time slot is considered available if it has fewer than two assigned
- * sections.
+ * Converts a time string into the minutes of a day.
  *
- * @param string $semester The semester for which to check availability.
- * @param string $year The year for which to check availability.
- * @return array An array of available time slots.
- * @author James Chen
+ * @param string $time The time string in the format of "hh:mm:ss".
+ * @return int The minutes of a day.
  */
-function get_available_time_slots(
-    string $semester,
-    string $year
-): array {
-    $stmt = pdo_instance()->prepare(
-        "
-            SELECT * FROM time_slot
-            WHERE time_slot_id NOT IN (
-                SELECT time_slot.time_slot_id
-                FROM time_slot
-                LEFT JOIN section ON time_slot.time_slot_id = section.time_slot_id
-                WHERE semester = :semester
-                  AND year = :year
-                GROUP BY time_slot.time_slot_id
-                HAVING COUNT(*) >= 2
-            )
-        "
-    );
-    execute($stmt, ['semester' => $semester, 'year' => $year]);
-
-    return $stmt->fetchAll();
-}
-
 function time_to_minutes(string $time): int
 {
     list($hours, $minutes) = explode(':', $time);

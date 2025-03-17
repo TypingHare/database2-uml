@@ -57,7 +57,7 @@ $section = get_section($course_id, $section_id, $semester, $year);
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <h3>Edit Course Section</h3>
+    <h2>Edit Course Section</h2>
     <form
       style="display: flex; flex-direction: column; gap: 1rem;"
       action="<?= Page::EDIT_SECTION ?>"

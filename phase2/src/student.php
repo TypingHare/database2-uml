@@ -20,12 +20,16 @@ $student = get_student_by_id($student_id);
 if ($student === null) {
     error("Invalid student ID: " . $student_id);
 }
+$student_type = get_student_type($student_id);
+$student_subclass = get_student_subclass($student_id, $student_type);
 
 $student_type = get_student_type($student_id);
 $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     'email' => $student['email']
 ]);
-
+$edit_student_url = build_url(Page::EDIT_STUDENT, [
+    'student_id' => $student_id
+]);
 $access_records_url = build_url(Page::COURSE_HISTORY, [
     'student_id' => $student_id
 ]);
@@ -46,8 +50,27 @@ $access_records_url = build_url(Page::COURSE_HISTORY, [
     <div><b>Department: </b> <?= $student['dept_name'] ?></div>
     <div><b>Type: </b> <?= $student_type ?></div>
 
+      <?php if ($student_type === StudentType::PHD): ?>
+        <div>
+          <b>Qualifier: </b>
+            <?= $student_subclass['qualifier'] ?>
+        </div>
+        <div>
+          <b>Proposal Defence Date: </b>
+            <?= $student_subclass['proposal_defence_date'] ?>
+        </div>
+        <div>
+          <b>Dissertation Defence Date: </b>
+            <?= $student_subclass['dissertation_defence_date'] ?>
+        </div>
+      <?php endif ?>
+
     <a href="<?= $change_password_url ?>">
       <button>Change Password</button>
+    </a>
+
+    <a href="<?= $edit_student_url ?>">
+      <button>Edit Student</button>
     </a>
 
     <a href="<?= $access_records_url ?>">

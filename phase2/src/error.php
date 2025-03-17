@@ -18,7 +18,7 @@ $error_message = $_GET['error_message'];
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div>
-    <b style="color: red;">[Error] <?= $error_message ?></b>
+    <b style="color: red;">[Error] <?= $error_message ?? "Unknown error" ?></b>
   </div>
 </div>
 
