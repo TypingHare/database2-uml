@@ -10,14 +10,17 @@
 
 require_once 'service/instructor.php';
 
-if ($_GET['instructor_id'] == null) {
+$instructor_id = $_GET['instructor_id'];
+if ($instructor_id == null) {
     error('Missing parameter "instructor_id"');
 }
 
-$instructor = get_instructor_by_id($_GET['instructor_id']);
+
+$instructor = get_instructor_by_id($instructor_id);
 if ($instructor === null) {
-    error("Invalid instructor ID: " . $_GET['instructor_id']);
+    error("Invalid instructor ID: " . $instructor_id);
 }
+
 
 $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     'email' => $instructor['email']
@@ -41,6 +44,11 @@ $change_password_url = build_url(Page::CHANGE_PASSWORD, [
 
     <a href="<?= $change_password_url ?>">
       <button>Change Password</button>
+    </a>
+
+    <a
+      href="<?= build_url(Page::ADVISOR, ['instructor_id' => $instructor_id]) ?>">
+      <button>Manage Advisors</button>
     </a>
   </div>
 </div>

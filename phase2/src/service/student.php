@@ -253,6 +253,7 @@ function get_master(string $student_id): array|null
  *
  * @param string $student_id The Student ID.
  * @return array|null A PhD object; or null if it does not exist.
+ * @author James Chen
  */
 function get_phd(string $student_id): array|null
 {
@@ -273,6 +274,7 @@ function get_phd(string $student_id): array|null
  * @param string $student_id The student ID.
  * @return string Either 'undergraduate', 'master', 'PhD', or an empty string.
  * @see StudentType
+ * @author James Chen
  */
 function get_student_type(string $student_id): string
 {
@@ -356,4 +358,131 @@ function update_phd_info(
         "proposal_defence_date" => $proposal_defence_date,
         "dissertation_defence_date" => $dissertation_defence_date
     ]);
+}
+
+function get_all_phd(): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM PhD
+            JOIN student ON student.student_id = phd.student_id
+        "
+    );
+    execute($stmt);
+
+    return $stmt->fetchAll();
+}
+
+function get_phd_and_advisors(): array
+{
+    // Get all records in the `advise` table
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM advise
+            JOIN student ON advise.student_id = student.student_id
+            JOIN instructor ON advise.instructor_id = instructor.instructor_id
+        "
+    );
+    execute($stmt);
+    $advise_records = $stmt->fetchAll();
+
+    return array_reduce($advise_records, function ($result, $record) {
+        $result[$record['student_id']][] = $record;
+        return $result;
+    }, []);
+}
+
+function get_advisors(string $student_id): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM advise
+            JOIN instructor ON advise.instructor_id = instructor.instructor_id
+            WHERE student_id = :student_id
+        "
+    );
+    execute($stmt, ['student_id' => $student_id]);
+
+    return $stmt->fetchAll();
+}
+
+function add_or_update_advisor(
+    string      $student_id,
+    string      $instructor_id,
+    string|null $start_date,
+    string|null $end_date
+): array {
+    $advisors = get_advisors($student_id);
+    $instructor_ids = array_column($advisors, 'instructor_id');
+
+    if (empty($start_date)) {
+        throw new RuntimeException(
+            "Start date cannot be empty."
+        );
+    }
+
+    $data = [
+        "student_id" => $student_id,
+        "instructor_id" => $instructor_id,
+        "start_date" => $start_date,
+        "end_date" => empty($end_date) ? null : $end_date,
+    ];
+    $stmt = in_array($instructor_id, $instructor_ids, true) ?
+        pdo_instance()->prepare(
+            "
+                UPDATE advise
+                SET start_date = :start_date, 
+                    end_date = :end_date
+                WHERE student_id = :student_id
+                  AND instructor_id = :instructor_id
+            "
+        ) :
+        pdo_instance()->prepare(
+            "
+                INSERT INTO advise
+                (student_id, instructor_id, start_date, end_date)
+                VALUES (:student_id, :instructor_id, :start_date, :end_date)
+            "
+        );
+    execute($stmt, $data);
+
+    return $data;
+}
+
+function remove_advisors_not(
+    string $student_id,
+    array  $instructor_ids
+): void {
+    $placeholders = [];
+    $params = [];
+
+    foreach ($instructor_ids as $index => $id) {
+        $paramName = "id$index";
+        $placeholders[] = ":$paramName";
+        $params[$paramName] = $id;
+    }
+
+    $instructor_id_placeholders_string = implode(',', $placeholders);
+    $stmt = pdo_instance()->prepare(
+        "
+            DELETE FROM advise
+            WHERE student_id = :student_id 
+              AND instructor_id NOT IN ($instructor_id_placeholders_string)
+        "
+    );
+    execute($stmt, array_merge($params, ['student_id' => $student_id]));
+}
+
+function get_all_advisees(string $instructor_id): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM advise
+            JOIN student ON advise.student_id = student.student_id
+            WHERE instructor_id = :instructor_id
+        "
+    );
+    execute($stmt, ['instructor_id' => $instructor_id]);
+
+    return $stmt->fetchAll();
 }

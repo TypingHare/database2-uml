@@ -37,9 +37,13 @@ require_once 'minimal.php';
 <body>
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
-  <div>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
     <a href="<?= Page::SECTION ?>">
-      <button>View sections</button>
+      <button>Manage Sections</button>
+    </a>
+
+    <a href="<?= Page::ADVISOR ?>">
+      <button>Manage Advisors</button>
     </a>
   </div>
 </div>
