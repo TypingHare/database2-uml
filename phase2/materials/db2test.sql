@@ -317,6 +317,30 @@ insert into undergraduate (student_id, total_credits, class_standing) values ('0
 
 insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+');
 insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'COMP1020', 'Section101', 'Spring', 2024, 'B-');
-insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'Comp2010', 'Section101', 'Fall', 2023, 'C+');
+insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'Comp2010', 'Section101', 'Fall', 2023, 'F');
 insert into take (student_id, course_id, section_id, semester, year, grade) value ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null);
                                                      
+/*
+create table prereq
+(
+    course_id varchar(20),
+    prereq_id varchar(20) not null,
+    primary key (course_id, prereq_id),
+    foreign key (course_id) references course (course_id)
+        on delete cascade,
+    foreign key (prereq_id) references course (course_id)
+);
+
+insert into course (course_id, course_name, credits)
+values ('COMP1010', 'Computing I', 3);
+insert into course (course_id, course_name, credits)
+values ('COMP1020', 'Computing II', 3);
+insert into course (course_id, course_name, credits)
+values ('COMP2010', 'Computing III', 3);
+insert into course (course_id, course_name, credits)
+values ('COMP2040', 'Computing IV', 3);
+
+*/
+insert into prereq (course_id, prereq_id) values ('COMP1020', 'COMP1010');
+insert into prereq (course_id, prereq_id) values ('COMP2010', 'COMP1020');
+insert into prereq (course_id, prereq_id) values ('COMP2040', 'COMP2010');
