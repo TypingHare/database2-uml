@@ -24,7 +24,13 @@ if ($instructor === null) {
 
 $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     'email' => $instructor['email']
-])
+]);
+$manage_advisor_url = build_url(Page::ADVISOR, [
+    'instructor_id' => $instructor_id
+]);
+$view_advisees_url = build_url(Page::ADVISEE, [
+    'instructor_id' => $instructor_id
+]);
 
 ?>
 
@@ -47,8 +53,14 @@ $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     </a>
 
     <a
-      href="<?= build_url(Page::ADVISOR, ['instructor_id' => $instructor_id]) ?>">
+      href="<?= $manage_advisor_url ?>">
       <button>Manage Advisors</button>
+    </a>
+
+    <a
+      href="<?= $view_advisees_url ?>"
+    >
+      <button>View Advisees</button>
     </a>
   </div>
 </div>

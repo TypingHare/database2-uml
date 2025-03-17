@@ -1,5 +1,13 @@
 ## Phase II
 
+### Deployment Instruction
+
+This application requires the following environment requirements:
+
+* PHP - `8.2.x`
+* MariaDB - `15.x`
+* Apache (httpd) - `2.4.x`
+
 ### Folder Structure
 
 The folder structure of the root directory of Phase II is as follows:
