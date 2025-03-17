@@ -56,6 +56,10 @@ $cumulative_gpa = get_cumulative_gpa($student_id);
 $current_courses = get_all_active_courses($student_id);
 $finished_courses = get_all_completed_courses($student_id);
 
+$student_url = build_url(Page::STUDENT, [
+  'student_id' => $student_id
+]);
+
 ?>
 
 <html lang="en">
@@ -108,7 +112,7 @@ $finished_courses = get_all_completed_courses($student_id);
             <td><?= $course['course_id'] ?></td>
             <td><?= $course['course_name'] ?></td>
             <td><?= $course['credits'] ?></td>
-            <td><?= $course['grade'] !== null ? $course['grade'] : 'NA' ?></td>
+            <td><?= $course['grade']?></td>
           </tr>
         <?php endforeach; ?>
     </table>
@@ -119,6 +123,10 @@ $finished_courses = get_all_completed_courses($student_id);
     <div><b>Cumulative GPA: </b><?= number_format($cumulative_gpa, 1) ?></div>
   </div>
 </div>
+
+<a href="<?= $student_url ?>" style="margin-left: 0.5rem;">
+          <button type="button">Cancel</button>
+        </a>
 
 </body>
 </html>
