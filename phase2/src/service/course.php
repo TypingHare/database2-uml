@@ -32,21 +32,19 @@ function get_all_student_courses(string $student_id): array
 function get_all_completed_courses(string $student_id): array
 {
     $courses = get_all_student_courses($student_id);
-    $completed_courses = array_filter(
+    return array_filter(
         $courses,
         fn($course) => $course['grade'] !== null
     );
-    return $completed_courses;
 }
 
 function get_all_active_courses(string $student_id): array
 {
     $courses = get_all_student_courses($student_id);
-    $active_courses = array_filter(
+    return array_filter(
         $courses,
         fn($course) => $course['grade'] === null
     );
-    return $active_courses;
 }
 
 function get_total_credits(string $student_id): int
