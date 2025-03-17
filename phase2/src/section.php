@@ -42,7 +42,7 @@ function get_edit_section_url(array $section): string
 <body style="height: 100%;">
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
-  <div>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
     <h2>Sections</h2>
     <table style="width:100%;">
       <tr>
@@ -73,9 +73,12 @@ function get_edit_section_url(array $section): string
         <?php endforeach; ?>
     </table>
 
-    <div style="margin-top: 1rem;">
+    <div style="display: flex; gap: 0.5rem;">
       <a href="<?= Page::CREATE_SECTION ?>">
         <button>Create section</button>
+      </a>
+      <a href="<?= Page::ADMIN ?>">
+        <button type="button">Back</button>
       </a>
     </div>
   </div>

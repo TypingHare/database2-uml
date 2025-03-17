@@ -11,7 +11,10 @@ require_once 'minimal.php';
 
 $instructor_id = $_GET['instructor_id'];
 $advisees = get_all_advisees($instructor_id);
-var_dump($advisees);
+
+$back_url = build_url(Page::INSTRUCTOR, [
+    'instructor_id' => $instructor_id
+]);
 
 ?>
 
@@ -31,24 +34,32 @@ var_dump($advisees);
 <body style="height: 100%;">
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
-  <div>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
     <h2>Advisees</h2>
 
     <table style="width: 100%;">
       <tr style="font-weight: bold;">
         <td>Student ID</td>
         <td>Student Name</td>
-        <td>Advisor 1</td>
-        <td>Advisor 2</td>
-        <td style="font-weight: normal; color: gray;">Operation</td>
+        <td>Start Date</td>
+        <td>End Date</td>
       </tr>
 
         <?php foreach ($advisees as $advisee): ?>
           <tr>
-            <td><?=$advisee['student_id']?></td>
+            <td><?= $advisee['student_id'] ?></td>
+            <td><?= $advisee['name'] ?></td>
+            <td><?= $advisee['start_date'] ?></td>
+            <td><?= $advisee['end_date'] ?></td>
           </tr>
         <?php endforeach ?>
     </table>
+
+    <div>
+      <a href="<?= $back_url ?>">
+        <button>Back</button>
+      </a>
+    </div>
   </div>
 </div>
 
