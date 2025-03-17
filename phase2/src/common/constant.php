@@ -105,4 +105,12 @@ readonly class Page
 
     // Display the student's course history.
     public const COURSE_HISTORY = 'course_history.php';
+
+    // Display a list of PhD students and their advisors.
+    public const ADVISOR = 'advisor.php';
+
+    // Edit the advisor of a PhD student.
+    public const EDIT_ADVISOR = 'edit_advisor.php';
+
+    public const ADVISEE = 'advisee.php';
 }
