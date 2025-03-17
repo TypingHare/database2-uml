@@ -50,8 +50,11 @@ function get_all_active_courses(string $student_id): array
 function get_total_credits(string $student_id): int
 {
     $completed_courses = get_all_completed_courses($student_id);
-    
-    $credits_array = array_column($completed_courses, 'credits');
+    $passed = array_filter(
+        $completed_courses, 
+        fn($course) => $course['grade'] !== 'F'
+    );
+    $credits_array = array_column($passed, 'credits');
     return array_sum(array_map('intval', $credits_array));
 }
 
