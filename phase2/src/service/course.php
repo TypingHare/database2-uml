@@ -29,10 +29,29 @@ function get_all_student_courses(string $student_id): array
     return $stmt->fetchAll();
 }
 
-function get_total_credits(string $student_id): int
+function get_all_completed_courses(string $student_id): array
 {
     $courses = get_all_student_courses($student_id);
-    $credits_array = array_column($courses, 'credits');
+    return array_filter(
+        $courses,
+        fn($course) => $course['grade'] !== null
+    );
+}
+
+function get_all_active_courses(string $student_id): array
+{
+    $courses = get_all_student_courses($student_id);
+    return array_filter(
+        $courses,
+        fn($course) => $course['grade'] === null
+    );
+}
+
+function get_total_credits(string $student_id): int
+{
+    $completed_courses = get_all_completed_courses($student_id);
+    
+    $credits_array = array_column($completed_courses, 'credits');
     return array_sum(array_map('intval', $credits_array));
 }
 
