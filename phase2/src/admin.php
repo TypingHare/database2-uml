@@ -10,7 +10,7 @@ require_once 'minimal.php';
 
 /* need to add ability to assign TAs to sections
 * TA restrictions are
-* - PHD student
+* - PhD student
 * - section student count > 10
 * - can only TA for 1 section
 *
@@ -24,7 +24,7 @@ require_once 'minimal.php';
 * - course history
 * - update student information?
 * -
-* can use course history from "Student transcipt"
+* can use course history from "Student transcript"
 * what information can be updated?
 */
 
