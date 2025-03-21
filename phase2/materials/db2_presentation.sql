@@ -5,28 +5,6 @@ CREATE DATABASE db2;
 
 USE DB2;
 
-
-/*
-drop table account;
-drop table advise;
-drop table TA;
-drop table PhD;
-drop table masterGrader;
-drop table master;
-drop table undergraduateGrader;
-drop table undergraduate;
-drop table take;
-drop table student;
-drop table department;
-drop table time_slot;
-drop table prereq;
-drop table course;
-drop table section;
-drop table instructor;
-drop table classroom;
-
-*/
-
 create table account
 (
     email    varchar(50),
@@ -380,26 +358,7 @@ VALUES ('3149703500', 'COMP2030', 'Section201', 'Fall', 2025, null);
 INSERT INTO take
 (student_id, course_id, section_id, semester, year, grade)
 VALUES ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null);
--- END ADD_TAKES_RECORDS
-
-# create table prereq
-# (
-#     course_id varchar(20),
-#     prereq_id varchar(20) not null,
-#     primary key (course_id, prereq_id),
-#     foreign key (course_id) references course (course_id)
-#         on delete cascade,
-#     foreign key (prereq_id) references course (course_id)
-# );
-#
-# insert into course (course_id, course_name, credits)
-# values ('COMP1010', 'Computing I', 3);
-# insert into course (course_id, course_name, credits)
-# values ('COMP1020', 'Computing II', 3);
-# insert into course (course_id, course_name, credits)
-# values ('COMP2010', 'Computing III', 3);
-# insert into course (course_id, course_name, credits)
-# values ('COMP2040', 'Computing IV', 3);
+-- END ADD_TAKES_RECORDS2
 
 insert into prereq (course_id, prereq_id)
 values ('COMP1020', 'COMP1010');
@@ -441,4 +400,20 @@ CREATE TABLE scholarship
     PRIMARY KEY (student_id, semester, year),
     FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
--- END SCHOLARSHIP
+
+insert into course (course_id, course_name, credits) values ('MATH1010', 'Calculus I', 3);
+insert into course (course_id, course_name, credits) values ('MATH1020', 'Calculus II', 3);
+insert into course (course_id, course_name, credits) values ('MATH3010', 'Discrete Structures I', 3);
+insert into course (course_id, course_name, credits) values ('MATH3040', 'Discrete Structures II', 3);
+
+insert into course (course_id, course_name, credits) values ('SOC1010', 'Ethics', 3);
+insert into course (course_id, course_name, credits) values ('SOC1020', 'Diversity', 3);
+
+
+
+insert into prereq (course_id, prereq_id) values ('COMP1020', 'COMP1010');
+insert into prereq (course_id, prereq_id) values ('COMP2010', 'COMP1020');
+insert into prereq (course_id, prereq_id) values ('COMP2040', 'COMP2010');
+
+insert into prereq (course_id, prereq_id) values ('MATH1020', 'MATH1010');
+insert into prereq (course_id, prereq_id) values ('MATH3040', 'MATH3010');
