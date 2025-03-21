@@ -341,6 +341,21 @@ insert into course (course_id, course_name, credits)
 values ('COMP2040', 'Computing IV', 3);
 
 */
+
+
+insert into course (course_id, course_name, credits) values ('MATH1010', 'Calculus I', 3);
+insert into course (course_id, course_name, credits) values ('MATH1020', 'Calculus II', 3);
+insert into course (course_id, course_name, credits) values ('MATH3010', 'Discrete Structures I', 3);
+insert into course (course_id, course_name, credits) values ('MATH3040', 'Discrete Structures II', 3);
+
+insert into course (course_id, course_name, credits) values ('SOC1010', 'Ethics', 3);
+insert into course (course_id, course_name, credits) values ('SOC1020', 'Diversity', 3);
+
+
+
 insert into prereq (course_id, prereq_id) values ('COMP1020', 'COMP1010');
 insert into prereq (course_id, prereq_id) values ('COMP2010', 'COMP1020');
 insert into prereq (course_id, prereq_id) values ('COMP2040', 'COMP2010');
+
+insert into prereq (course_id, prereq_id) values ('MATH1020', 'MATH1010');
+insert into prereq (course_id, prereq_id) values ('MATH3040', 'MATH3010');
