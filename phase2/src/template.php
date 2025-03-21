@@ -11,6 +11,8 @@
  * @author James Chen
  */
 
+require_once 'minimal.php';
+
 ?>
 
 <html lang="en">

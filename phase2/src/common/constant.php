@@ -60,6 +60,38 @@ readonly class StudentClassStanding
 }
 
 /**
+ * Represents the status of bills.
+ *
+ * @author James Chen
+ */
+readonly class BillStatus
+{
+    public const PAID = 'Paid';
+    public const UNPAID = 'Unpaid';
+    public const NOT_CREATED = 'Not Created';
+}
+
+/**
+ * To be simplified, the tuition per credit is a constant.
+ *
+ * @author James Chen
+ */
+defined('TUITION_PER_CREDIT') || define('TUITION_PER_CREDIT', 800);
+
+/**
+ * Scholarship table.
+ *
+ * @author James Chen
+ */
+defined('SCHOLARSHIP_TABLE') || define('SCHOLARSHIP_TABLE', [
+    [3.98, 4000],
+    [3.75, 3000],
+    [3.50, 2000],
+    [3.25, 500],
+    [3.00, 200],
+]);
+
+/**
  * Represents all pages in the application.
  *
  * @author James Chen; Victor R.; Alexis Marx
@@ -112,5 +144,22 @@ readonly class Page
     // Edit the advisor of a PhD student.
     public const EDIT_ADVISOR = 'edit_advisor.php';
 
+    // This page allows the instructors to view their advisees.
     public const ADVISEE = 'advisee.php';
+
+    // This page allows students to check all the tuition bills, including paid
+    // and unpaid.
+    public const STUDENT_BILLS = 'student_bills.php';
+
+    // This page allows students to pay the bill.
+    public const BILL_PAYMENT = 'bill_payment.php';
+
+    // This page displays the payment success message.
+    public const PAYMENT_SUCCESS = 'payment_success.php';
+
+    // This page allows admin to select a specific semester for viewing bills.
+    public const BILLS_SELECT_SEMESTER = 'bills_select_semester.php';
+
+    // This page allows admin to create a bill for a student.
+    public const BILLS = 'bills.php';
 }

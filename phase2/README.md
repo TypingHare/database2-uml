@@ -8,6 +8,18 @@ This application requires the following environment requirements:
 * MariaDB - `15.x`
 * Apache (httpd) - `2.4.x`
 
+Move all the files in `src` to the httpd main document root, and visit the index file (`index.html`) by `localhost/`. In the index page, you are required to log in to the system. The application will redirect you to different dashboard pages based on your account type associated with the email. However, you can access to different dashboard pages by the following URLs:
+
+- Admin Dashboard Page: `localhost/admin.php`
+- Instructor Dashboard Page: `localhost/instructor.php?instructor_id=1`
+- Student Dashboard Page: `localhost/student.php?student_id=1`
+
+### Student-Proposed Functionalities
+
+9\. Students can view their degree pathways, which consist of all the courses they must take to finish their degrees. They can also check what courses they can take in the upcoming semester based on their completed courses and the courses that are available in the next semester.
+
+10\. Admin can issue a bill for a student. The student will then receive a hold and cannot sign up for courses, and they can remove the hold by making a payment. Students can view the bill history. Each bill contains some courses and the total tuition. Admin can give a student a scholarship based on their cumulative GPA, and the student will receive a deduction for their next bill.
+
 ### Folder Structure
 
 The folder structure of the root directory of Phase II is as follows:
