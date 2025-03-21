@@ -482,3 +482,27 @@ function update_section(
 
     return $data;
 }
+
+function get_student_sections_by_semester(
+    string $student_id,
+    string $semester,
+    string $year
+): array {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * 
+            FROM take
+            JOIN course ON take.course_id = course.course_id
+            WHERE student_id = :student_id
+              AND semester = :semester
+              AND year = :year
+        "
+    );
+    execute($stmt, [
+        'student_id' => $student_id,
+        'semester' => $semester,
+        'year' => $year,
+    ]);
+
+    return $stmt->fetchAll();
+}

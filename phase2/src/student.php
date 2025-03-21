@@ -22,8 +22,9 @@ if ($student === null) {
 }
 $student_type = get_student_type($student_id);
 $student_subclass = get_student_subclass($student_id, $student_type);
-
 $student_type = get_student_type($student_id);
+$num_unpaid_bills = get_num_unpaid_bills($student_id);
+
 $change_password_url = build_url(Page::CHANGE_PASSWORD, [
     'email' => $student['email']
 ]);
@@ -33,6 +34,12 @@ $edit_student_url = build_url(Page::EDIT_STUDENT, [
 $access_records_url = build_url(Page::COURSE_HISTORY, [
     'student_id' => $student_id
 ]);
+$view_bills_url = build_url(Page::STUDENT_BILLS, [
+    'student_id' => $student_id
+]);
+
+$bill_correct_form = $num_unpaid_bills === 1 ? 'bill' : 'bills';
+$unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_correct_form!";
 
 ?>
 
@@ -76,6 +83,15 @@ $access_records_url = build_url(Page::COURSE_HISTORY, [
     <a href="<?= $access_records_url ?>">
       <button>Access Records</button>
     </a>
+
+    <a href="<?= $view_bills_url ?>">
+      <button>View Bills</button>
+    </a>
+
+    <!-- Hold due to unpaid bills -->
+    <div <?= $num_unpaid_bills > 0 ? '' : 'hidden' ?> style="color:red">
+        <?= $unpaid_bills_message ?>
+    </div>
   </div>
 </div>
 

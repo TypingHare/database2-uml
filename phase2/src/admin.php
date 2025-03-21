@@ -45,6 +45,10 @@ require_once 'minimal.php';
     <a href="<?= Page::ADVISOR ?>">
       <button>Manage Advisors</button>
     </a>
+
+    <a href="<?= Page::BILLS_SELECT_SEMESTER ?>">
+      <button>View Bills</button>
+    </a>
   </div>
 </div>
 

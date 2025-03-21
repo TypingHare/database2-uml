@@ -9,44 +9,8 @@ require_once 'minimal.php';
  * transcript page From here, the student will see all current and previous
  * classes as well as a running total of their credits and there cumulative gpa.
  *
- * @author Victor Ruest
+ * @author Victor Ruest; James Chen
  */
-
-/* need to convert each letter grade into grade points
- * A+ = 4
- * A = 3.9
- * A- = 3.7 * B+ = 3.3
- * B = 3
- * B- = 2.7
- * C+ = 2.3
- * C = 2
- * C- = 1.7
- * D+ = 1.3
- * D = 1
- * D- = 0.7
- * F = 0
- * Each class = grade points * class credit hours
- * sum all class point
- * sum all credit hours
- * cumulative gpa = (total grade points) / (total credit hours)
-*/
-
-function get_cumulative_gpa(string $student_id): float
-{
-    $completed_courses = get_all_completed_courses($student_id);
-    //var_dump($completed_courses);
-    $total_credits = array_sum(
-        array_map('intval', array_column($completed_courses, 'credits'))
-    );
-
-    $grade_array = array_map(
-        fn ($course) => convert_letter_grade_to_number($course['grade']) * intval($course['credits']),
-        $completed_courses
-    );
-    $total_grade = array_sum($grade_array);
-
-    return $total_credits === 0 ? 0. : $total_grade / $total_credits;
-}
 
 $student_id = $_GET['student_id'];
 $courses = get_all_student_courses($student_id);

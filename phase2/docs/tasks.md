@@ -23,3 +23,5 @@ In this document, write down what you have implemented in detail.
 - Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`. 
 
 ### 8. Assigning Advisors for PhD Students
+
+### 9. 

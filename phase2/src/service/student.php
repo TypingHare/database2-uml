@@ -486,3 +486,19 @@ function get_all_advisees(string $instructor_id): array
 
     return $stmt->fetchAll();
 }
+
+function get_cumulative_gpa(string $student_id): float
+{
+    $completed_courses = get_all_completed_courses($student_id);
+    $total_credits = array_sum(
+        array_map('intval', array_column($completed_courses, 'credits'))
+    );
+
+    $grade_array = array_map(
+        fn ($course) => convert_letter_grade_to_number($course['grade']) * intval($course['credits']),
+        $completed_courses
+    );
+    $total_grade = array_sum($grade_array);
+
+    return $total_credits === 0 ? 0. : $total_grade / $total_credits;
+}

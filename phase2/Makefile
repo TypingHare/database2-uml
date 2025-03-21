@@ -22,3 +22,7 @@ deploy:
 	fi; \
 	echo "Deploying files to: $$document_root"; \
 	rm -rf "$$document_root"/* && cp -r src/{.,} "$$document_root"/
+
+# Import materials/db2_representation.sql
+import_sql:
+	mysql -u root -p < materials/db2_presentation.sql
