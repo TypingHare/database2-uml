@@ -19,7 +19,7 @@ handle(HttpMethod::POST, function (array $data) {
     $semester = $data['semester'];
     $year = $data['year'];
     $amount = $data['amount'];
-    // pay_bill($student_id, $semester, $year);
+    pay_bill($student_id, $semester, $year);
 
     success("Paid successfully!");
     redirect(Page::PAYMENT_SUCCESS, [
@@ -41,7 +41,7 @@ $total_tuition = $total_credits * TUITION_PER_CREDIT;
 $bill = get_bill($student_id, $semester, $year);
 $paid = $bill['status'] === BillStatus::PAID;
 $scholarship = get_scholarship($student_id, $semester, $year);
-$scholarship = $scholarship === null ? 0 : $scholarship['scholarship'];
+$scholarship = $scholarship === null ? 0 : intval($scholarship['scholarship']);
 $amount = $total_tuition - $scholarship;
 
 ?>
@@ -76,7 +76,7 @@ $amount = $total_tuition - $scholarship;
       <input type="hidden" name="student_id" value="<?= $student_id ?>">
       <input type="hidden" name="semester" value="<?= $semester ?>">
       <input type="hidden" name="year" value="<?= $year ?>">
-      <input type="hidden" name="total_tuition" value="<?= $total_tuition ?>">
+      <input type="hidden" name="amount" value="<?= $amount ?>">
 
       <table>
         <tr style="font-weight: bold;">
@@ -97,7 +97,7 @@ $amount = $total_tuition - $scholarship;
 
       <div><b>Total Tuition: </b>$<?= $total_tuition ?></div>
       <div><b>Scholarship: </b>-$<?= $scholarship ?></div>
-      <div><b>Amount: </b></div>
+      <div><b>Amount: </b>$<?= $amount ?></div>
       <div>
         <b>Status: </b>
         <span style="color: <?= $paid ? 'green' : 'red' ?>">
