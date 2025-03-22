@@ -39,15 +39,15 @@ require_once 'minimal.php';
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <a href="<?= Page::SECTION ?>">
-      <button>Manage Sections</button>
+      <button>Manage sections</button>
     </a>
 
     <a href="<?= Page::ADVISOR ?>">
-      <button>Manage Advisors</button>
+      <button>Manage advisors</button>
     </a>
 
     <a href="<?= Page::BILLS_SELECT_SEMESTER ?>">
-      <button>View Bills</button>
+      <button>View bills</button>
     </a>
   </div>
 </div>

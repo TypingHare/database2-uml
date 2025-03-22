@@ -275,99 +275,73 @@ insert into section (course_id, section_id, semester, year) value ('COMP2010', '
 insert into section (course_id, section_id, semester, year) value ('COMP2010', 'Section102', 'Fall', 2023);
 insert into section (course_id, section_id, semester, year) value ('COMP2040', 'Section201', 'Spring', 2024);
 
--- BEGIN CREATE_CLASSROOMS
-INSERT INTO classroom (classroom_id, building, room_number, capacity)
-VALUES ('CR1', 'Fal', '305', 50);
+-- ***************** The following are added by students. ***************** --
 
+-- BEGIN ADD_CLASSROOMS
 INSERT INTO classroom (classroom_id, building, room_number, capacity)
-VALUES ('CR2', 'Ols', '300', 80);
+VALUES ('CR1', 'Fal', '305', 50),
+       ('CR2', 'Ols', '300', 80),
+       ('CR3', 'Dan', '207', 30),
+       ('CR4', 'Dan', '309', 30),
+       ('CR5', 'Bal', '301', 30);
+-- END ADD_CLASSROOMS
 
-INSERT INTO classroom (classroom_id, building, room_number, capacity)
-VALUES ('CR3', 'Dan', '207', 30);
--- END CREATE_CLASSROOMS
-
--- BEGIN CREATE_MORE_COURSES
+-- BEGIN ADD_COURSES
 INSERT INTO course (course_id, course_name, credits)
-VALUES ('COMP2030', 'Assembly Language', 3);
+VALUES ('COMP2030', 'Assembly Language', 3),
+       ('COMP3050', 'Computer Architecture', 3),
+       ('MATH1010', 'Calculus I', 3),
+       ('MATH1020', 'Calculus II', 3),
+       ('MATH3010', 'Discrete Structures I', 3),
+       ('MATH3040', 'Discrete Structures II', 3),
+       ('SOC1010', 'Ethics', 3),
+       ('SOC1020', 'Diversity', 3);
+-- END ADD_COURSES
 
-INSERT INTO course (course_id, course_name, credits)
-VALUES ('COMP3050', 'Computer Architecture', 3);
--- END CREATE_MORE_COURSES
-
--- BEGIN CREATE_MORE_SECTIONS
+-- BEGIN ADD_SECTIONS
 INSERT INTO section (course_id, section_id, semester, year, instructor_id,
                      classroom_id, time_slot_id)
-VALUES ('COMP2030', 'Section201', 'Fall', 2025, '3', 'CR1', 'TS4');
-INSERT INTO section (course_id, section_id, semester, year, instructor_id,
-                     classroom_id, time_slot_id)
-VALUES ('COMP3050', 'Section201', 'Fall', 2025, '4', 'CR2', 'TS5');
--- END CREATE_MORE_SECTIONS
+VALUES ('COMP2030', 'Section201', 'Fall', 2025, '3', 'CR1', 'TS4'),
+       ('COMP3050', 'Section201', 'Fall', 2025, '4', 'CR2', 'TS5');
+-- END ADD_SECTIONS
 
--- BEGIN CREATE_TWO_UNDERGRADUATE_STUDENTS
-INSERT INTO account
-    (email, password, type)
-VALUES ('avengersassemble@stark.com', '123456', 'student');
+-- BEGIN ADD_STUDENTS
+INSERT INTO account (email, password, type)
+VALUES ('avengersassemble@stark.com', '123456', 'student'),
+       ('andrew@uml.edu', '123456', 'student');
 
-INSERT INTO student
-    (student_id, name, email, dept_name)
+INSERT INTO student (student_id, name, email, dept_name)
 VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
+        'Miner School of Computer & Information Sciences'),
+       ('3149703500', 'Andrew Dodge', 'andrew@uml.edu',
         'Miner School of Computer & Information Sciences');
 
-INSERT INTO undergraduate
-    (student_id, total_credits, class_standing)
-VALUES ('0102559623', 0, 'Freshman');
-
-INSERT INTO account
-    (email, password, type)
-VALUES ('andrew@uml.edu', '123456', 'student');
-
-INSERT INTO student
-    (student_id, name, email, dept_name)
-VALUES ('3149703500', 'Andrew Dodge', 'andrew@uml.edu',
-        'Miner School of Computer & Information Sciences');
-
-INSERT INTO undergraduate
-    (student_id, total_credits, class_standing)
-VALUES ('3149703500', 0, 'Junior');
--- END CREATE_TWO_UNDERGRADUATE_STUDENTS
+INSERT INTO undergraduate (student_id, total_credits, class_standing)
+VALUES ('0102559623', 0, 'Freshman'),
+       ('3149703500', 0, 'Junior');
+-- END ADD_STUDENTS
 
 -- BEGIN ADD_TAKES_RECORDS
-INSERT INTO take
-(student_id, course_id, section_id, semester, year, grade)
-VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+');
-
-INSERT INTO take
-(student_id, course_id, section_id, semester, year, grade)
-VALUES ('0102559623', 'COMP1020', 'Section101', 'Spring', 2024, 'B-');
-
-INSERT INTO take
-(student_id, course_id, section_id, semester, year, grade)
-VALUES ('0102559623', 'Comp2010', 'Section101', 'Fall', 2023, 'F');
-
 INSERT INTO take (student_id, course_id, section_id, semester, year, grade)
-VALUES ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null);
+VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
+       ('0102559623', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('0102559623', 'Comp2010', 'Section101', 'Fall', 2023, 'F'),
+       ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null),
+       ('3149703500', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('3149703500', 'COMP2030', 'Section201', 'Fall', 2025, null),
+       ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null);
+-- END ADD_TAKES_RECORDS
 
-INSERT INTO take
-(student_id, course_id, section_id, semester, year, grade)
-VALUES ('3149703500', 'COMP2040', 'Section201', 'Spring', 2024, 'A+');
+-- BEGIN ADD_PREREQUISITES_RECORDS
+INSERT INTO prereq (course_id, prereq_id)
+VALUES ('COMP1020', 'COMP1010'),
+       ('COMP2010', 'COMP1020'),
+       ('COMP2040', 'COMP2010'),
+       ('MATH1020', 'MATH1010'),
+       ('MATH3040', 'MATH3010');
+-- END ADD_PREREQUISITES_RECORDS
 
-INSERT INTO take
-(student_id, course_id, section_id, semester, year, grade)
-VALUES ('3149703500', 'COMP2030', 'Section201', 'Fall', 2025, null);
-
-INSERT INTO take
-(student_id, course_id, section_id, semester, year, grade)
-VALUES ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null);
--- END ADD_TAKES_RECORDS2
-
-insert into prereq (course_id, prereq_id)
-values ('COMP1020', 'COMP1010');
-insert into prereq (course_id, prereq_id)
-values ('COMP2010', 'COMP1020');
-insert into prereq (course_id, prereq_id)
-values ('COMP2040', 'COMP2010');
-
--- BEGIN COURSE_PAYMENT
+-- BEGIN CREATE_BILL_TABLE
 -- @desc Create a payment table.
 -- @author James Chen
 CREATE TABLE bill
@@ -382,13 +356,12 @@ CREATE TABLE bill
     FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
 INSERT INTO bill (student_id, semester, year, status)
-VALUES ('0102559623', 'Spring', 2024, 'Unpaid');
-INSERT INTO bill (student_id, semester, year, status)
-VALUES ('0102559623', 'Fall', 2023, 'Paid');
--- END COURSE_PAYMENT
+VALUES ('0102559623', 'Spring', 2024, 'Unpaid'),
+       ('0102559623', 'Fall', 2023, 'Paid');
+-- END CREATE_BILL_TABLE
 
--- BEGIN SCHOLARSHIP
--- @desc
+-- BEGIN CREATE_SCHOLARSHIP_TABLE
+-- @desc Represents a collection of scholarship.
 -- @author James Chen
 CREATE TABLE scholarship
 (
@@ -400,20 +373,4 @@ CREATE TABLE scholarship
     PRIMARY KEY (student_id, semester, year),
     FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
-
-insert into course (course_id, course_name, credits) values ('MATH1010', 'Calculus I', 3);
-insert into course (course_id, course_name, credits) values ('MATH1020', 'Calculus II', 3);
-insert into course (course_id, course_name, credits) values ('MATH3010', 'Discrete Structures I', 3);
-insert into course (course_id, course_name, credits) values ('MATH3040', 'Discrete Structures II', 3);
-
-insert into course (course_id, course_name, credits) values ('SOC1010', 'Ethics', 3);
-insert into course (course_id, course_name, credits) values ('SOC1020', 'Diversity', 3);
-
-
-
-insert into prereq (course_id, prereq_id) values ('COMP1020', 'COMP1010');
-insert into prereq (course_id, prereq_id) values ('COMP2010', 'COMP1020');
-insert into prereq (course_id, prereq_id) values ('COMP2040', 'COMP2010');
-
-insert into prereq (course_id, prereq_id) values ('MATH1020', 'MATH1010');
-insert into prereq (course_id, prereq_id) values ('MATH3040', 'MATH3010');
+-- END CREATE_SCHOLARSHIP_TABLE

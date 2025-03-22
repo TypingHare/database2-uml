@@ -61,17 +61,17 @@ function get_bill(string $student_id, string $semester, string $year): array|nul
  */
 function pay_bill(string $student_id, string $semester, string $year): void
 {
-    $paid_bill_status = BillStatus::PAID;
     $stmt = pdo_instance()->prepare(
         "
             UPDATE bill
-            SET status = $paid_bill_status
+            SET status = :status
             WHERE student_id = :student_id
               AND semester = :semester
               AND year = :year
         "
     );
     execute($stmt, [
+        'status' => BillStatus::PAID,
         'student_id' => $student_id,
         'semester' => $semester,
         'year' => $year
@@ -86,16 +86,18 @@ function pay_bill(string $student_id, string $semester, string $year): void
  */
 function get_num_unpaid_bills(string $student_id): int
 {
-    $unpaid_bill_status = BillStatus::UNPAID;
     $stmt = pdo_instance()->prepare(
         "
             SELECT COUNT(*) as num_unpaid_bills 
             FROM bill
             WHERE student_id = :student_id
-              AND status = '$unpaid_bill_status'
+              AND status = :status
         "
     );
-    execute($stmt, ['student_id' => $student_id]);
+    execute($stmt, [
+        'status' => BillStatus::UNPAID,
+        'student_id' => $student_id
+    ]);
 
     return intval($stmt->fetch()['num_unpaid_bills']);
 }
