@@ -24,6 +24,21 @@ In this document, write down what you have implemented in detail.
 
 ### 8. Assigning Advisors for PhD Students
 
+
+### 9. Next Semester Course Suggestion 
+- Student can prompt system to suggest classes for their next semester. System will suggest three classes that student can take based off their degree pathway and completed courses.
+  - Suggested classes will adhear to class prerequisites.
+  - Classes without prerequistes can be suggested.
+  - Classes that are full will be omitted.
+  - Failed classes will be suggested(possibly priositized if not too difficult).
+  - Error message if student workload is full for next semester already (4 classes registered). this may not be needed
+- Student can then select 1 - 3 of them and add them to their registered classes or decline the suggestion. There's a possibilty that registering with this info is too complicated for this project, so the simplified version will just have a back button on the suggestion page.
+ - "Suggest Classes" button on student page that takes them to suggested_courses.php page.
+ - 3 suggested classes will be selectable (clickable checkbox).
+ - Apply button needed to register selected classes. Ideally goes to the course_select.php  page with selected coursed pulled up. If too difficult, the button can just take them to the course select page. 
+ - Back button to return student to student.php page.
+
+
 ### 10. Bill System
 
 - The admin can click the `View bills` button on the dashboard page to navigate to `bills_select_semester.php`, where the admin is required to select a specific semester.
