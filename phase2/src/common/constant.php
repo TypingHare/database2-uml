@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUnused */
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /** @noinspection PhpIllegalPsrClassPathInspection */
@@ -162,4 +163,8 @@ readonly class Page
 
     // This page allows admin to create a bill for a student.
     public const BILLS = 'bills.php';
+
+    //This page allows admin to select PHD student for TA Role
+
+    public const SELECT_PHD = 'select_phd_student.php';
 }

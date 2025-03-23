@@ -49,6 +49,10 @@ require_once 'minimal.php';
     <a href="<?= Page::BILLS_SELECT_SEMESTER ?>">
       <button>View bills</button>
     </a>
+
+    <a href="<?= Page::SELECT_PHD ?>">
+      <button>Manage TAs</button>
+    </a>
   </div>
 </div>
 
