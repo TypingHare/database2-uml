@@ -167,4 +167,7 @@ readonly class Page
     //This page allows admin to select PHD student for TA Role
 
     public const SELECT_PHD = 'select_phd_student.php';
+
+    //This page allows admin to assign student TA to section?
+    public const ASSIGN_TA = 'assign_ta.php';
 }
