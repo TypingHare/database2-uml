@@ -310,7 +310,8 @@ INSERT INTO account (email, password, type)
 VALUES ('avengersassemble@stark.com', '123456', 'student'),
        ('andrew@uml.edu', '123456', 'student'),
        ('scarletwitch@uml.edu', '123456', 'student')
-       ('hulksmash@uml.edu', '123456', 'student');
+       ('hulksmash@uml.edu', '123456', 'student')
+       ('i_am_ironman@uml.edu', '123456', 'student');
 
 INSERT INTO student (student_id, name, email, dept_name)
 VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
@@ -320,6 +321,8 @@ VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
        ('5519262752', 'Wanda Maximoff','scarletwitch@uml.edu',
         'Miner School of Computer & Information Sciences'),
        ('0488917281', 'Bruce Banner', 'hulksmash@uml.edu',
+        'Miner School of Computer & Information Sciences')
+       ('0175846026', 'Tony Stark', 'i_am_ironman@uml.edu',
         'Miner School of Computer & Information Sciences');
 
 INSERT INTO undergraduate (student_id, total_credits, class_standing)
@@ -329,8 +332,9 @@ VALUES ('0102559623', 0, 'Freshman'),
 INSERT INTO master (student_id, total_credits)
 VALUES ('5519262752', 0);
 
-INSERT INTO master (student_id, proposal_defence_date, qualifier, dissertation_defence_date)
-VALUES ('0488917281', null, null, null);
+INSERT INTO PhD (student_id, proposal_defence_date, qualifier, dissertation_defence_date)
+VALUES ('0488917281', null, null, null)
+       ('0175846026', null, null, null);
 -- END ADD_STUDENTS
 
 -- BEGIN ADD_TAKES_RECORDS
