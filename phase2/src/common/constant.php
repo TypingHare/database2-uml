@@ -164,11 +164,10 @@ readonly class Page
     // This page allows admin to create a bill for a student.
     public const BILLS = 'bills.php';
 
-    //This page allows admin to select PHD student for TA Role
-
+    // This page allows admin to select PhD student for TA Role
     public const SELECT_PHD = 'select_phd_student.php';
 
-    //This page allows admin to assign student TA to section?
+    // This page allows admin to assign student TA to section?
     public const ASSIGN_TA = 'assign_ta.php';
 
     //This page allows a student to browse currently offered classes and register
