@@ -26,16 +26,16 @@ In this document, write down what you have implemented in detail.
 
 
 ### 9. Next Semester Course Suggestion 
-- Student can prompt system to suggest classes for their next semester. System will suggest three classes that student can take based off their degree pathway and completed courses.
-  - Suggested classes will adhear to class prerequisites.
-  - Classes without prerequistes can be suggested.
-  - Classes that are full will be omitted.
-  - Failed classes will be suggested(possibly priositized if not too difficult).
+- Student can prompt the system to suggest classes for their next semester. The system will suggest three classes that student can take based on their degree pathway and completed courses.
+  - Suggested classes will adhere to class prerequisites.
+  - Classes without prerequisites can be suggested.
+  - Full classes will be omitted.
+  - Failed classes will be suggested(possibly prioritized if not too difficult).
   - Error message if student workload is full for next semester already (4 classes registered). this may not be needed
-- Student can then select 1 - 3 of them and add them to their registered classes or decline the suggestion. There's a possibilty that registering with this info is too complicated for this project, so the simplified version will just have a back button on the suggestion page.
- - "Suggest Classes" button on student page that takes them to suggested_courses.php page.
+- Student can then select 1 - 3 of them and add them to their registered classes or decline the suggestion. There's a possibility that registering with this info is too complicated for this project, so the simplified version will just have a back button on the suggestion page.
+ - "Suggest Classes" button on the student page that takes them to the `suggested_courses.php` page.
  - 3 suggested classes will be selectable (clickable checkbox).
- - Apply button needed to register selected classes. Ideally goes to the course_select.php  page with selected coursed pulled up. If too difficult, the button can just take them to the course select page. 
+ - Apply button needed to register selected classes. Ideally, it goes to the course_select.php  page with the selected courses pulled up. If it is too difficult, the button can take them to the course selection page. 
  - Back button to return student to student.php page.
 
 
