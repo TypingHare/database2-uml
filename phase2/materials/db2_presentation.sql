@@ -383,11 +383,39 @@ VALUES ('0102559623', 'Spring', 2024, 'Unpaid'),
 CREATE TABLE scholarship
 (
     student_id  VARCHAR(10),
-    semester    VARCHAR(6),
-    year        DECIMAL(4),
-    scholarship INT,
+    semester    VARCHAR(6) NOT NULL,
+    year        DECIMAL(4) NOT NULL,
+    scholarship INT        NOT NULL,
     CHECK (semester in ('Fall', 'Winter', 'Spring', 'Summer')),
     PRIMARY KEY (student_id, semester, year),
     FOREIGN KEY (student_id) REFERENCES student (student_id)
+        ON DELETE CASCADE
 );
 -- END CREATE_SCHOLARSHIP_TABLE
+
+-- BEGIN CREATE_DEGREE_PATHWAY
+CREATE TABLE degree_pathway
+(
+    major_name VARCHAR(50) NOT NULL,
+    course_id  VARCHAR(20),
+    PRIMARY KEY (major_name, course_id),
+    FOREIGN KEY (course_id) REFERENCES course (course_id)
+        ON DELETE CASCADE
+);
+-- END CREATE_DEGREE_PATHWAY
+
+-- BEGIN ADD_DEGREE_PATHWAY_RECORDS
+INSERT INTO degree_pathway (major_name, course_id)
+VALUES ('Computer Science', 'COMP1010'),
+       ('Computer Science', 'COMP1020'),
+       ('Computer Science', 'COMP2010'),
+       ('Computer Science', 'COMP2030'),
+       ('Computer Science', 'COMP2040'),
+       ('Computer Science', 'COMP3050'),
+       ('Computer Science', 'MATH1010'),
+       ('Computer Science', 'MATH1020'),
+       ('Computer Science', 'MATH3010'),
+       ('Computer Science', 'MATH3040'),
+       ('Computer Science', 'SOC1010'),
+       ('Computer Science', 'SOC1020');
+-- END ADD_DEGREE_PATHWAY_RECORDS
