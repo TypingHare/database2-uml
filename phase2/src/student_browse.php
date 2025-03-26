@@ -4,7 +4,7 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page allows students to browse all sections that are offered in
  * the current semester
  *
@@ -18,6 +18,7 @@ $sections = get_all_sections_semester_year("Spring", "2024");
 function get_register_section_url(array $section): string
 {
     return build_url(Page::REGISTER, [
+        'student_id' => $_GET['student_id'],
         'course_id' => $section['course_id'],
         'section_id' => $section['section_id'],
         'semester' => $section['semester'],

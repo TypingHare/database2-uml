@@ -4,7 +4,7 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page allows students to attempt to register for the selected section
  *
  * @param_get student_id The student ID.
@@ -20,7 +20,7 @@ $year = $_GET['year'];
 $section = get_section($course_id, $section_id, $semester, $year);
 
 handle(HttpMethod::POST, function ($data) {
-    $student_id = $data['student_id']
+    $student_id = $data['student_id'];
     $course_id = $data['course_id'];
     $section_id = $data['section_id'];
     $semester = $data['semester'];
@@ -38,6 +38,10 @@ handle(HttpMethod::POST, function ($data) {
 });
 
 $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
+
+// TODO: I don't understand the HTML portion: Why should we display a table of
+// sections in this page? -- James Chen
+$sections = []
 
 ?>
 
@@ -71,6 +75,7 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
         <td>Time slot</td>
         <td style="color: grey;">Operation</td>
       </tr>
+        <?php foreach ($sections as $section): ?>
           <tr>
             <td><?= $section['course_id'] ?></td>
             <td><?= $section['section_id'] ?></td>
@@ -81,7 +86,7 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
             <td><?= time_slot_to_string($section) ?></td>
             <td>
               <a href="<?= get_edit_section_url($section) ?>">
-                <button type = "submit">Register</button>
+                <button type="submit">Register</button>
               </a>
             </td>
           </tr>
