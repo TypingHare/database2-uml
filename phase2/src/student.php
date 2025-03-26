@@ -37,6 +37,12 @@ $access_records_url = build_url(Page::COURSE_HISTORY, [
 $view_bills_url = build_url(Page::STUDENT_BILLS, [
     'student_id' => $student_id
 ]);
+$suggested_courses_url = build_url(Page::SUGGESTED_COURSES, [
+    'student_id' => $student_id,
+    // To simplify, here we pass the Fall 2025 to the suggested_course page
+    'semester' => 'Fall',
+    'year' => '2025'
+]);
 
 $bill_correct_form = $num_unpaid_bills === 1 ? 'bill' : 'bills';
 $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_correct_form!";
@@ -73,23 +79,27 @@ $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_corre
       <?php endif ?>
 
     <a href="<?= $change_password_url ?>">
-      <button>Change Password</button>
+      <button>Change password</button>
     </a>
 
     <a href="<?= $edit_student_url ?>">
-      <button>Edit Student</button>
+      <button>Edit information</button>
     </a>
 
     <a href="<?= $access_records_url ?>">
-      <button>Access Records</button>
+      <button>Access records</button>
     </a>
 
     <a href="<?= $view_bills_url ?>">
-      <button>View Bills</button>
+      <button>View bills</button>
+    </a>
+
+    <a href="<?= $suggested_courses_url ?>">
+      <button>Suggested courses</button>
     </a>
 
     <!-- Hold due to unpaid bills -->
-    <div <?= $num_unpaid_bills > 0 ? '' : 'hidden' ?> style="color:red">
+    <div <?= $num_unpaid_bills > 0 ? '' : 'hidden' ?> style="color: red">
         <?= $unpaid_bills_message ?>
     </div>
   </div>
@@ -97,4 +107,3 @@ $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_corre
 
 </body>
 </html>
-

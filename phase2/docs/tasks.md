@@ -11,6 +11,7 @@ In this document, write down what you have implemented in detail.
 - Users can change the password for a student account on `change_password.php`.
     - If the account does not exist or the old password does not match, the user will be redirected to the error page.
 
+
 ### 2. Admin Views, Creates, and Edits Sections
 
 - Admin can view all the course sections on `section.php`.
@@ -20,7 +21,8 @@ In this document, write down what you have implemented in detail.
   - In the same semester, there would not exist two sections associated with the same classroom and time slot.
   - In the same semester, there would not exist two sections associated with the same instructor but different classrooms.
   - In the same semester, if an instructor takes two different sections, then the time slots associated with the two sections should be consecutive—the gap between two time slots is less than or equal to 15 minutes.
-- Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`. 
+- Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`.
+
 
 ### 8. Assigning Advisors for PhD Students
 
@@ -29,9 +31,8 @@ In this document, write down what you have implemented in detail.
 - Student can prompt the system to suggest classes for their next semester. The system will suggest three classes that student can take based on their degree pathway and completed courses.
   - Suggested classes will adhere to class prerequisites.
   - Classes without prerequisites can be suggested.
-  - Full classes will be omitted.
+  - Full classes will be omitted. (15 students)
   - Failed classes will be suggested(possibly prioritized if not too difficult).
-  - Error message if student workload is full for next semester already (4 classes registered). this may not be needed
 - Student can then select 1 - 3 of them and add them to their registered classes or decline the suggestion. There's a possibility that registering with this info is too complicated for this project, so the simplified version will just have a back button on the suggestion page.
  - "Suggest Classes" button on the student page that takes them to the `suggested_courses.php` page.
  - 3 suggested classes will be selectable (clickable checkbox).

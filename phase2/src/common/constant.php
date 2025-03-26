@@ -169,4 +169,8 @@ readonly class Page
 
     // This page allows admin to assign student TA to section?
     public const ASSIGN_TA = 'assign_ta.php';
+
+    // This page displays several suggested courses that the student can sign up
+    // for the next semester.
+    public const SUGGESTED_COURSES = 'suggested_courses.php';
 }
