@@ -24,6 +24,32 @@ function get_all_sections(): array
 }
 
 /**
+ * Fetches all sections from the database of a specific section and year.
+ *
+ * @return array An array of sections.
+ * @author Alexis Marx
+ */
+function get_all_sections_semester_year(string $semester, string $year): array
+{
+    $data = [
+        "semester" => $semester,
+        "year" => $year,
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM section
+            LEFT JOIN instructor ON section.instructor_id = instructor.instructor_id
+            LEFT JOIN time_slot ON section.time_slot_id = time_slot.time_slot_id
+            LEFT JOIN classroom ON section.classroom_id = classroom.classroom_id
+            WHERE section.semester = :semester AND section.year = :year
+        "
+    );
+    execute($stmt, $data);
+
+    return $stmt->fetchAll();
+}
+
+/**
  * Fetches a specific section from the database based on course ID, section ID,
  * semester, and year.
  *
@@ -505,4 +531,40 @@ function get_student_sections_by_semester(
     ]);
 
     return $stmt->fetchAll();
+}
+
+/**
+ * Determines if section has space to be registered into
+ *
+ * @author Alexis Marx
+ */
+
+function check_section_availability(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): bool {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT COUNT(*) AS seats_filled
+            FROM take
+            WHERE course_id = :course_id
+              AND section_id = :section_id
+              AND semester = :semester
+              AND year = :year
+        "
+    );
+    execute($stmt, [
+        'course_id' => $course_id,
+        'section_id' => $section_id,
+        'semester' => $semester,
+        'year' => $year,
+    ]);
+
+    $count = $stmt->fetch;
+    if($count['seats_filled'] < 15) {
+        return true;
+    }
+    return false;
 }
