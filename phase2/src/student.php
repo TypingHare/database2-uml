@@ -37,6 +37,9 @@ $access_records_url = build_url(Page::COURSE_HISTORY, [
 $view_bills_url = build_url(Page::STUDENT_BILLS, [
     'student_id' => $student_id
 ]);
+$browse_classes_url = build_url(Page::BROWSE, [
+    'student_id' => $student_id
+]);
 
 $bill_correct_form = $num_unpaid_bills === 1 ? 'bill' : 'bills';
 $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_correct_form!";
@@ -86,6 +89,10 @@ $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_corre
 
     <a href="<?= $view_bills_url ?>">
       <button>View Bills</button>
+    </a>
+
+    <a href="<?= $browse_classes_url ?>">
+      <button>Browse Classes</button>
     </a>
 
     <!-- Hold due to unpaid bills -->

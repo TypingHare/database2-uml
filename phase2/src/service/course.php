@@ -76,3 +76,21 @@ function convert_letter_grade_to_number(string $letter_grade): float
         'F' => 0.0
     ][$letter_grade];
 }
+
+/**
+ * Returns a course's prereqs
+ *
+ * @author Alexis Marx
+ */
+function get_prereqs(string $course_id): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT prereq_id
+            FROM prereq
+            WHERE course_id = :course_id
+        "
+    );
+    execute($stmt, ['course_id' => $course_id]);
+    return $stmt->fetchAll();
+}
