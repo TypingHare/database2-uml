@@ -33,6 +33,8 @@ function get_edit_url(string $sections_for_ta): string
         'year' =>  $sections_for_ta['year'] ?? ''
     ]);
 }
+?>
+
 
 <html lang="en">
 <head>
@@ -96,6 +98,7 @@ function get_edit_url(string $sections_for_ta): string
 
 </body>
 </html>
+
 
 
 
