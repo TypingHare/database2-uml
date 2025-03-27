@@ -21,7 +21,7 @@ deploy:
 	    echo "Error: Could not determine Main DocumentRoot."; exit 1; \
 	fi; \
 	echo "Deploying files to: $$document_root"; \
-	rm -rf "$$document_root"/* && cp -r src/{.,} "$$document_root"/
+	rm -rf "$$document_root"/* && cp -r src/. "$$document_root"/
 
 # Import materials/db2_representation.sql
 import_sql:
