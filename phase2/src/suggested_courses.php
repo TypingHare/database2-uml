@@ -23,7 +23,7 @@ handle(HttpMethod::POST, function (array $data) {
 
     foreach ($selected_course_ids as $selected_course_id) {
         [$course_id, $section_id] = explode(';', $selected_course_id);
-        take_section($student_id, $course_id, $section_id, $semester, $year);
+        register_student($student_id, $course_id, $section_id, $semester, $year);
     }
 
     redirect(Page::COURSE_HISTORY, ['student_id' => $student_id]);
