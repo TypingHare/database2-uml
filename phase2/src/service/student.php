@@ -502,3 +502,81 @@ function get_cumulative_gpa(string $student_id): float
 
     return $total_credits === 0 ? 0. : $total_grade / $total_credits;
 }
+
+/**
+ * Determines if a student has taken a course's prereqs
+ *
+ * @author Alexis Marx
+ */
+function has_taken_prereqs(string $student_id, string $course_id): bool
+{
+    $prereqs = get_prereqs($course_id);
+    $completed_courses = get_all_completed_courses($student_id);
+
+    foreach ($prereqs as $element) {
+        if (!in_array($element, $completed_courses)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * Registers a student in a class if possible
+ *
+ * @author Alexis Marx
+ */
+function register_student(
+    string      $student_id,
+    string      $course_id,
+    string      $section_id,
+    string      $semester,
+    string      $year
+) : array|null {
+    $section = get_section($course_id, $section_id, $semester, $year);
+    
+    if(!has_taken_prereqs($student_id, $course_id)) {
+        error("The required prerequisites have not been taken.");
+        return null;
+    }
+    
+    if(!check_section_availability($course_id, $section_id, $semester, $year)) {
+        error("This section is full.");
+        return null;
+    }
+
+    pdo_instance()->beginTransaction();
+    $stmt = pdo_instance()->prepare(
+        "
+            INSERT INTO take (
+                student_id,
+                course_id, 
+                section_id, 
+                semester, 
+                year, 
+                grade
+            ) VALUES (
+                :student_id,
+                :course_id, 
+                :section_id,
+                :semester, 
+                :year, 
+                :grade,
+            )
+        "
+    );
+    $data = [
+        'student_id' => $student_id,
+        'course_id' => $course_id,
+        'section_id' => $section_id,
+        'semester' => $semester,
+        'year' => $year,
+        'grade' => null,
+    ];
+    $stmt->execute($data);
+
+    pdo_instance()->commit();
+
+    return $data;
+    
+}

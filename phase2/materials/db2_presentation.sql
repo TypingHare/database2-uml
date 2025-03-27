@@ -344,6 +344,33 @@ VALUES (
         '4',
         'CR2',
         'TS5'
+    ),
+    (
+        'MATH1010',
+        'Section101',
+        'Fall',
+        2025,
+        '5',
+        'CR3',
+        'TS1'
+    ),
+    (
+        'MATH3010',
+        'Section202',
+        'Fall',
+        2025,
+        '1',
+        'CR5',
+        'TS1'
+    ),
+    (
+        'COMP2010',
+        'Section201',
+        'Fall',
+        2025,
+        '2',
+        'CR4',
+        'TS2'
     );
 -- END ADD_SECTIONS
 -- BEGIN ADD_STUDENTS
@@ -429,7 +456,7 @@ VALUES (
     ),
     (
         '0102559623',
-        'Comp2010',
+        'COMP2010',
         'Section101',
         'Fall',
         2023,
@@ -474,7 +501,8 @@ VALUES ('COMP1020', 'COMP1010'),
     ('COMP2010', 'COMP1020'),
     ('COMP2040', 'COMP2010'),
     ('MATH1020', 'MATH1010'),
-    ('MATH3040', 'MATH3010');
+    ('MATH3040', 'MATH3010'),
+    ('COMP3050', 'COMP2030');
 -- END ADD_PREREQUISITES_RECORDS
 -- BEGIN CREATE_BILL_TABLE
 -- @desc Create a payment table.
@@ -512,24 +540,60 @@ CREATE TABLE scholarship (
 -- END CREATE_SCHOLARSHIP_TABLE
 -- BEGIN CREATE_DEGREE_PATHWAY
 CREATE TABLE degree_pathway (
-    major_name VARCHAR(50) NOT NULL,
+    dept_name VARCHAR(100) NOT NULL,
     course_id VARCHAR(20),
-    PRIMARY KEY (major_name, course_id),
+    PRIMARY KEY (dept_name, course_id),
     FOREIGN KEY (course_id) REFERENCES course (course_id) ON DELETE CASCADE
 );
 -- END CREATE_DEGREE_PATHWAY
 -- BEGIN ADD_DEGREE_PATHWAY_RECORDS
-INSERT INTO degree_pathway (major_name, course_id)
-VALUES ('Computer Science', 'COMP1010'),
-    ('Computer Science', 'COMP1020'),
-    ('Computer Science', 'COMP2010'),
-    ('Computer Science', 'COMP2030'),
-    ('Computer Science', 'COMP2040'),
-    ('Computer Science', 'COMP3050'),
-    ('Computer Science', 'MATH1010'),
-    ('Computer Science', 'MATH1020'),
-    ('Computer Science', 'MATH3010'),
-    ('Computer Science', 'MATH3040'),
-    ('Computer Science', 'SOC1010'),
-    ('Computer Science', 'SOC1020');
+INSERT INTO degree_pathway (dept_name, course_id)
+VALUES (
+        'Miner School of Computer & Information Sciences',
+        'COMP1010'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'COMP1020'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'COMP2010'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'COMP2030'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'COMP2040'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'COMP3050'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'MATH1010'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'MATH1020'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'MATH3010'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'MATH3040'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'SOC1010'
+    ),
+    (
+        'Miner School of Computer & Information Sciences',
+        'SOC1020'
+    );
 -- END ADD_DEGREE_PATHWAY_RECORDS

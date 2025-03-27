@@ -169,4 +169,14 @@ readonly class Page
 
     // This page allows admin to assign student TA to section?
     public const ASSIGN_TA = 'assign_ta.php';
+
+    // This page allows a student to browse currently offered classes and register
+    public const BROWSE = 'student_browse.php';
+
+    // This page displays the status of a registration request
+    public const REGISTER = 'registration_status.php';
+
+    // This page displays several suggested courses that the student can sign up
+    // for the next semester.
+    public const SUGGESTED_COURSES = 'suggested_courses.php';
 }
