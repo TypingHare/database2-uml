@@ -12,13 +12,17 @@ require_once 'minimal.php';
  * @author Alexis Marx
  */
 
-$student_id = $_GET['student_id'];
-$sections = get_all_sections_semester_year("Spring", "2024");
+// (date(""))
 
-function get_register_section_url(array $section): string
+// $year = date("Y");
+
+$student_id = $_GET['student_id'];
+$sections = get_all_sections_semester_year("Fall", "2025");
+
+function get_register_section_url(string $student_id,array $section): string
 {
     return build_url(Page::REGISTER, [
-        'student_id' => $_GET['student_id'],
+        'student_id' => $student_id,
         'course_id' => $section['course_id'],
         'section_id' => $section['section_id'],
         'semester' => $section['semester'],
@@ -32,7 +36,7 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
 
 <html lang="en">
 <head>
-  <title>Register Courses</title>
+  <title>Browse Courses</title>
   <style>
       table, th, td {
           border: 1px solid black;
@@ -47,7 +51,7 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <h2>Register Courses</h2>
+    <h2>Browse Courses</h2>
 
     <table style="width:100%;">
       <tr>
@@ -70,8 +74,8 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
             <td><?= classroom_to_string($section) ?></td>
             <td><?= time_slot_to_string($section) ?></td>
             <td>
-              <a href="<?= get_register_section_url($section) ?>">
-                <button>Register</button>
+              <a href="<?= get_register_section_url($student_id,$section) ?>">
+                <button>View</button>
               </a>
             </td>
           </tr>

@@ -32,6 +32,10 @@ $view_advisees_url = build_url(Page::ADVISEE, [
     'instructor_id' => $instructor_id
 ]);
 
+$view_records_url = build_url(Page::INSTRUCTOR_RECORDS, [
+    'instructor_id' => $instructor_id
+]);
+
 ?>
 
 <html lang="en">
@@ -58,9 +62,13 @@ $view_advisees_url = build_url(Page::ADVISEE, [
     </a>
 
     <a
-      href="<?= $view_advisees_url ?>"
-    >
-      <button>View advisees</button>
+      href="<?= $view_advisees_url ?>">
+      <button>View Advisees</button>
+    </a>
+
+    <a
+      href="<?= $view_records_url ?>">
+      <button>View Course Records</button>
     </a>
   </div>
 </div>

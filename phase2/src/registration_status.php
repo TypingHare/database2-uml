@@ -11,15 +11,9 @@ require_once 'minimal.php';
  * @author Alexis Marx
  */
 
-$student_id = $_GET['student_id'];
-$course_id = $_GET['course_id'];
-$section_id = $_GET['section_id'];
-$semester = $_GET['semester'];
-$year = $_GET['year'];
+ $student_id = $_GET['student_id'];
 
-$section = get_section($course_id, $section_id, $semester, $year);
-
-handle(HttpMethod::POST, function ($data) {
+handle(HttpMethod::POST, function (array $data) {
     $student_id = $data['student_id'];
     $course_id = $data['course_id'];
     $section_id = $data['section_id'];
@@ -34,10 +28,24 @@ handle(HttpMethod::POST, function ($data) {
         $year
     );
 
-    redirect(Page::REGISTER);
+    redirect(Page::REGISTER, [
+      'student_id' => $student_id,
+      'course_id' => $course_id,
+      'section_id' => $section_id,
+      'semester' => $semester,
+      'year' => $year,
+  ]);
 });
 
-$back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
+$course_id = $_GET['course_id'];
+$section_id = $_GET['section_id'];
+$semester = $_GET['semester'];
+$year = $_GET['year'];
+
+$section = get_section_plus($course_id, $section_id, $semester, $year);
+
+
+$back_url = build_url(Page::BROWSE, ['student_id' => $student_id]);
 
 // TODO: I don't understand the HTML portion: Why should we display a table of
 // sections in this page? -- James Chen
@@ -47,7 +55,7 @@ $sections = []
 
 <html lang="en">
 <head>
-  <title>Registration Status</title>
+  <title>Register</title>
   <style>
       table, th, td {
           border: 1px solid black;
@@ -75,8 +83,13 @@ $sections = []
         <td>Time slot</td>
         <td style="color: grey;">Operation</td>
       </tr>
-        <?php foreach ($sections as $section): ?>
-          <tr>
+          <tr><form action="registration_status.php" method="POST">
+          <input type="hidden" name="student_id" value="<?= $student_id ?>">
+          <?php var_dump($student_id); ?>
+          <input type="hidden" name="course_id" value="<?= $section['course_id'] ?>">
+          <input type="hidden" name="section_id" value="<?= $section['section_id'] ?>">
+          <input type="hidden" name="semester" value="<?= $section['semester'] ?>">
+          <input type="hidden" name="year" value="<?= $section['year'] ?>">
             <td><?= $section['course_id'] ?></td>
             <td><?= $section['section_id'] ?></td>
             <td><?= $section['semester'] ?></td>
@@ -85,12 +98,9 @@ $sections = []
             <td><?= classroom_to_string($section) ?></td>
             <td><?= time_slot_to_string($section) ?></td>
             <td>
-              <a href="<?= get_edit_section_url($section) ?>">
-                <button type="submit">Register</button>
-              </a>
+                <button type = "submit">Register</button>
             </td>
-          </tr>
-        <?php endforeach; ?>
+    </form></tr>
     </table>
 
     <div style="display: flex; justify-content: right;">
