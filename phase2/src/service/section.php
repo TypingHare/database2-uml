@@ -26,7 +26,6 @@ function get_all_sections(): array
 /**
  * Fetches all sections from the database of a specific section and year.
  *
- * @return array An array of sections.
  * @author Alexis Marx
  */
 function get_all_sections_semester_year(string $semester, string $year): array
@@ -42,6 +41,77 @@ function get_all_sections_semester_year(string $semester, string $year): array
             LEFT JOIN time_slot ON section.time_slot_id = time_slot.time_slot_id
             LEFT JOIN classroom ON section.classroom_id = classroom.classroom_id
             WHERE section.semester = :semester AND section.year = :year
+        "
+    );
+    execute($stmt, $data);
+
+    return $stmt->fetchAll();
+}
+
+function get_all_sections_instructor(string $instructor_id): array
+{
+    $data = [
+        "instructor_id" => $instructor_id,
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT DISTINCT course_id, section_id from section
+            WHERE section.instructor_id = :instructor_id
+            GROUP BY course_id, section_id
+        "
+    );
+    execute($stmt, $data);
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $sections[$row['course_id']][] = $row;
+    }
+
+    return $sections;
+}
+
+function get_section_instances(
+    string $instructor_id,
+    string $course_id,
+    string $section_id,
+): array {
+
+    $data = [
+        "instructor_id" => $instructor_id,
+        "course_id" => $course_id,
+        "section_id" => $section_id
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT semester, year from section
+            WHERE section.instructor_id = :instructor_id AND 
+            section.course_id = :course_id AND
+            section.section_id = :section_id
+        "
+    );
+    execute($stmt, $data);
+
+    return $stmt->fetchAll();
+}
+
+function get_section_records(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+) : array {
+    $data = [
+        "course_id" => $course_id,
+        "section_id" => $section_id,
+        "semester" => $semester,
+        "year" => $year
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT student_id, grade from take
+            WHERE  take.course_id = :course_id AND
+            take.section_id = :section_id AND
+            take.semester = :semester AND
+            take.year = :year
         "
     );
     execute($stmt, $data);
@@ -70,6 +140,34 @@ function get_section(
     $stmt = pdo_instance()->prepare(
         "
             SELECT * FROM section
+            WHERE course_id = :course_id 
+              AND section_id = :section_id
+              AND semester = :semester 
+              AND year = :year  
+        "
+    );
+    execute($stmt, [
+        'course_id' => $course_id,
+        'section_id' => $section_id,
+        'semester' => $semester,
+        'year' => $year
+    ]);
+
+    return $stmt->rowCount() === 0 ? null : $stmt->fetch();
+}
+
+function get_section_plus(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): array|null {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM section
+            LEFT JOIN instructor ON section.instructor_id = instructor.instructor_id
+            LEFT JOIN time_slot ON section.time_slot_id = time_slot.time_slot_id
+            LEFT JOIN classroom ON section.classroom_id = classroom.classroom_id
             WHERE course_id = :course_id 
               AND section_id = :section_id
               AND semester = :semester 

@@ -533,16 +533,24 @@ function register_student(
     string      $semester,
     string      $year
 ) : array|null {
-    $section = get_section($course_id, $section_id, $semester, $year);
     
+    $stmt = pdo_instance()->prepare("
+    SELECT COUNT(*) FROM take 
+    WHERE student_id = ? AND course_id = ? AND section_id = ? AND semester = ? AND year = ?
+");
+$stmt->execute([$student_id, $course_id, $section_id, $semester, $year]);
+
+if ($stmt->fetchColumn() > 0) {
+    throw new RunTimeException("You are already registered for this section.");
+}
+
+
     if(!has_taken_prereqs($student_id, $course_id)) {
-        error("The required prerequisites have not been taken.");
-        return null;
+        throw new RuntimeException("The required prerequisites have not been taken.");
     }
     
     if(!check_section_availability($course_id, $section_id, $semester, $year)) {
-        error("This section is full.");
-        return null;
+        throw new RuntimeException("This section is full.");
     }
 
     pdo_instance()->beginTransaction();
@@ -561,7 +569,7 @@ function register_student(
                 :section_id,
                 :semester, 
                 :year, 
-                :grade,
+                :grade
             )
         "
     );
@@ -578,5 +586,14 @@ function register_student(
     pdo_instance()->commit();
 
     return $data;
+    
+}
+
+function get_students_by_section(
+    string      $course_id,
+    string      $section_id,
+    string      $semester,
+    string      $year
+) : array|null {
     
 }

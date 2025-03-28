@@ -174,5 +174,14 @@ readonly class Page
     public const BROWSE = 'student_browse.php';
 
     //This page displays the status of a registration request
-    public const REGISTER = 'registration_status.php';
+    public const REGISTER = 'register.php';
+
+    //This page confirms a registration request by a student has succeeded
+    public const REGISTER_SUCCESS = 'registration_success.php';
+
+    //This page allows an instructor to view a list of all sections they've taught
+    public const INSTRUCTOR_RECORDS = 'instructor_records.php';
+
+    //This pages lists the student records and data for a single section, past and present
+    public const RECORD = 'section_record.php';
 }
