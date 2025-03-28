@@ -1,6 +1,6 @@
 <?php
 
-require_once 'mininal.php';
+require_once 'minimal.php';
 
 
 
@@ -13,7 +13,8 @@ function get_ta_section(): array
             WHERE s.section_id = t.section_id
             AND s.semester = t.semester
             AND s.year = t.year
-            GROUP BY COUNT(t.student_id)10;
+            GROUP BY s.course_id
+            HAVING COUNT(t.student_id) > 10;
         "
     );
     execute($stmt);
@@ -22,9 +23,10 @@ function get_ta_section(): array
 }
 
 $sections_for_ta = get_ta_section();
+$sections = get_all_sections();
 
 $instructor_id = $_GET['student_id'] ?? '';
-function get_edit_url(string $sections_for_ta): string
+function get_edit_url(array $sections_for_ta): string
 {
     return build_url(Page::TA, [
         'student_id' => $_GET['student_id'], //student id passed as query. how do I write?
@@ -69,7 +71,7 @@ function get_edit_url(string $sections_for_ta): string
                     <td>Time slot</td>
                     <td style="color: grey;">Operation</td>
                 </tr>
-                <?php foreach ($sections_for_ta as $section): ?>
+                <?php foreach ($$sections as $section): ?>
                 <tr>
                     <td><?= $section['course_id'] ?>
                     </td>
