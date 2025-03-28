@@ -314,7 +314,17 @@ VALUES ('avengersassemble@stark.com', '123456', 'student'),
        ('andrew@uml.edu', '123456', 'student'),
        ('scarletwitch@uml.edu', '123456', 'student'),
        ('hulksmash@uml.edu', '123456', 'student'),
-       ('i_am_ironman@uml.edu', '123456', 'student');
+       ('i_am_ironman@uml.edu', '123456', 'student'),
+       ('natasha@uml.edu', '123456', 'student'),
+       ('clint@uml.edu', '123456', 'student'),
+       ('peter.parker@uml.edu', '123456', 'student'),
+       ('sam.wilson@uml.edu', '123456', 'student'),
+       ('bucky@uml.edu', '123456', 'student'),
+       ('tchalla@uml.edu', '123456', 'student'),
+       ('carol.danvers@uml.edu', '123456', 'student'),
+       ('scott.lang@uml.edu', '123456', 'student'),
+       ('stephen.strange@uml.edu', '123456', 'student'),
+       ('shuri@uml.edu', '123456', 'student');
 
 INSERT INTO student (student_id, name, email, dept_name)
 VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
@@ -326,11 +336,41 @@ VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
        ('0488917281', 'Bruce Banner', 'hulksmash@uml.edu',
         'Miner School of Computer & Information Sciences'),
        ('0175846026', 'Tony Stark', 'i_am_ironman@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('2983746590', 'Natasha Romanoff', 'natasha@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('3498752311', 'Clint Barton', 'clint@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('1123581321', 'Peter Parker', 'peter.parker@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('8374659201', 'Sam Wilson', 'sam.wilson@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('8371948203', 'Bucky Barnes', 'bucky@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('9182736450', 'T\'Challa', 'tchalla@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('5647382910', 'Carol Danvers', 'carol.danvers@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('7362819450', 'Scott Lang', 'scott.lang@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('9102837465', 'Stephen Strange', 'stephen.strange@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('1029384756', 'Shuri', 'shuri@uml.edu',
         'Miner School of Computer & Information Sciences');
 
 INSERT INTO undergraduate (student_id, total_credits, class_standing)
 VALUES ('0102559623', 0, 'Freshman'),
-       ('3149703500', 0, 'Junior');
+       ('3149703500', 0, 'Junior'),
+       ('2983746590', 15, 'Sophomore'),
+       ('3498752311', 45, 'Junior'),
+       ('1123581321', 0, 'Freshman'),
+       ('8374659201', 90, 'Senior'),
+       ('8371948203', 60, 'Junior'),
+       ('9182736450', 30, 'Sophomore'),
+       ('5647382910', 0, 'Freshman'),
+       ('7362819450', 105, 'Senior'),
+       ('9102837465', 75, 'Junior'),
+       ('1029384756', 15, 'Sophomore');
 
 INSERT INTO master (student_id, total_credits)
 VALUES ('5519262752', 0);
@@ -349,7 +389,17 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null),
        ('3149703500', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
        ('3149703500', 'COMP2030', 'Section201', 'Fall', 2025, null),
-       ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null);
+       ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('2983746590', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('3498752311', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('1123581321', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('8374659201', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('8371948203', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('9182736450', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('5647382910', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('7362819450', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('9102837465', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('1029384756', 'COMP3050', 'Section201', 'Fall', 2025, null);
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
