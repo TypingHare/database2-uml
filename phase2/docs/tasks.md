@@ -23,10 +23,13 @@ In this document, write down what you have implemented in detail.
   - In the same semester, if an instructor takes two different sections, then the time slots associated with the two sections should be consecutive—the gap between two time slots is less than or equal to 15 minutes.
 - Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`.
 
+### 3.
 
 ### 4. Course History
 - Student can view their course history
   - Table for current courses
+
+### 5.
 
 ### 6. Teaching Assistants
 - Admin can select a student to be a TA for a section.
@@ -44,6 +47,7 @@ In this document, write down what you have implemented in detail.
   - table of all TAs
   - Back button that takes user back to admin page.
 
+### 7.
 
 ### 8. Assigning Advisors for PhD Students
 

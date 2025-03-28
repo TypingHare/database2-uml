@@ -9,7 +9,7 @@ $php_students = get_all_phd();
 
 function get_edit_url(string $student_id): string// go to url passing student id as query
 {
-    return build_url(Page::ASSIGN_TA, [
+    return build_url(Page::SELECT_TA_SECTION, [
         'student_id' => $student_id,
     ]);
 }
@@ -44,13 +44,18 @@ function get_edit_url(string $student_id): string// go to url passing student id
             <td><?= $student['student_id'] ?></td>
             <td><?= $student['name'] ?></td>
             <td>
-              <a href="<?= get_edit_url($student['student_id']) ?>"> <!-- broken? -->
+              <a href="<?= get_edit_url($student['student_id']) ?>"> 
                 <button>Assign</button>
               </a>
             </td>
           </tr>
         <?php endforeach ?> 
     </table>
+    <div style="display: flex; gap: 0.5rem;">
+        <a href="<?= Page::ADMIN ?>">
+            <button type="button">Back</button>
+        </a>
+    </div>
   </div>
 </div>
 
