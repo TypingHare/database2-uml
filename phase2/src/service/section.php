@@ -660,8 +660,8 @@ function check_section_availability(
         'year' => $year,
     ]);
 
-    $count = $stmt->fetch;
-    if($count['seats_filled'] < 15) {
+    $count = $stmt->fetch();
+    if ($count['seats_filled'] < 15) {
         return true;
     }
     return false;

@@ -11,6 +11,7 @@ In this document, write down what you have implemented in detail.
 - Users can change the password for a student account on `change_password.php`.
     - If the account does not exist or the old password does not match, the user will be redirected to the error page.
 
+
 ### 2. Admin Views, Creates, and Edits Sections
 
 - Admin can view all the course sections on `section.php`.
@@ -20,23 +21,55 @@ In this document, write down what you have implemented in detail.
   - In the same semester, there would not exist two sections associated with the same classroom and time slot.
   - In the same semester, there would not exist two sections associated with the same instructor but different classrooms.
   - In the same semester, if an instructor takes two different sections, then the time slots associated with the two sections should be consecutive—the gap between two time slots is less than or equal to 15 minutes.
-- Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`. 
+- Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`.
+
+### 3.
+
+### 4. Course History
+- Student can view their course history
+  - Table for current courses
+
+### 5.
+
+### 6. Teaching Assistants
+- Admin can select a student to be a TA for a section.
+  - Students must be type PhD.
+  - Sections must have > 10 students enrolled.
+  - Student can only serve as a TA for one section(per semester?)
+- "Select TA" button on admin page that takes user to select_phd_student.php page.
+  - Drop down menu to select student.
+- "Select Section" button that takes user to select_section.php.
+  - Carry student ID to this URL and display it at top.
+  - Table of all availablesections to choose from.
+  - Last column will have an "apply" button.
+  - Student id and section info added to TA table on click.
+- User taken to TA page on click.
+  - table of all TAs
+  - Back button that takes user back to admin page.
+
+### 7.
 
 ### 8. Assigning Advisors for PhD Students
 
+- The admin can navigate to `advisor.php` by clicking the `Manage advisors` button in `admin.php`; instructors and navigate to the same page by clicking the `Manage advisors` button in `instructor.php`.
+- In the `advisor.php` page, there is a list of all the PhD students in the database, along with their name and the two advisors. If a student has only one advisor, the `Advisor 2` column will be left blank. If a student has no advisors, both `Advisor 1` and `Advisor 2` will be left blank.
+- Users can click the `Edit` button to edit the advisors for a PhD student. This will navigate the user to the `edit_advisor.php` page. If either advisor is changed to `(None)` option in the dropdown list, the advisor will be removed.
+- Users can click the `Back` button in `advisor.php` to navigate back to the dashboard page.
+- Instructors can click the `View advisees` button in `instructor.php` to navigate to `advisee.php`, where they can see a list of advisees of them.
 
-### 9. Next Semester Course Suggestion 
-- Student can prompt the system to suggest classes for their next semester. The system will suggest three classes that student can take based on their degree pathway and completed courses.
-  - Suggested classes will adhere to class prerequisites.
-  - Classes without prerequisites can be suggested.
-  - Full classes will be omitted.
-  - Failed classes will be suggested(possibly prioritized if not too difficult).
-  - Error message if student workload is full for next semester already (4 classes registered). this may not be needed
-- Student can then select 1 - 3 of them and add them to their registered classes or decline the suggestion. There's a possibility that registering with this info is too complicated for this project, so the simplified version will just have a back button on the suggestion page.
- - "Suggest Classes" button on the student page that takes them to the `suggested_courses.php` page.
- - 3 suggested classes will be selectable (clickable checkbox).
- - Apply button needed to register selected classes. Ideally, it goes to the course_select.php  page with the selected courses pulled up. If it is too difficult, the button can take them to the course selection page. 
- - Back button to return student to student.php page.
+
+### 9. Next Semester Course Suggestion
+
+- Students can navigate to the `suggested_courses.php` by clicking the `Suggested courses` button in the `student.php` page.
+- Students can see a list of courses (classes) in `suggested_courses.php`, which:
+  - are in the student's degree pathway, which is a list of courses that the student has to finish to graduate.
+  - students have completed all the prerequisites and had a non-F grade for each of them.
+  - has opened sections in the specified semester (in the presentation, the semester would be 2025 Fall)
+- Failed classes, which are completed with F's, will be prioritized in the list.
+- If a class is full, the checkbox will be disabled.
+- By default, the first three classes in the list will be selected.
+- Students can select which courses to register by check or uncheck the checkbox in each row. Then students can register all the selected courses by clicking the `Confirm` button. The student will then be redirected to `course_history.php`.
+- Clicking the `Cancel` button in `suggested_courses.php` will bring the student back to `student.php`.
 
 
 ### 10. Bill System

@@ -7,9 +7,9 @@ $php_students = get_all_phd();
 //have to subtract all php students who are TAs(join of ta and php where student_id.ta = student_id.php) from get_all_php()
 //for an accurate list of avaible TAs
 
-function get_edit_url_copy(string $student_id): string// go to url passing student id as query
+function get_edit_url(string $student_id): string// go to url passing student id as query
 {
-    return build_url(Page::ASSIGN_TA, [
+    return build_url(Page::SELECT_TA_SECTION, [
         'student_id' => $student_id,
     ]);
 }
@@ -44,13 +44,18 @@ function get_edit_url_copy(string $student_id): string// go to url passing stude
             <td><?= $student['student_id'] ?></td>
             <td><?= $student['name'] ?></td>
             <td>
-              <a href="<?= get_edit_url_copy($student['student_id']) ?>"> <!-- broken? -->
+              <a href="<?= get_edit_url($student['student_id']) ?>"> 
                 <button>Assign</button>
               </a>
             </td>
           </tr>
         <?php endforeach ?> 
     </table>
+    <div style="display: flex; gap: 0.5rem;">
+        <a href="<?= Page::ADMIN ?>">
+            <button type="button">Back</button>
+        </a>
+    </div>
   </div>
 </div>
 

@@ -4,7 +4,7 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page allows students to attempt to register for the selected section
  *
  * @param_get student_id The student ID.
@@ -46,6 +46,10 @@ $section = get_section_plus($course_id, $section_id, $semester, $year);
 
 
 $back_url = build_url(Page::BROWSE, ['student_id' => $student_id]);
+
+// TODO: I don't understand the HTML portion: Why should we display a table of
+// sections in this page? -- James Chen
+$sections = []
 
 ?>
 

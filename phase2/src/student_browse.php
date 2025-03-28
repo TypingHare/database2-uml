@@ -4,7 +4,7 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page allows students to browse all sections that are offered in
  * the current semester
  *

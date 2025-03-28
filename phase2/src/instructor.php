@@ -53,12 +53,12 @@ $view_records_url = build_url(Page::INSTRUCTOR_RECORDS, [
     <div><b>Department: </b> <?= $instructor['dept_name'] ?></div>
 
     <a href="<?= $change_password_url ?>">
-      <button>Change Password</button>
+      <button>Change password</button>
     </a>
 
     <a
       href="<?= $manage_advisor_url ?>">
-      <button>Manage Advisors</button>
+      <button>Manage advisors</button>
     </a>
 
     <a

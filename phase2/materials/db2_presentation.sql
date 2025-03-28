@@ -302,7 +302,10 @@ VALUES ('COMP2030', 'Assembly Language', 3),
 INSERT INTO section (course_id, section_id, semester, year, instructor_id,
                      classroom_id, time_slot_id)
 VALUES ('COMP2030', 'Section201', 'Fall', 2025, '3', 'CR1', 'TS4'),
-       ('COMP3050', 'Section201', 'Fall', 2025, '4', 'CR2', 'TS5');
+       ('COMP3050', 'Section201', 'Fall', 2025, '4', 'CR2', 'TS5'),
+       ('MATH1010', 'Section101', 'Fall', 2025, '5', 'CR3', 'TS1'),
+       ('MATH3010', 'Section202', 'Fall', 2025, '1', 'CR5', 'TS1'),
+       ('COMP2010', 'Section201', 'Fall', 2025, '2', 'CR4', 'TS2');
 -- END ADD_SECTIONS
 
 -- BEGIN ADD_STUDENTS
@@ -311,7 +314,17 @@ VALUES ('avengersassemble@stark.com', '123456', 'student'),
        ('andrew@uml.edu', '123456', 'student'),
        ('scarletwitch@uml.edu', '123456', 'student'),
        ('hulksmash@uml.edu', '123456', 'student'),
-       ('i_am_ironman@uml.edu', '123456', 'student');
+       ('i_am_ironman@uml.edu', '123456', 'student'),
+       ('natasha@uml.edu', '123456', 'student'),
+       ('clint@uml.edu', '123456', 'student'),
+       ('peter.parker@uml.edu', '123456', 'student'),
+       ('sam.wilson@uml.edu', '123456', 'student'),
+       ('bucky@uml.edu', '123456', 'student'),
+       ('tchalla@uml.edu', '123456', 'student'),
+       ('carol.danvers@uml.edu', '123456', 'student'),
+       ('scott.lang@uml.edu', '123456', 'student'),
+       ('stephen.strange@uml.edu', '123456', 'student'),
+       ('shuri@uml.edu', '123456', 'student');
 
 INSERT INTO student (student_id, name, email, dept_name)
 VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
@@ -323,30 +336,70 @@ VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
        ('0488917281', 'Bruce Banner', 'hulksmash@uml.edu',
         'Miner School of Computer & Information Sciences'),
        ('0175846026', 'Tony Stark', 'i_am_ironman@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('2983746590', 'Natasha Romanoff', 'natasha@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('3498752311', 'Clint Barton', 'clint@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('1123581321', 'Peter Parker', 'peter.parker@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('8374659201', 'Sam Wilson', 'sam.wilson@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('8371948203', 'Bucky Barnes', 'bucky@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('9182736450', 'T\'Challa', 'tchalla@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('5647382910', 'Carol Danvers', 'carol.danvers@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('7362819450', 'Scott Lang', 'scott.lang@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('9102837465', 'Stephen Strange', 'stephen.strange@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+       ('1029384756', 'Shuri', 'shuri@uml.edu',
         'Miner School of Computer & Information Sciences');
 
 INSERT INTO undergraduate (student_id, total_credits, class_standing)
 VALUES ('0102559623', 0, 'Freshman'),
-       ('3149703500', 0, 'Junior');
+       ('3149703500', 0, 'Junior'),
+       ('2983746590', 15, 'Sophomore'),
+       ('3498752311', 45, 'Junior'),
+       ('1123581321', 0, 'Freshman'),
+       ('8374659201', 90, 'Senior'),
+       ('8371948203', 60, 'Junior'),
+       ('9182736450', 30, 'Sophomore'),
+       ('5647382910', 0, 'Freshman'),
+       ('7362819450', 105, 'Senior'),
+       ('9102837465', 75, 'Junior'),
+       ('1029384756', 15, 'Sophomore');
 
 INSERT INTO master (student_id, total_credits)
 VALUES ('5519262752', 0);
 
-INSERT INTO PhD (student_id, proposal_defence_date, qualifier,
+INSERT INTO PhD (student_id, qualifier, proposal_defence_date,
                  dissertation_defence_date)
-VALUES ('0488917281', null, null, null),
-       ('0175846026', null, null, null);
+VALUES ('0488917281', 'Passed', '2022-04-06', '2025-04-06'),
+       ('0175846026', 'Failed', '2021-10-12', '2025-04-06');
 -- END ADD_STUDENTS
 
 -- BEGIN ADD_TAKES_RECORDS
 INSERT INTO take (student_id, course_id, section_id, semester, year, grade)
 VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('0102559623', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
-       ('0102559623', 'Comp2010', 'Section101', 'Fall', 2023, 'F'),
+       ('0102559623', 'COMP2010', 'Section101', 'Fall', 2023, 'F'),
        ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null),
        ('3149703500', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
        ('3149703500', 'COMP2030', 'Section201', 'Fall', 2025, null),
-       ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null);
+       ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('2983746590', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('3498752311', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('1123581321', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('8374659201', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('8371948203', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('9182736450', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('5647382910', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('7362819450', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('9102837465', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('1029384756', 'COMP3050', 'Section201', 'Fall', 2025, null);
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
@@ -355,8 +408,16 @@ VALUES ('COMP1020', 'COMP1010'),
        ('COMP2010', 'COMP1020'),
        ('COMP2040', 'COMP2010'),
        ('MATH1020', 'MATH1010'),
-       ('MATH3040', 'MATH3010');
+       ('MATH3040', 'MATH3010'),
+       ('COMP3050', 'COMP2030');
 -- END ADD_PREREQUISITES_RECORDS
+
+-- BEGIN ADD_ADVISE_RECORDS
+INSERT INTO advise (instructor_id, student_id, start_date, end_date)
+VALUES ('1', '0175846026', '2025-01-21', '2025-12-21'),
+       ('3', '0175846026', '2025-01-21', '2025-12-21'),
+       ('5', '0488917281', '2024-01-21', '2025-05-04');
+-- END ADD_ADVISE_RECORDS
 
 -- BEGIN CREATE_BILL_TABLE
 -- @desc Create a payment table.
@@ -396,26 +457,26 @@ CREATE TABLE scholarship
 -- BEGIN CREATE_DEGREE_PATHWAY
 CREATE TABLE degree_pathway
 (
-    major_name VARCHAR(50) NOT NULL,
-    course_id  VARCHAR(20),
-    PRIMARY KEY (major_name, course_id),
+    dept_name VARCHAR(100) NOT NULL,
+    course_id VARCHAR(20),
+    PRIMARY KEY (dept_name, course_id),
     FOREIGN KEY (course_id) REFERENCES course (course_id)
         ON DELETE CASCADE
 );
 -- END CREATE_DEGREE_PATHWAY
 
 -- BEGIN ADD_DEGREE_PATHWAY_RECORDS
-INSERT INTO degree_pathway (major_name, course_id)
-VALUES ('Computer Science', 'COMP1010'),
-       ('Computer Science', 'COMP1020'),
-       ('Computer Science', 'COMP2010'),
-       ('Computer Science', 'COMP2030'),
-       ('Computer Science', 'COMP2040'),
-       ('Computer Science', 'COMP3050'),
-       ('Computer Science', 'MATH1010'),
-       ('Computer Science', 'MATH1020'),
-       ('Computer Science', 'MATH3010'),
-       ('Computer Science', 'MATH3040'),
-       ('Computer Science', 'SOC1010'),
-       ('Computer Science', 'SOC1020');
+INSERT INTO degree_pathway (dept_name, course_id)
+VALUES ('Miner School of Computer & Information Sciences', 'COMP1010'),
+       ('Miner School of Computer & Information Sciences', 'COMP1020'),
+       ('Miner School of Computer & Information Sciences', 'COMP2010'),
+       ('Miner School of Computer & Information Sciences', 'COMP2030'),
+       ('Miner School of Computer & Information Sciences', 'COMP2040'),
+       ('Miner School of Computer & Information Sciences', 'COMP3050'),
+       ('Miner School of Computer & Information Sciences', 'MATH1010'),
+       ('Miner School of Computer & Information Sciences', 'MATH1020'),
+       ('Miner School of Computer & Information Sciences', 'MATH3010'),
+       ('Miner School of Computer & Information Sciences', 'MATH3040'),
+       ('Miner School of Computer & Information Sciences', 'SOC1010'),
+       ('Miner School of Computer & Information Sciences', 'SOC1020');
 -- END ADD_DEGREE_PATHWAY_RECORDS
