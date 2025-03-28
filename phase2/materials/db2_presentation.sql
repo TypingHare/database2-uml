@@ -589,6 +589,9 @@ VALUES (
         'MATH3040'
     ),
     (
+
+
+        
         'Miner School of Computer & Information Sciences',
         'SOC1010'
     ),

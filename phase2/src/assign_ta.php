@@ -1,106 +1,98 @@
 <?php
 
+/**
+ * This file serves as a page template file. You can copy this template to
+ * your newly created file, remove the comments, and add elements in the
+ * specific div.
+ *
+ * NOTE: Make sure to include a brief introduction to the file and change the
+ * author name.
+ *
+ * @author James Chen
+ */
+
 require_once 'minimal.php';
 
+/**
+ * Update the information of a student. A student can update their name and
+ * department.
+ *
+ * @api
+ */
+handle(HttpMethod::POST, function (array $data) {
+    $student_id = $data['student_id'];
+    $course_id = $data['course_id'];
+    $section_id = $data['section_id'];
+    $semester = $data['semester'];
+    $year = $data['year'];
+    create_ta($student_id, $course_id, $section_id, $semester, $year);
 
 
-function get_ta_section(): array
-{
-    $stmt = pdo_instance()->prepare(
-        "
-            SELECT *
-            FROM section s, take t
-            WHERE s.section_id = t.section_id
-            AND s.semester = t.semester
-            AND s.year = t.year
-            GROUP BY s.course_id
-            HAVING COUNT(t.student_id) > 10;
-        "
-    );
-    execute($stmt);
 
-    return $stmt->fetchAll();
-}
+    redirect(Page::SELECT_PHD);
+});
 
-$sections_for_ta = get_ta_section();
-$sections = get_all_sections();
+$student_id = $_GET['student_id'];
+$student_name = get_student_by_id($student_id);
+$course_id = $_GET['course_id'];
+$section_id = $_GET['section_id'];
+$semester = $_GET['semester'];
+$year = $_GET['year'];
 
-$instructor_id = $_GET['student_id'] ?? '';
-function get_edit_url(array $sections_for_ta): string
-{
-    return build_url(Page::TA, [
-        'student_id' => $_GET['student_id'], //student id passed as query. how do I write?
-        'section_id' => $sections_for_ta['section_id'],
-        'semester' =>  $sections_for_ta['semester'],
-        'year' =>  $sections_for_ta['year'] ?? ''
-    ]);
-}
+$select_section_url = build_url(Page::SELECT_TA_SECTION, [
+    'student_id' => $student_id
+]);
+
 ?>
-
 
 <html lang="en">
 <head>
-    <title>TA Sections</title>
-    <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-
-        th,
-        td {
-            padding: 0.5rem;
-        }
-    </style>
+  <title>Assign TA</title>
 </head>
-
 <body style="height: 100%;">
 
-    <div style="display: flex; justify-content: center; margin-top: 16vh;">
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <h2>Sections</h2>
-            <table style="width:100%;">
-                <tr>
-                    <td>Course ID</td>
-                    <td>Section ID</td>
-                    <td>Semester</td>
-                    <td>Year</td>
-                    <td>Instructor</td>
-                    <td>Classroom</td>
-                    <td>Time slot</td>
-                    <td style="color: grey;">Operation</td>
-                </tr>
-                <?php foreach ($$sections as $section): ?>
-                <tr>
-                    <td><?= $section['course_id'] ?>
-                    </td>
-                    <td><?= $section['section_id'] ?>
-                    </td>
-                    <td><?= $section['semester'] ?>
-                    </td>
-                    <td><?= $section['year'] ?>
-                    </td>
-                    <td>
-                        <a href="<?= get_edit_url($section) ?>">
-                            <button>Select</button>
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
+<div style="display: flex; justify-content: center; margin-top: 16vh;">
+  <div>
+    <h2>Confirm Selected TA and Section</h2>
+    <form
+      style="display: flex; flex-direction: column; gap: 1rem;"
+      action="<?= Page::ASSIGN_TA ?>"
+      method="POST"
+    >
+        <div><b>Student Name: </b> <?= $student_name['name'] ?></div>
 
-            <div style="display: flex; gap: 0.5rem;">
-                <a href="<?= Page::SELECT_PHD ?>">
-                    <button type="button">Back</button>
-                </a>
-            </div>
-        </div>
-    </div>
+
+        <div><b>Student ID: </b> <?= $student_id ?></div>
+        <input type="hidden" name="student_id"
+            value="<?= $student_id ?>">
+
+        <div><b>Course ID: </b> <?= $course_id ?></div>
+        <input type="hidden" name="course_id"
+            value="<?= $course_id ?>">
+
+        <div><b>Section ID: </b> <?= $section_id ?></div>
+        <input type="hidden" name="section_id"
+            value="<?= $section_id ?>">
+
+        <div><b>Semester: </b> <?= $semester ?></div>
+        <input type="hidden" name="semester"
+            value="<?= $semester ?>">
+
+        <div><b>Year: </b> <?= $year ?></div>
+        <input type="hidden" name="year"
+            value="<?= $year ?>">
+
+        <div style="display: flex; justify-content: center;">
+            <button type="submit">Update</button>
+            <a href="<?= $select_section_url ?>" style="margin-left: 0.5rem;">
+                <button type="button">Cancel</button>
+            </a>
+      </div>
+    </form>
+
+    <!-- Add other elements. -->
+  </div>
+</div>
 
 </body>
 </html>
-
-
-
-
