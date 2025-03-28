@@ -324,6 +324,10 @@ VALUES ('avengersassemble@stark.com', '123456', 'student'),
        ('carol.danvers@uml.edu', '123456', 'student'),
        ('scott.lang@uml.edu', '123456', 'student'),
        ('stephen.strange@uml.edu', '123456', 'student'),
+       ('hammertime@uml.edu', '123456', 'student'),
+       ('stretcharmstrong@uml.edu', '123456', 'student'),
+       ('invisibo@uml.edu', '123456', 'student'),
+       ('leader@uml.edu', '123456', 'student'),
        ('shuri@uml.edu', '123456', 'student');
 
 INSERT INTO student (student_id, name, email, dept_name)
@@ -347,7 +351,7 @@ VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
         'Miner School of Computer & Information Sciences'),
        ('8371948203', 'Bucky Barnes', 'bucky@uml.edu',
         'Miner School of Computer & Information Sciences'),
-       ('9182736450', 'T\'Challa', 'tchalla@uml.edu',
+       ('9182736450', 'Challa', 'tchalla@uml.edu',
         'Miner School of Computer & Information Sciences'),
        ('5647382910', 'Carol Danvers', 'carol.danvers@uml.edu',
         'Miner School of Computer & Information Sciences'),
@@ -356,6 +360,14 @@ VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
        ('9102837465', 'Stephen Strange', 'stephen.strange@uml.edu',
         'Miner School of Computer & Information Sciences'),
        ('1029384756', 'Shuri', 'shuri@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+        ('9102817465', 'Thor Odinson', 'hammertime@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+        ('9602837465', 'Reed Richards', 'stretcharmstrong@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+        ('9102837565', 'Sue Storm', 'invisibo@uml.edu',
+        'Miner School of Computer & Information Sciences'),
+        ('9602837461', 'Samuel Sterns', 'leader@uml.edu',
         'Miner School of Computer & Information Sciences');
 
 INSERT INTO undergraduate (student_id, total_credits, class_standing)
@@ -378,16 +390,44 @@ VALUES ('5519262752', 0);
 INSERT INTO PhD (student_id, qualifier, proposal_defence_date,
                  dissertation_defence_date)
 VALUES ('0488917281', 'Passed', '2022-04-06', '2025-04-06'),
-       ('0175846026', 'Failed', '2021-10-12', '2025-04-06');
+       ('0175846026', 'Failed', '2021-10-12', '2025-04-06'),
+       ('9102817465', 'Failed', '2021-10-12', '2025-04-06'),
+       ('9602837465', 'Passed', '2021-10-12', '2025-04-06'),
+       ('9102837565', 'Passed', '2021-10-12', '2025-04-06'),
+       ('9602837461', 'Passed', '2021-10-12', '2025-04-06');
+   
+       
 -- END ADD_STUDENTS
 
 -- BEGIN ADD_TAKES_RECORDS
 INSERT INTO take (student_id, course_id, section_id, semester, year, grade)
 VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('0102559623', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
-       ('0102559623', 'COMP2010', 'Section101', 'Fall', 2023, 'F'),
+       ('3149703500', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('2983746590', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('3498752311', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('1123581321', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('8374659201', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('8371948203', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('9182736450', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('5647382910', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('7362819450', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('9102837465', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('1029384756', 'COMP1020', 'Section101', 'Spring', 2024, 'B-'),
+       ('5519262752', 'COMP2010', 'Section101', 'Fall', 2023, 'F'),
        ('0102559623', 'COMP2040', 'Section201', 'Spring', 2024, null),
        ('3149703500', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('2983746590', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('3498752311', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('1123581321', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('8374659201', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('8371948203', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('9182736450', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('5647382910', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('7362819450', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('9102837465', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('1029384756', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
+       ('5519262752', 'COMP2040', 'Section201', 'Spring', 2024, 'A+'),
        ('3149703500', 'COMP2030', 'Section201', 'Fall', 2025, null),
        ('3149703500', 'COMP3050', 'Section201', 'Fall', 2025, null),
        ('2983746590', 'COMP3050', 'Section201', 'Fall', 2025, null),

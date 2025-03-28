@@ -173,6 +173,9 @@ readonly class Page
     //This page shows all selected info for admin to submit.
     public const ASSIGN_TA = 'assign_ta.php';
 
+    //This page shows Admin all created TAs.
+    public const VIEW_TA = 'view_ta.php';
+
     // This page allows a student to browse currently offered classes and register
     public const BROWSE = 'student_browse.php';
 
