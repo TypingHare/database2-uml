@@ -64,46 +64,27 @@ $back_url = build_url(Page::BROWSE, ['student_id' => $student_id]);
 </head>
 <body style="height: 100%;">
 
-<div style="display: flex; justify-content: center; margin-top: 16vh;">
-  <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <h2>Register for Section</h2>
-
-    <table style="width:100%;">
-      <tr>
-        <td>Course ID</td>
-        <td>Section ID</td>
-        <td>Semester</td>
-        <td>Year</td>
-        <td>Instructor</td>
-        <td>Classroom</td>
-        <td>Time slot</td>
-        <td style="color: grey;">Operation</td>
-      </tr>
-          <tr><form action="register.php" method="POST">
+<div style="display: flex; flex-direction: column; align-items: center;">
+  
+    <form style="display: flex; flex-direction: column; gap: 1rem;margin-top: 16vh;" action="register.php" method="POST">
           <input type="hidden" name="student_id" value="<?= $student_id ?>">
           <input type="hidden" name="course_id" value="<?= $section['course_id'] ?>">
           <input type="hidden" name="section_id" value="<?= $section['section_id'] ?>">
           <input type="hidden" name="semester" value="<?= $section['semester'] ?>">
           <input type="hidden" name="year" value="<?= $section['year'] ?>">
-            <td><?= $section['course_id'] ?></td>
-            <td><?= $section['section_id'] ?></td>
-            <td><?= $section['semester'] ?></td>
-            <td><?= $section['year'] ?></td>
-            <td><?= $section['instructor_name'] ?></td>
-            <td><?= classroom_to_string($section) ?></td>
-            <td><?= time_slot_to_string($section) ?></td>
-            <td>
-                <button type = "submit">Register</button>
-            </td>
-    </form></tr>
-    </table>
-
-    <div style="display: flex; justify-content: right;">
-      <a href="<?= $back_url ?>">
-        <button>Back</button>
-      </a>
+      <div><b>Course ID: </b> <?= $section['course_id'] ?></div>
+      <div><b>Section ID: </b> <?= $section['section_id'] ?></div>
+      <div><b>Semester: </b> <?= $section['semester'] ?> <?= $section['year'] ?></div>
+      <div><b>Instructor: </b> <?= $section['instructor_name'] ?></div>
+      <div><b>Classroom: </b> <?= classroom_to_string($section) ?></div>
+      <div><b>Time slot: </b> <?= time_slot_to_string($section) ?></div>
+      <div style="display: flex; margin-top: 20px;"><button type = "submit">Register</button></div>
+    </form>
+      <div style="display: flex; margin-top: 20px;">
+        <a href="<?= $back_url ?>">
+          <button>Back</button>
+        </a>
     </div>
-  </div>
 </div>
 
 </body>
