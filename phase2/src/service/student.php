@@ -339,6 +339,7 @@ function update_student_info(
         "dept_name" => $dept_name
     ]);
 }
+
 /*
 
 create table TA (
@@ -562,29 +563,29 @@ function has_taken_prerequisites(string $student_id, string $course_id): bool
  * @author Alexis Marx
  */
 function register_student(
-    string      $student_id,
-    string      $course_id,
-    string      $section_id,
-    string      $semester,
-    string      $year
-) : array|null {
-    
+    string $student_id,
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): array|null {
+
     $stmt = pdo_instance()->prepare("
     SELECT COUNT(*) FROM take 
     WHERE student_id = ? AND course_id = ? AND section_id = ? AND semester = ? AND year = ?
 ");
-$stmt->execute([$student_id, $course_id, $section_id, $semester, $year]);
+    $stmt->execute([$student_id, $course_id, $section_id, $semester, $year]);
 
-if ($stmt->fetchColumn() > 0) {
-    throw new RunTimeException("You are already registered for this section.");
-}
+    if ($stmt->fetchColumn() > 0) {
+        throw new RunTimeException("You are already registered for this section.");
+    }
 
 
-    if(!has_taken_prereqs($student_id, $course_id)) {
+    if (!has_taken_prereqs($student_id, $course_id)) {
         throw new RuntimeException("The required prerequisites have not been taken.");
     }
-    
-    if(!check_section_availability($course_id, $section_id, $semester, $year)) {
+
+    if (!check_section_availability($course_id, $section_id, $semester, $year)) {
         throw new RuntimeException("This section is full.");
     }
 
@@ -621,14 +622,14 @@ if ($stmt->fetchColumn() > 0) {
     pdo_instance()->commit();
 
     return $data;
-    
+
 }
 
 function get_students_by_section(
-    string      $course_id,
-    string      $section_id,
-    string      $semester,
-    string      $year
-) : array|null {
-    
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): array|null {
+    return [];
 }
