@@ -25,24 +25,24 @@ In this document, write down what you have implemented in detail.
 
 
 ### 4. Course History
--Student can view their course history
-  -Table for current courses
+- Student can view their course history
+  - Table for current courses
 
 ### 6. Teaching Assistants
--Admin can select a student to be a TA for a section.
-  -Students must be type PhD.
-  -Sections must have > 10 students enrolled.
-  -Student can only serve as a TA for one section(per semester?)
--"Select TA" button on admin page that takes user to select_phd_student.php page.
-  -Drop down menu to select student.
--"Select Section" button that takes user to select_section.php.
-  -Carry student ID to this URL and display it at top.
-  -Table of all availablesections to choose from.
-  -Last column will have an "apply" button.
-  -Student id and section info added to TA table on click.
--User taken to TA page on click.
-  -table of all TAs
-  -Back button that takes user back to admin page.
+- Admin can select a student to be a TA for a section.
+  - Students must be type PhD.
+  - Sections must have > 10 students enrolled.
+  - Student can only serve as a TA for one section(per semester?)
+- "Select TA" button on admin page that takes user to select_phd_student.php page.
+  - Drop down menu to select student.
+- "Select Section" button that takes user to select_section.php.
+  - Carry student ID to this URL and display it at top.
+  - Table of all availablesections to choose from.
+  - Last column will have an "apply" button.
+  - Student id and section info added to TA table on click.
+- User taken to TA page on click.
+  - table of all TAs
+  - Back button that takes user back to admin page.
 
 
 ### 8. Assigning Advisors for PhD Students
