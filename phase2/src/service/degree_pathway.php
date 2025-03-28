@@ -2,26 +2,28 @@
 
 require_once __DIR__ . '/../minimal.php';
 
-function take_section(
-    string $student_id,
-    string $course_id,
-    string $section_id,
-    string $semester,
-    string $year
-): void {
-}
-
+/**
+ * Retrieves a list of suggested courses for a student for a given semester and
+ * year.
+ *
+ * This function suggests courses that:
+ * - Are part of the student's degree pathway.
+ * - Have all prerequisite courses completed with a non-F grade.
+ * - Have open sections in the specified semester and year.
+ * - Have not already been completed by the student with a non-F grade.
+ *
+ * @param string $student_id The unique identifier of the student.
+ * @param string $semester The semester for which to suggest courses.
+ * @param string $year The academic year for which to suggest courses.
+ * @return array An array of suggested course sections with additional course
+ * and instructor information.
+ * @author James Chen
+ */
 function get_suggested_courses(
     string $student_id,
     string $semester,
     string $year
 ): array {
-    // Find all courses that
-    // - are in the student's degree pathway;
-    // - all the prerequisites courses are finished with a non-F grade
-    //     - This means there does not exist any prerequisites of the course,
-    //       such that there does not exist a `take` record with a non-F grade.
-    // - have opened sections in the specified semester
     $stmt = pdo_instance()->prepare(
         "
             SELECT section.*, course.course_name, instructor.instructor_name, take.grade

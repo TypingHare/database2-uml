@@ -81,27 +81,27 @@ $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_corre
       <?php endif ?>
 
     <a href="<?= $change_password_url ?>">
-      <button>Change Password</button>
+      <button>Change password</button>
     </a>
 
     <a href="<?= $edit_student_url ?>">
-      <button>Edit Student</button>
+      <button>Edit student</button>
     </a>
 
     <a href="<?= $access_records_url ?>">
-      <button>Access Records</button>
+      <button>Access records</button>
     </a>
 
     <a href="<?= $view_bills_url ?>">
-      <button>View Bills</button>
+      <button>View bills</button>
     </a>
 
     <a href="<?= $browse_classes_url ?>">
-      <button>Browse Classes</button>
+      <button>Browse classes</button>
     </a>
 
     <a href="<?= $suggested_course_url ?>">
-      <button>Suggested Courses</button>
+      <button>Suggested courses</button>
     </a>
 
     <!-- Hold due to unpaid bills -->
