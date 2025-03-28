@@ -4,33 +4,42 @@ require_once 'minimal.php';
 
 
 
-function get_ta_section(): array
+function get_ta_section(string $student_id): array
 {
     $stmt = pdo_instance()->prepare(
         "
-            SELECT *
-            FROM section s, take t
-            WHERE s.section_id = t.section_id
-            AND s.semester = t.semester
-            AND s.year = t.year
-            GROUP BY t.student_id, t.course_id, t.section_id, semester, year
-            HAVING COUNT(t.student_id) > 10;
+            SELECT * 
+            FROM (SELECT course_id, section_id, semester, year
+                FROM take
+                GROUP BY course_id, section_id, semester, year
+                HAVING COUNT(*) > 10
+            ) AS a 
+            WHERE NOT EXISTS ( SELECT 1
+                FROM (SELECT year, semester
+                    FROM TA
+                    WHERE student_id = :student_id
+                    ) AS b 
+                WHERE a.semester = b.semester 
+                AND a.year = b.year
+            );
         "
     );
-    execute($stmt);
+    execute($stmt, ['student_id' => $student_id]);
 
     return $stmt->fetchAll();
 }
 
-$sections_for_ta = get_ta_section();
-$sections = get_all_sections();
+//$sections = get_all_sections();
+
 
 $student_id = $_GET['student_id'];
 $student_name = get_student_by_id($student_id);
+$sections_for_ta = get_ta_section($student_id);
 //var_dump($student);
 
 //var_dump($sections);
-
+//var_dump($sections_for_ta);
+//exit(0);
 
 
 //$instructor_id = $_GET['student_id'] ?? '';
@@ -80,7 +89,7 @@ function get_edit_url(array $sections_for_ta): string
                     <td>Year</td>
                     <td style="color: grey;">Operation</td>
                 </tr>
-                <?php foreach ($sections as $section): ?>
+                <?php foreach ($sections_for_ta as $section): ?>
                 <tr>
                     <td><?= $section['course_id'] ?>
                     </td>
