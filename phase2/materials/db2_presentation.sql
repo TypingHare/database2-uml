@@ -6,7 +6,7 @@ create table account (
     email varchar(50),
     password varchar(20) not null,
     type varchar(20),
-    primary key (email)
+    primary key <email)
 );
 create table department (
     dept_name varchar(100),
@@ -420,14 +420,12 @@ VALUES ('0102559623', 0, 'Freshman'),
     ('3149703500', 0, 'Junior');
 INSERT INTO master (student_id, total_credits)
 VALUES ('5519262752', 0);
-INSERT INTO PhD (
-        student_id,
-        proposal_defence_date,
-        qualifier,
-        dissertation_defence_date
-    )
-VALUES ('0488917281', null, null, null),
-    ('0175846026', null, null, null);
+
+INSERT INTO PhD (student_id, qualifier, proposal_defence_date,
+                 dissertation_defence_date)
+VALUES ('0488917281', 'Passed', '2022-04-06', '2025-04-06'),
+       ('0175846026', 'Failed', '2021-10-12', '2025-04-06');
+
 -- END ADD_STUDENTS
 -- BEGIN ADD_TAKES_RECORDS
 INSERT INTO take (
@@ -504,6 +502,14 @@ VALUES ('COMP1020', 'COMP1010'),
     ('MATH3040', 'MATH3010'),
     ('COMP3050', 'COMP2030');
 -- END ADD_PREREQUISITES_RECORDS
+
+-- BEGIN ADD_ADVISE_RECORDS
+INSERT INTO advise (instructor_id, student_id, start_date, end_date)
+VALUES ('1', '0175846026', '2025-01-21', '2025-12-21'),
+       ('3', '0175846026', '2025-01-21', '2025-12-21'),
+       ('5', '0488917281', '2024-01-21', '2025-05-04');
+-- END ADD_ADVISE_RECORDS
+
 -- BEGIN CREATE_BILL_TABLE
 -- @desc Create a payment table.
 -- @author James Chen
