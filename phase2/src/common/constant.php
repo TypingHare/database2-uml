@@ -170,6 +170,9 @@ readonly class Page
     // This page allows admin to assign student TA to section?
     public const ASSIGN_TA = 'assign_ta.php';
 
+    //This page shows all TA's with their seciton.
+    public const TA = 'ta.php';
+
     // This page allows a student to browse currently offered classes and register
     public const BROWSE = 'student_browse.php';
 
