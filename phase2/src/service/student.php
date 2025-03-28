@@ -339,6 +339,41 @@ function update_student_info(
         "dept_name" => $dept_name
     ]);
 }
+/*
+
+create table TA (
+    student_id varchar(10),
+    course_id varchar(8),
+    section_id varchar(10),
+    semester varchar(6),
+    year numeric(4, 0),
+    primary key (
+        student_id,
+        course_id,
+        section_id,
+        semester,
+        year
+    ),
+    foreign key (student_id) references PhD (student_id) on delete cascade,
+    foreign key (course_id, section_id, semester, year) references section (course_id, section_id, semester, year) on delete cascade
+);
+*/
+function create_ta(string $student_id, string $course_id, string $section_id, string $semester, string $year): void
+{
+    $stmt = pdo_instance()->prepare(
+        "
+        INSERT INTO TA(student_id, course_id, section_id, semester, year)
+        VALUES (:student_id, :course_id, :section_id, :semester, :year); 
+    "
+    );
+    execute($stmt, [
+        "student_id" => $student_id,
+        "course_id" => $course_id,
+        "section_id" => $section_id,
+        "semester" => $semester,
+        "year" => $year
+    ]);
+}
 
 function update_phd_info(
     string $student_id,
