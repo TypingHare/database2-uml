@@ -49,6 +49,12 @@ $suggested_course_url = build_url(Page::SUGGESTED_COURSES, [
 $bill_correct_form = $num_unpaid_bills === 1 ? 'bill' : 'bills';
 $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_correct_form!";
 
+$instructor = $_GET('instructor_id');
+
+$back_to_advisee = build_url(Page::ADVISEE, [
+  'instructor_id' => $instructor
+]);
+
 ?>
 
 <html lang="en">
@@ -103,6 +109,14 @@ $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_corre
     <a href="<?= $suggested_course_url ?>">
       <button>Suggested courses</button>
     </a>
+
+    <?php if ($instructor_id !== null): ?>
+
+    <a href="<?= $back_to_advisee ?>">
+      <button>Back to Advisee</button>
+    </a>
+
+    <?php endif ?>
 
     <!-- Hold due to unpaid bills -->
     <div <?= $num_unpaid_bills > 0 ? '' : 'hidden' ?> style="color:red">
