@@ -5,7 +5,7 @@ require_once 'minimal.php';
 $phd_students = get_all_phd();
 
 //have to subtract all php students who are TAs(join of ta and php where student_id.ta = student_id.php) from get_all_php()
-//for an accurate list of avaible TAs
+//for an accurate list of available TAs
 
 function get_edit_url(string $student_id): string// go to url passing student id as query
 {

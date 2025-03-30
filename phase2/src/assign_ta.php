@@ -27,8 +27,6 @@ handle(HttpMethod::POST, function (array $data) {
     $year = $data['year'];
     create_ta($student_id, $course_id, $section_id, $semester, $year);
 
-
-
     redirect(Page::SELECT_PHD);
 });
 
@@ -60,7 +58,6 @@ $select_section_url = build_url(Page::SELECT_TA_SECTION, [
       method="POST"
     >
         <div><b>Student Name: </b> <?= $student_name['name'] ?></div>
-
 
         <div><b>Student ID: </b> <?= $student_id ?></div>
         <input type="hidden" name="student_id"
