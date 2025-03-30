@@ -277,6 +277,14 @@ insert into section (course_id, section_id, semester, year) value ('COMP2040', '
 
 -- ***************** The following are added by students. ***************** --
 
+-- BEGIN ADD_INDSTRUCTORS
+insert into instructor (instructor_id, instructor_name, title, dept_name,
+                        email) value ('6', 'David Hendrickson',
+                                      'Ajunct Professor',
+                                      'Miner School of Computer & Information Sciences',
+                                      'thegoat@uml.edu');
+-- END ADD_INSTRUCTOR
+
 -- BEGIN ADD_CLASSROOMS
 INSERT INTO classroom (classroom_id, building, room_number, capacity)
 VALUES ('CR1', 'Fal', '305', 50),
@@ -305,6 +313,7 @@ VALUES ('COMP2030', 'Section201', 'Fall', 2025, '3', 'CR1', 'TS4'),
        ('COMP3050', 'Section201', 'Fall', 2025, '4', 'CR2', 'TS5'),
        ('MATH1010', 'Section101', 'Fall', 2025, '5', 'CR3', 'TS1'),
        ('MATH3010', 'Section202', 'Fall', 2025, '1', 'CR5', 'TS1'),
+       ('COMP1010', 'Section101', 'Fall', 2025, '6', 'CR3', 'TS3'),
        ('COMP2010', 'Section201', 'Fall', 2025, '2', 'CR4', 'TS2');
 -- END ADD_SECTIONS
 
@@ -439,7 +448,22 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('5647382910', 'COMP3050', 'Section201', 'Fall', 2025, null),
        ('7362819450', 'COMP3050', 'Section201', 'Fall', 2025, null),
        ('9102837465', 'COMP3050', 'Section201', 'Fall', 2025, null),
-       ('1029384756', 'COMP3050', 'Section201', 'Fall', 2025, null);
+       ('1029384756', 'COMP3050', 'Section201', 'Fall', 2025, null),
+       ('3149703500', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('2983746590', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('3498752311', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('1123581321', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('8374659201', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('8371948203', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('9182736450', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('5647382910', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('7362819450', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('9102837465', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('1029384756', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('5519262752', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('9602837465', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('9102837565', 'COMP1010', 'Section101', 'Fall', 2025, null),
+       ('9602837461', 'COMP1010', 'Section101', 'Fall', 2025, null);
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
