@@ -40,7 +40,7 @@ In this document, write down what you have implemented in detail.
   - Drop down menu to select student.
 - "Select Section" button that takes user to select_section.php.
   - Carry student ID to this URL and display it at top.
-  - Table of all availablesections to choose from.
+  - Table of all available sections to choose from.
   - Last column will have an "apply" button.
   - Student id and section info added to TA table on click.
 - User taken to TA page on click.
