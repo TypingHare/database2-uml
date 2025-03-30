@@ -581,7 +581,7 @@ function register_student(
     }
 
 
-    if (!has_taken_prereqs($student_id, $course_id)) {
+    if (!has_taken_prerequisites($student_id, $course_id)) {
         throw new RuntimeException("The required prerequisites have not been taken.");
     }
 

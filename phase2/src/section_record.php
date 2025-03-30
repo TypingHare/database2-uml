@@ -4,7 +4,7 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page contains a single section's current and past student records
  * @author Alexis Marx
  */
@@ -38,26 +38,26 @@ $back_url = build_url(Page::INSTRUCTOR_RECORDS, ['instructor_id' => $instructor_
     <h2><?= $course_id ?></h2>
     <h3><?= $section_id ?></h3>
 
-    <?php foreach ($instances as $section): ?>
-      <?php $records = get_section_records($course_id, $section_id, $section['semester'], $section['year']); ?>
+      <?php foreach ($instances as $section): ?>
+          <?php $records = get_section_records($course_id, $section_id, $section['semester'], $section['year']); ?>
         <h3><?= $section['semester'] ?> <?= $section['year'] ?></h3>
         <table style="width:100%;">
-        <tr>
+          <tr>
             <td>Name</td>
             <td>ID</td>
             <td>Grade</td>
-        </tr>
-        <?php foreach ($records as $record): ?>
-          <?php $student = get_student_by_id($record['student_id']); ?>
-          <?php $name = $student['name']; ?>
-        <tr>
-          <td><?= $name ?></td>
-          <td><?= $record['student_id'] ?></td>
-          <td><?= $record['grade'] ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-    <?php endforeach; ?>
+          </tr>
+            <?php foreach ($records as $record): ?>
+                <?php $student = get_student_by_id($record['student_id']); ?>
+                <?php $name = $student['name']; ?>
+              <tr>
+                <td><?= $name ?></td>
+                <td><?= $record['student_id'] ?></td>
+                <td><?= $record['grade'] ?></td>
+              </tr>
+            <?php endforeach; ?>
+        </table>
+      <?php endforeach; ?>
     <!--get data per instance -->
 
 

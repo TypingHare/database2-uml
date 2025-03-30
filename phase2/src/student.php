@@ -49,9 +49,9 @@ $suggested_course_url = build_url(Page::SUGGESTED_COURSES, [
 $bill_correct_form = $num_unpaid_bills === 1 ? 'bill' : 'bills';
 $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_correct_form!";
 
-$instructor_id = $_GET['instructor_id'];//gives warning when student accesses page
+$instructor_id = $_GET['instructor_id'] ?? null;
 
-$back_to_advisee = build_url(Page::ADVISEE, [//button for advisor to return to advisee page
+$back_to_advisee_url = build_url(Page::ADVISEE, [
   'instructor_id' => $instructor_id
 ]);
 
@@ -116,9 +116,9 @@ $back_to_advisee = build_url(Page::ADVISEE, [//button for advisor to return to a
         <button>Suggested courses</button>
       </a>
 
-      <?php if ($instructor_id !== null): ?><!--back button shows if advisor is accessing page-->
+      <?php if ($instructor_id !== null): ?>
 
-      <a href="<?= $back_to_advisee ?>">
+      <a href="<?= $back_to_advisee_url ?>">
         <button>Back to Advisee</button>
       </a>
 
