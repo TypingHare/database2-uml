@@ -23,13 +23,26 @@ In this document, write down what you have implemented in detail.
   - In the same semester, if an instructor takes two different sections, then the time slots associated with the two sections should be consecutive—the gap between two time slots is less than or equal to 15 minutes.
 - Admin can edit a course section by clicking the `edit` button in the section table in `section.php`. The admin will then be navigated to `edit_section_php`, where they can edit the instructor, classroom, and time slot. A successful edition should meet all the conditions aforementioned. After the edition, the user will be redirected back to `section.php`.
 
-### 3.
+### 3. Students can browse courses and register
+
+- Students can view all courses offered in the 'current' semester on 'student_browse.php'.
+- Students can select a desired course and view its information by clicking the 'view' button, redirecting to 'register.php'
+- Students can register for a chosen course using 'register' button given that:
+  - The student has taken and passed any designated prerequisites of the class
+  - The class is not already at its limit of 15 students
+  - If either scenario is true or the student is already registered for this section, they will be directed to an error message.
+  - If registration is successful, the student is taken to 'register_success.php', displaying a message indicating registration and letting user
+    exit back to student dashboard, 'student.php'.
 
 ### 4. Course History
 - Student can view their course history
   - Table for current courses
 
-### 5.
+### 5. Instructor Course History
+
+- Instructors can view a list of all courses and sections they have ever taught.
+- 'instructor_records.php' is organized by course id, with a table containing a 'view record' button for each section of that course this instructor has ever taught
+  - 'view record' directs to 'section_record.php' which lists all existing instances of this course and section, past and present, accompanied by a table of all student records associated with that semester and year's instance.
 
 ### 6. Teaching Assistants
 - Admin can select a student to be a TA for a section.
@@ -47,7 +60,19 @@ In this document, write down what you have implemented in detail.
   - table of all TAs
   - Back button that takes user back to admin page.
 
-### 7.
+### 7. Assigning Graders
+
+- Admin can navigate to 'select_grader_section.php' with 'manage graders' button in 'admin.php'
+- In 'select_grader_section.php', a table lists all sections eligible to be assigned graders
+  - In order to be eligible, a section must:
+    - have 5-10 enrolled students
+    - not already have been assigned a grader
+- Selecting a section with the 'assign' button redirects to 'select_grader.php' which pulls a list of students eligible to be graders for this section
+  - In order to be eligible, a student must:
+    - Be either an undergraduate or a masters student
+    - Have gotten an A- or A in the specificed course
+    - Not already be assigned as a grader for another section during this semester/year
+- Again, the 'assign' button directs to a final confirmation page indicating the chosen section and student and allowing admin to complete the action, redirecting back to the admin dashboard.
 
 ### 8. Assigning Advisors for PhD Students
 

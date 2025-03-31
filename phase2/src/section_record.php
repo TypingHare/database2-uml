@@ -58,7 +58,6 @@ $back_url = build_url(Page::INSTRUCTOR_RECORDS, ['instructor_id' => $instructor_
             <?php endforeach; ?>
         </table>
       <?php endforeach; ?>
-    <!--get data per instance -->
 
 
     <div style="display: flex; justify-content: right;">
