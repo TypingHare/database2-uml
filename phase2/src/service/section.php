@@ -688,10 +688,10 @@ function get_grader_sections(): array
 {
     $stmt = pdo_instance()->prepare(
         "
-            SELECT course_id, section_id, semester, year
+            SELECT course_id, section_id, semester, year, COUNT(*) as count
             FROM take
             GROUP BY course_id, section_id, semester, year
-            HAVING COUNT(*) BETWEEN 5 AND 10
+            HAVING COUNT(student_id) BETWEEN 1 AND 10
             AND NOT EXISTS (
                 SELECT 1 FROM undergraduategrader u
                 WHERE u.course_id = take.course_id
@@ -705,7 +705,7 @@ function get_grader_sections(): array
                     AND m.section_id = take.section_id
                     AND m.semester = take.semester
                     AND m.year = take.year
-);
+            );
         "
     );
     execute($stmt);

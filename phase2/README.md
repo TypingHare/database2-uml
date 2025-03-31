@@ -8,7 +8,7 @@ This application requires the following environment requirements:
 * MariaDB - `15.x`
 * Apache (httpd) - `2.4.x`
 
-Move all the files in `src` to the httpd main document root, and visit the index file (`index.html`) by `localhost/`. In the index page, you are required to log in to the system. The application will redirect you to different dashboard pages based on your account type associated with the email. However, you can access to different dashboard pages by the following URLs:
+Move all the files in `src` to the httpd main document root, and visit the index file (`index.html`) by `localhost/`. On the index page, you are required to log in to the system. The application will redirect you to different dashboard pages based on the account type associated with the email. However, you can access different dashboard pages by the following URLs:
 
 - Admin Dashboard Page: `localhost/admin.php`
 - Instructor Dashboard Page: `localhost/instructor.php?instructor_id=1`
