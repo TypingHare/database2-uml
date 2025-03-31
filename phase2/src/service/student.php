@@ -625,8 +625,13 @@ function register_student(
 
 }
 
-function add_grader(string $student_id, string $course_id, string $section_id, string $semester, string $year): null
-{
+function add_grader(
+    string $student_id,
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): void {
     if (get_student_type($student_id) == StudentType::UNDERGRADUATE) {
         $stmt = pdo_instance()->prepare(
             "
@@ -634,8 +639,7 @@ function add_grader(string $student_id, string $course_id, string $section_id, s
             VALUES (:student_id, :course_id, :section_id, :semester, :year); 
         "
         );
-    }
-    else {
+    } else {
         $stmt = pdo_instance()->prepare(
             "
             INSERT INTO mastergrader(student_id, course_id, section_id, semester, year)
@@ -643,7 +647,7 @@ function add_grader(string $student_id, string $course_id, string $section_id, s
         "
         );
     }
-    
+
     execute($stmt, [
         "student_id" => $student_id,
         "course_id" => $course_id,
@@ -652,4 +656,3 @@ function add_grader(string $student_id, string $course_id, string $section_id, s
         "year" => $year
     ]);
 }
-
