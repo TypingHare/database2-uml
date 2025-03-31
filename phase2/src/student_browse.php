@@ -16,8 +16,10 @@ require_once 'minimal.php';
 
 // $year = date("Y");
 
+$semester = "Fall";
+$year = "2025";
 $student_id = $_GET['student_id'];
-$sections = get_all_sections_semester_year("Fall", "2025");
+$sections = get_all_sections_semester_year($semester, $year);
 
 function get_register_section_url(string $student_id,array $section): string
 {
@@ -51,7 +53,7 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
 
 <div style="display: flex; justify-content: center; margin-top: 16vh;">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <h2>Browse Courses</h2>
+    <h2><?= $semester ?> <?= $year ?> Courses</h2>
 
     <table style="width:100%;">
       <tr>

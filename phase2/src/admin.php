@@ -53,6 +53,10 @@ require_once 'minimal.php';
     <a href="<?= Page::SELECT_PHD ?>">
       <button>Manage TAs</button>
     </a>
+
+    <a href="<?= Page::SELECT_GRADER_SECTION ?>">
+      <button>Manage graders</button>
+    </a>
   </div>
 </div>
 

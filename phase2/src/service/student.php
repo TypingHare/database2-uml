@@ -625,11 +625,31 @@ function register_student(
 
 }
 
-function get_students_by_section(
-    string $course_id,
-    string $section_id,
-    string $semester,
-    string $year
-): array|null {
-    return [];
+function add_grader(string $student_id, string $course_id, string $section_id, string $semester, string $year): null
+{
+    if (get_student_type($student_id) == StudentType::UNDERGRADUATE) {
+        $stmt = pdo_instance()->prepare(
+            "
+            INSERT INTO undergraduategrader(student_id, course_id, section_id, semester, year)
+            VALUES (:student_id, :course_id, :section_id, :semester, :year); 
+        "
+        );
+    }
+    else {
+        $stmt = pdo_instance()->prepare(
+            "
+            INSERT INTO mastergrader(student_id, course_id, section_id, semester, year)
+            VALUES (:student_id, :course_id, :section_id, :semester, :year); 
+        "
+        );
+    }
+    
+    execute($stmt, [
+        "student_id" => $student_id,
+        "course_id" => $course_id,
+        "section_id" => $section_id,
+        "semester" => $semester,
+        "year" => $year
+    ]);
 }
+

@@ -97,7 +97,7 @@ $unpaid_bills_message = "❗ HOLD: You have $num_unpaid_bills unpaid $bill_corre
     </a>
 
     <a href="<?= $browse_classes_url ?>">
-      <button>Browse classes</button>
+      <button>Browse courses</button>
     </a>
 
     <a href="<?= $suggested_course_url ?>">
