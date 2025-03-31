@@ -481,7 +481,14 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('0488917281', 'MATH3010', 'Section202', 'Spring', 2025, 'C+'),
        ('0488917281', 'MATH3040', 'Section101', 'Fall', 2024, 'A+'),
        ('0488917281', 'COMP2030', 'Section201', 'Spring', 2025, 'C'),
-       ('0488917281', 'COMP3050', 'Section201', 'Spring', 2025, 'A');
+       ('0488917281', 'COMP3050', 'Section201', 'Spring', 2025, 'A'),
+       ('9102837465', 'SOC1020', 'Section101', 'Fall', 2025, null),
+       ('1029384756', 'SOC1020', 'Section101', 'Fall', 2025, null),
+       ('5519262752', 'SOC1020', 'Section101', 'Fall', 2025, null),
+       ('9602837465', 'SOC1020', 'Section101', 'Fall', 2025, null),
+       ('9102837565', 'SOC1020', 'Section101', 'Fall', 2025, null),
+       ('9602837461', 'SOC1020', 'Section101', 'Fall', 2025, null);
+
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
