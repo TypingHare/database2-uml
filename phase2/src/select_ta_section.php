@@ -1,25 +1,22 @@
 <?php
 
 require_once 'minimal.php';
-
-
-
 function get_ta_section(string $student_id): array
 {
     $stmt = pdo_instance()->prepare(
         "
             SELECT * 
-            FROM (SELECT course_id, section_id, semester, year
+            FROM (SELECT course_id, section_id, semester, year  
                 FROM take
                 GROUP BY course_id, section_id, semester, year
                 HAVING COUNT(*) > 10
             ) AS a 
             WHERE NOT EXISTS ( SELECT 1
-                FROM (SELECT year, semester
+                FROM (SELECT year, semester                     
                     FROM TA
                     WHERE student_id = :student_id
                     ) AS b 
-                WHERE a.semester = b.semester 
+                WHERE a.semester = b.semester
                 AND a.year = b.year
             );
         "
@@ -29,20 +26,9 @@ function get_ta_section(string $student_id): array
     return $stmt->fetchAll();
 }
 
-//$sections = get_all_sections();
-
-
 $student_id = $_GET['student_id'];
 $student_name = get_student_by_id($student_id);
 $sections_for_ta = get_ta_section($student_id);
-//var_dump($student);
-
-//var_dump($sections);
-//var_dump($sections_for_ta);
-//exit(0);
-
-
-//$instructor_id = $_GET['student_id'] ?? '';
 function get_edit_url(array $sections_for_ta): string
 {
     return build_url(Page::ASSIGN_TA, [
@@ -54,7 +40,6 @@ function get_edit_url(array $sections_for_ta): string
     ]);
 }
 ?>
-
 
 <html lang="en">
 <head>

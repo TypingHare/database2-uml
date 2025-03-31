@@ -9,12 +9,24 @@
 
 require_once 'minimal.php';
 
+
+
 $instructor_id = $_GET['instructor_id'];
 $advisees = get_all_advisees($instructor_id);
 
 $back_url = build_url(Page::INSTRUCTOR, [
     'instructor_id' => $instructor_id
 ]);
+
+function get_student_url(string $student_id, string $instructor_id): string// go to url passing student id as query
+{
+    return build_url(Page::STUDENT, [
+        'student_id' => $student_id,
+        'instructor_id' => $instructor_id
+    ]);
+}
+
+
 
 ?>
 
@@ -43,6 +55,7 @@ $back_url = build_url(Page::INSTRUCTOR, [
         <td>Student Name</td>
         <td>Start Date</td>
         <td>End Date</td>
+        <td style="font-weight: normal; color: gray;">Operation</td>
       </tr>
 
         <?php foreach ($advisees as $advisee): ?>
@@ -51,6 +64,11 @@ $back_url = build_url(Page::INSTRUCTOR, [
             <td><?= $advisee['name'] ?></td>
             <td><?= $advisee['start_date'] ?></td>
             <td><?= $advisee['end_date'] ?></td>
+            <td>
+              <a href="<?= get_student_url($advisee['student_id'], $instructor_id) ?>"> 
+                <button>Access</button>
+              </a>
+            </td>
           </tr>
         <?php endforeach ?>
     </table>

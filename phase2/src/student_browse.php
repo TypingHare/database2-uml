@@ -21,7 +21,7 @@ $year = "2025";
 $student_id = $_GET['student_id'];
 $sections = get_all_sections_semester_year($semester, $year);
 
-function get_register_section_url(string $student_id,array $section): string
+function get_register_section_url(string $student_id, array $section): string
 {
     return build_url(Page::REGISTER, [
         'student_id' => $student_id,
@@ -76,7 +76,7 @@ $back_url = build_url(Page::STUDENT, ['student_id' => $student_id]);
             <td><?= classroom_to_string($section) ?></td>
             <td><?= time_slot_to_string($section) ?></td>
             <td>
-              <a href="<?= get_register_section_url($student_id,$section) ?>">
+              <a href="<?= get_register_section_url($student_id, $section) ?>">
                 <button>View</button>
               </a>
             </td>

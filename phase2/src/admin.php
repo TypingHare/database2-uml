@@ -56,6 +56,8 @@ require_once 'minimal.php';
 
     <a href="<?= Page::SELECT_GRADER_SECTION ?>">
       <button>Manage graders</button>
+    <a href="<?= Page::VIEW_TA ?>">
+      <button>TA Records</button>
     </a>
   </div>
 </div>
