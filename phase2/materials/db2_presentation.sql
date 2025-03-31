@@ -309,12 +309,22 @@ VALUES ('COMP2030', 'Assembly Language', 3),
 -- BEGIN ADD_SECTIONS
 INSERT INTO section (course_id, section_id, semester, year, instructor_id,
                      classroom_id, time_slot_id)
-VALUES ('COMP2030', 'Section201', 'Fall', 2025, '3', 'CR1', 'TS4'),
+VALUES ('COMP2030', 'Section201', 'Spring', 2025, '3', 'CR1', 'TS4'),
+       ('COMP3050', 'Section201', 'Spring', 2025, '4', 'CR2', 'TS5'),
+       ('MATH1010', 'Section101', 'Spring', 2025, '5', 'CR3', 'TS1'),
+       ('MATH3010', 'Section202', 'Spring', 2025, '1', 'CR5', 'TS1'),
+       ('COMP1010', 'Section101', 'Spring', 2025, '6', 'CR3', 'TS3'),
+       ('COMP2010', 'Section201', 'Spring', 2025, '2', 'CR4', 'TS2'),
+       ('COMP2030', 'Section201', 'Fall', 2025, '3', 'CR1', 'TS4'),
        ('COMP3050', 'Section201', 'Fall', 2025, '4', 'CR2', 'TS5'),
        ('MATH1010', 'Section101', 'Fall', 2025, '5', 'CR3', 'TS1'),
        ('MATH3010', 'Section202', 'Fall', 2025, '1', 'CR5', 'TS1'),
        ('COMP1010', 'Section101', 'Fall', 2025, '6', 'CR3', 'TS3'),
-       ('COMP2010', 'Section201', 'Fall', 2025, '2', 'CR4', 'TS2');
+       ('COMP2010', 'Section201', 'Fall', 2025, '2', 'CR4', 'TS2'),
+       ('MATH1020', 'Section101', 'Fall', 2024, '2', 'CR4', 'TS1'),
+       ('MATH3040', 'Section101', 'Fall', 2024, '3', 'CR5', 'TS2'),
+       ('SOC1010', 'Section101', 'Fall', 2025, '1', 'CR5', 'TS2'),
+       ('SOC1020', 'Section101', 'Fall', 2025, '5', 'CR3', 'TS2');
 -- END ADD_SECTIONS
 
 -- BEGIN ADD_STUDENTS
@@ -463,7 +473,18 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('5519262752', 'COMP1010', 'Section101', 'Fall', 2025, null),
        ('9602837465', 'COMP1010', 'Section101', 'Fall', 2025, null),
        ('9102837565', 'COMP1010', 'Section101', 'Fall', 2025, null),
-       ('9602837461', 'COMP1010', 'Section101', 'Fall', 2025, null);
+       ('9602837461', 'COMP1010', 'Section101', 'Fall', 2025, null),       
+       ('0488917281', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
+       ('0488917281', 'COMP1020', 'Section102', 'Spring', 2024, 'A'),
+       ('0488917281', 'COMP2010', 'Section101', 'Fall', 2023, 'B'),
+       ('0488917281', 'COMP2040', 'Section201', 'Spring', 2024, 'B-'),
+       ('0488917281', 'MATH1010', 'Section101', 'Spring', 2025, 'A+'),
+       ('0488917281', 'MATH1020', 'Section101', 'Fall', 2024, 'B'),
+       ('0488917281', 'MATH3010', 'Section202', 'Spring', 2025, 'C+'),
+       ('0488917281', 'MATH3040', 'Section101', 'Fall', 2024, 'A+'),
+       ('0488917281', 'COMP2030', 'Section201', 'Spring', 2025, 'C'),
+       ('0488917281', 'COMP3050', 'Section201', 'Spring', 2025, 'A');
+
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
