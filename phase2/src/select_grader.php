@@ -29,9 +29,9 @@ require_once 'minimal.php';
             AND NOT EXISTS (
                 SELECT 1 
                 FROM (
-                    SELECT student_id FROM undergraduategrader
+                    SELECT student_id, semester, year FROM undergraduategrader
                     UNION
-                    SELECT student_id FROM mastergrader
+                    SELECT student_id, semester, year FROM mastergrader
                 ) as b
                 WHERE b.student_id = a.student_id 
                 AND b.semester = t.semester 
