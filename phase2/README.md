@@ -1,5 +1,11 @@
 ## Phase II
 
+### Team Members
+
+> - James Chen
+> - Victor Reust
+> - Alexis Marx
+
 ### Deployment Instruction
 
 This application requires the following environment requirements:
