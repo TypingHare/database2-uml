@@ -108,9 +108,9 @@ $back_to_advisee_url = build_url(Page::ADVISEE, [
         <button>View bills</button>
       </a>
 
-      <a href="<?= $browse_classes_url ?>">
-        <button>Browse classes</button>
-      </a>
+    <a href="<?= $browse_classes_url ?>">
+      <button>Browse courses</button>
+    </a>
 
       <a href="<?= $suggested_course_url ?>">
         <button>Suggested courses</button>

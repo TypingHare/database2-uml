@@ -194,4 +194,13 @@ readonly class Page
     // This page displays several suggested courses that the student can sign up
     // for the next semester.
     public const SUGGESTED_COURSES = 'suggested_courses.php';
+
+    // This page allows admin to select a section eligible to be assigned a grader
+    public const SELECT_GRADER_SECTION = 'select_grader_section.php';
+
+    // This page allows admin to select a student to be a grader for a section
+    public const SELECT_GRADER = 'select_grader.php';
+
+    // This page allows admin to assign a selected student as a grader to a selected section
+    public const ASSIGN_GRADER = 'assign_grader.php';
 }

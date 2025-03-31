@@ -8,7 +8,6 @@ require_once 'minimal.php';
  * This page allows students to browse all sections that are offered in
  * the current semester
  *
- * @param_get student_id The student ID.
  * @author Alexis Marx
  */
 

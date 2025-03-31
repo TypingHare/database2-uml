@@ -631,18 +631,12 @@ function get_student_sections_by_semester(
     return $stmt->fetchAll();
 }
 
-/**
- * Determines if section has space to be registered into
- *
- * @author Alexis Marx
- */
-
-function check_section_availability(
+function get_section_num_enrolled(
     string $course_id,
     string $section_id,
     string $semester,
     string $year
-): bool {
+): int {
     $stmt = pdo_instance()->prepare(
         "
             SELECT COUNT(*) AS seats_filled
@@ -660,9 +654,49 @@ function check_section_availability(
         'year' => $year,
     ]);
 
-    $count = $stmt->fetch();
+    return $stmt->fetch();
+}
+
+/**
+ * Determines if section has space to be registered into
+ *
+ * @author Alexis Marx
+ */
+
+function check_section_availability(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): bool {
+    
+    $count = get_section_num_enrolled($course_id, $section_id, $semester, $year);
+
     if ($count['seats_filled'] < 15) {
         return true;
     }
     return false;
+}
+
+
+/**
+ * Returns an array of all sections eligible to be assigned a grader
+ *
+ * @author Alexis Marx
+ */
+
+
+function get_grader_sections() : array 
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT course_id, section_id, semester, year
+            FROM take
+            GROUP BY course_id, section_id, semester, year
+            HAVING COUNT(*) BETWEEN 5 AND 10;
+        "
+    );
+    execute($stmt);
+
+    return $stmt->fetchAll();
 }
