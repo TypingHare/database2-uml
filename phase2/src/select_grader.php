@@ -4,15 +4,15 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page allows admin to select MS or UG students to be graders
  *
  * @author Alexis Marx
  */
 
-  function get_possible_graders(string $course_id, string $section_id, string $semester, string $year) : array 
-  {
-     $stmt = pdo_instance()->prepare(
+function get_possible_graders(string $course_id, string $section_id, string $semester, string $year): array
+{
+    $stmt = pdo_instance()->prepare(
         "
           SELECT DISTINCT a.student_id
           FROM (
@@ -40,18 +40,19 @@ require_once 'minimal.php';
 
         "
     );
-    
+
     execute($stmt, [
-      "course_id" => $course_id,
-      "section_id" => $section_id,
-      "semester" => $semester,
-      "year" => $year
-  ]);
+        "course_id" => $course_id,
+        "section_id" => $section_id,
+        "semester" => $semester,
+        "year" => $year
+    ]);
 
     return $stmt->fetchAll();
-  }
+}
 
-  function get_assign_url(string $student_id, string $course_id, string $section_id, string $semester, string $year) : string {
+function get_assign_url(string $student_id, string $course_id, string $section_id, string $semester, string $year): string
+{
     return build_url(Page::ASSIGN_GRADER, [
         'student_id' => $student_id,
         'course_id' => $course_id,
@@ -59,15 +60,15 @@ require_once 'minimal.php';
         'semester' => $semester,
         'year' => $year
     ]);
- }
+}
 
- $course_id = $_GET['course_id'];
- $section_id = $_GET['section_id'];
- $semester = $_GET['semester'];
- $year = $_GET['year'];
- $candidates = get_possible_graders($course_id, $section_id, $semester, $year);
+$course_id = $_GET['course_id'];
+$section_id = $_GET['section_id'];
+$semester = $_GET['semester'];
+$year = $_GET['year'];
+$candidates = get_possible_graders($course_id, $section_id, $semester, $year);
 
- ?>
+?>
 
 <html lang="en">
 <head>
@@ -94,28 +95,29 @@ require_once 'minimal.php';
         <td>Degree Level</td>
         <td style="font-weight: normal; color: gray;">Operation</td>
       </tr>
-        <?php foreach ($candidates as $student): 
-          $s = get_student_by_id($student['student_id']);
-          $name = $s['name'];
-          $type = get_student_type($student['student_id']);
-        ?>
+        <?php foreach ($candidates as $student):
+            $s = get_student_by_id($student['student_id']);
+            $name = $s['name'];
+            $type = get_student_type($student['student_id']);
+            ?>
           <tr>
             <td><?= $student['student_id'] ?></td>
             <td><?= $name ?></td>
             <td><?= $type ?></td>
             <td>
-              <a href="<?= get_assign_url($student['student_id'], $course_id, $section_id, $semester, $year) ?>"> 
+              <a
+                href="<?= get_assign_url($student['student_id'], $course_id, $section_id, $semester, $year) ?>">
                 <button>Assign</button>
               </a>
             </td>
           </tr>
-        <?php endforeach ?> 
+        <?php endforeach ?>
     </table>
 
     <div style="display: flex; gap: 0.5rem;">
-        <a href="<?= Page::SELECT_GRADER_SECTION ?>">
-            <button type="button">Back</button>
-        </a>
+      <a href="<?= Page::SELECT_GRADER_SECTION ?>">
+        <button type="button">Back</button>
+      </a>
     </div>
   </div>
 </div>
