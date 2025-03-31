@@ -37,6 +37,14 @@ In this document, write down what you have implemented in detail.
 ### 4. Course History
 - Student can view their course history
   - Table for current courses
+  - Table for completed courses
+- Total credits calculated and displayed
+  - 'F' does not earn course credits
+- Cumulative GPA calculated and displayed
+  - Courses with passing grades have there letter grade multiplied by credits for course
+  - All courses then added together
+  - Total grade then gets divided by total credits to get Cumulative GPA
+  - In case of 0 credits, GPA is set to 0
 
 ### 5. Instructor Course History
 
