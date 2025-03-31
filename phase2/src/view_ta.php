@@ -73,8 +73,6 @@ $TAs = get_all_tas();
         </a>
       </div>
     </div>
-
-    <!-- Add other elements. -->
   </div>
 </div>
 

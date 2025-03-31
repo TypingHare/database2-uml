@@ -460,6 +460,89 @@ function has_taken_prerequisites(string $student_id, string $course_id): bool
 
 ```
 
+### 4. Student Course History
+```php
+//Seperates current courses and completed courses into two seperate tables
+//sum credits of completed(passed) courses
+//converts letter grade to numerical value
+//calculates cumulative gpa
+
+// service/course.php
+
+//use get_all_student_courses and display all courses with a grade(pass and fail)
+function get_all_completed_courses(string $student_id): array
+{
+    $courses = get_all_student_courses($student_id);
+    return array_filter(
+        $courses,
+        fn ($course) => $course['grade'] !== null
+    );
+}
+
+
+//use get_all_student_courses and display all courses with null in the grade column
+function get_all_active_courses(string $student_id): array
+{
+    $courses = get_all_student_courses($student_id);
+    return array_filter(
+        $courses,
+        fn ($course) => $course['grade'] === null
+    );
+}
+//using get_all_completed courses, this filters out failing grades(F) and then sums the rest
+function get_total_credits(string $student_id): int
+{
+    $completed_courses = get_all_completed_courses($student_id);
+    $passed = array_filter(
+        $completed_courses,
+        fn ($course) => $course['grade'] !== 'F'
+    );
+    $credits_array = array_column($passed, 'credits');
+    return array_sum(array_map('intval', $credits_array));
+}
+
+//converts letter grade to numeric value for calculating cumulative gpa
+function convert_letter_grade_to_number(string $letter_grade): float
+{
+    return [
+        'A+' => 4.0,
+        'A' => 3.9,
+        'A-' => 3.7,
+        'B+' => 3.3,
+        'B' => 3.0,
+        'B-' => 2.7,
+        'C+' => 2.3,
+        'C' => 2.0,
+        'C-' => 1.7,
+        'D+' => 1.3,
+        'D' => 1.0,
+        'D-' => 0.7,
+        'F' => 0.0
+    ][$letter_grade];
+}
+
+// service/student.php
+
+//sums up total credits from completed classes
+//multiply each letter grade by credits for that course and store each in array
+//sum grade_array for a total grade
+//divide total grade by total credits. Return 0 if total credits = 0
+function get_cumulative_gpa(string $student_id): float
+{
+    $completed_courses = get_all_completed_courses($student_id);
+    $total_credits = array_sum(
+        array_map('intval', array_column($completed_courses, 'credits'))
+    );
+
+    $grade_array = array_map(
+        fn ($course) => convert_letter_grade_to_number($course['grade']) * intval($course['credits']),
+        $completed_courses
+    );
+    $total_grade = array_sum($grade_array);
+
+    return $total_credits === 0 ? 0. : $total_grade / $total_credits;
+}
+```
 ### 5. Instructor Course History
 
 ```php
@@ -538,6 +621,66 @@ function get_section_records(
 
     return $stmt->fetchAll();
 }
+
+```
+
+### 6. Assign phd student as TA
+
+```php
+//choose a TA from a list of phd students
+//Select section for TA to be assigned too
+    //must contain more then 10 students
+    //PhD student can only be assigned one section per semester
+//confirm and assign TA
+//view list of TAs 
+
+// src/select_ta_section.php
+
+//"a" is all sections with count > then 10(more than 10 students in the section)
+//"b" is all years and semesters student has been a TA where semesters and years match between a and b
+//a - b, no sections will appear during a semester where PhD student is already serving as a TA
+function get_ta_section(string $student_id): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * 
+            FROM (SELECT course_id, section_id, semester, year  
+                FROM take
+                GROUP BY course_id, section_id, semester, year
+                HAVING COUNT(*) > 10
+            ) AS a 
+            WHERE NOT EXISTS ( SELECT 1
+                FROM (SELECT year, semester                     
+                    FROM TA
+                    WHERE student_id = :student_id
+                    ) AS b 
+                WHERE a.semester = b.semester
+                AND a.year = b.year
+            );
+        "
+    );
+    execute($stmt, ['student_id' => $student_id]);
+
+    return $stmt->fetchAll();
+}
+
+// src/view_ta.php
+//view all assigned TAs
+function get_all_tas(): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * 
+            FROM TA
+            ORDER BY semester, year;
+        "
+    );
+    execute($stmt);
+
+    return $stmt->fetchAll();
+}
+
+
 
 ```
 
@@ -650,6 +793,89 @@ function get_possible_graders(string $course_id, string $section_id, string $sem
         "year" => $year
     ]);
 }
+
+```
+
+### 8. Instructors Assigned as Advisors to PhD Students
+```php
+//Admin and instructors have ability to assign instructors as adviors to PhD students
+    //1 or 2 advisors per student
+    //Advising start and optional end date
+    //can view student course history and update their information
+
+// service/student.php
+
+
+function get_phd_and_advisors(): array
+{
+    // Get all records in the `advise` table
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM advise
+            JOIN student ON advise.student_id = student.student_id
+            JOIN instructor ON advise.instructor_id = instructor.instructor_id
+        "
+    );
+    execute($stmt);
+    $advise_records = $stmt->fetchAll();
+
+    return array_reduce($advise_records, function ($result, $record) {
+        $result[$record['student_id']][] = $record;
+        return $result;
+    }, []);
+}
+
+
+// src/advisor.php
+
+//arrays for table
+$phd_and_advisors = get_phd_and_advisors();
+$phd_having_advisors = array_keys($phd_and_advisors);
+$phd_having_no_advisors = [];
+foreach (get_all_phd() as $phd) {
+    if (!in_array($phd['student_id'], $phd_having_advisors)) {
+        $phd_having_no_advisors[] = $phd;
+    }
+}
+
+//advisor records for table
+function get_advisor_desc(array|null $record): string
+{
+    if (!$record) {
+        return '';
+    }
+
+    return "{$record['instructor_name']} <br/> ({$record['start_date']} to {$record['end_date']})";
+}
+
+//table containing all phd students with and without advisors 
+ <?php foreach ($phd_and_advisors as $records): ?>
+          <tr>
+            <td><?= $records[0]['student_id'] ?></td>
+            <td><?= $records[0]['name'] ?></td>
+            <td><?= get_advisor_desc($records[0] ?? null) ?></td>
+            <td><?= get_advisor_desc($records[1] ?? null) ?></td>
+            <td>
+              <a href="<?= get_edit_url($records[0]['student_id']) ?>">
+                <button>Edit</button>
+              </a>
+            </td>
+          </tr>
+        <?php endforeach ?>
+
+        <?php foreach ($phd_having_no_advisors as $phd): ?>
+          <tr>
+            <td><?= $phd['student_id'] ?></td>
+            <td><?= $phd['name'] ?></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="<?= get_edit_url($phd['student_id']) ?>">
+                <button>Edit</button>
+              </a>
+            </td>
+          </tr>
+        <?php endforeach ?>
 
 ```
 

@@ -18,7 +18,8 @@ $back_url = build_url(Page::INSTRUCTOR, [
     'instructor_id' => $instructor_id
 ]);
 
-function get_student_url(string $student_id, string $instructor_id): string// go to url passing student id as query
+// go to url passing student id and instructor id as query(needed for back button on student page)
+function get_student_url(string $student_id, string $instructor_id): string
 {
     return build_url(Page::STUDENT, [
         'student_id' => $student_id,
