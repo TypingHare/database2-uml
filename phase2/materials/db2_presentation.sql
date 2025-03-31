@@ -380,13 +380,13 @@ VALUES ('0102559623', 'Steve Rogers', 'avengersassemble@stark.com',
         'Miner School of Computer & Information Sciences'),
        ('1029384756', 'Shuri', 'shuri@uml.edu',
         'Miner School of Computer & Information Sciences'),
-        ('9102817465', 'Thor Odinson', 'hammertime@uml.edu',
+       ('9102817465', 'Thor Odinson', 'hammertime@uml.edu',
         'Miner School of Computer & Information Sciences'),
-        ('9602837465', 'Reed Richards', 'stretcharmstrong@uml.edu',
+       ('9602837465', 'Reed Richards', 'stretcharmstrong@uml.edu',
         'Miner School of Computer & Information Sciences'),
-        ('9102837565', 'Sue Storm', 'invisibo@uml.edu',
+       ('9102837565', 'Sue Storm', 'invisibo@uml.edu',
         'Miner School of Computer & Information Sciences'),
-        ('9602837461', 'Samuel Sterns', 'leader@uml.edu',
+       ('9602837461', 'Samuel Sterns', 'leader@uml.edu',
         'Miner School of Computer & Information Sciences');
 
 INSERT INTO undergraduate (student_id, total_credits, class_standing)
@@ -414,8 +414,6 @@ VALUES ('0488917281', 'Passed', '2022-04-06', '2025-04-06'),
        ('9602837465', 'Passed', '2021-10-12', '2025-04-06'),
        ('9102837565', 'Passed', '2021-10-12', '2025-04-06'),
        ('9602837461', 'Passed', '2021-10-12', '2025-04-06');
-   
-       
 -- END ADD_STUDENTS
 
 -- BEGIN ADD_TAKES_RECORDS
@@ -473,7 +471,7 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('5519262752', 'COMP1010', 'Section101', 'Fall', 2025, null),
        ('9602837465', 'COMP1010', 'Section101', 'Fall', 2025, null),
        ('9102837565', 'COMP1010', 'Section101', 'Fall', 2025, null),
-       ('9602837461', 'COMP1010', 'Section101', 'Fall', 2025, null),       
+       ('9602837461', 'COMP1010', 'Section101', 'Fall', 2025, null),
        ('0488917281', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('0488917281', 'COMP1020', 'Section102', 'Spring', 2024, 'A'),
        ('0488917281', 'COMP2010', 'Section101', 'Fall', 2023, 'B'),
@@ -484,7 +482,6 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('0488917281', 'MATH3040', 'Section101', 'Fall', 2024, 'A+'),
        ('0488917281', 'COMP2030', 'Section201', 'Spring', 2025, 'C'),
        ('0488917281', 'COMP3050', 'Section201', 'Spring', 2025, 'A');
-
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
@@ -503,6 +500,18 @@ VALUES ('1', '0175846026', '2025-01-21', '2025-12-21'),
        ('3', '0175846026', '2025-01-21', '2025-12-21'),
        ('5', '0488917281', '2024-01-21', '2025-05-04');
 -- END ADD_ADVISE_RECORDS
+
+-- BEGIN ADD_UNDERGRADUATE_GRADER_RECORDS
+INSERT INTO undergraduateGrader
+(student_id, course_id, section_id, semester, year)
+VALUES ('7362819450', 'MATH3010', 'Section202', 'Fall', '2025'),
+       ('7362819450', 'COMP3050', 'Section201', 'Fall', '2025');
+-- END ADD_UNDERGRADUATE_GRADER_RECORDS
+
+-- BEGIN ADD_UNDERGRADUATE_GRADER_RECORDS
+INSERT INTO masterGrader(student_id, course_id, section_id, semester, year)
+VALUES ('5519262752', 'COMP2010', 'Section201', 'Fall', '2025');
+-- END ADD_UNDERGRADUATE_GRADER_RECORDS
 
 -- BEGIN CREATE_BILL_TABLE
 -- @desc Create a payment table.
