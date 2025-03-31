@@ -29,9 +29,9 @@ require_once 'minimal.php';
             AND NOT EXISTS (
                 SELECT 1 
                 FROM (
-                    SELECT student_id FROM undergraduategrader
+                    SELECT student_id, semester, year FROM undergraduategrader
                     UNION
-                    SELECT student_id FROM mastergrader
+                    SELECT student_id, semester, year FROM mastergrader
                 ) as b
                 WHERE b.student_id = a.student_id 
                 AND b.semester = t.semester 
@@ -104,7 +104,7 @@ require_once 'minimal.php';
             <td><?= $name ?></td>
             <td><?= $type ?></td>
             <td>
-              <a href="<?= get_assign_url($student['student_id'], $section['course_id'], $section['section_id'], $section['semester'], $section['year']) ?>"> 
+              <a href="<?= get_assign_url($student['student_id'], $course_id, $section_id, $semester, $year) ?>"> 
                 <button>Assign</button>
               </a>
             </td>
