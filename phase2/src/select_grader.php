@@ -104,7 +104,7 @@ require_once 'minimal.php';
             <td><?= $name ?></td>
             <td><?= $type ?></td>
             <td>
-              <a href="<?= get_assign_url($student['student_id'], $section['course_id'], $section['section_id'], $section['semester'], $section['year']) ?>"> 
+              <a href="<?= get_assign_url($student['student_id'], $course_id, $section_id, $semester, $year) ?>"> 
                 <button>Assign</button>
               </a>
             </td>
