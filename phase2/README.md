@@ -4,15 +4,17 @@
 
 This application requires the following environment requirements:
 
-* PHP - `8.2.x`
-* MariaDB - `15.x`
-* Apache (httpd) - `2.4.x`
+* PHP - `>= 8.2.x`
+* MariaDB - `>= 15.x`
+* Apache (httpd) - `>= 2.4.x`
 
-Move all the files in `src` to the httpd main document root, and visit the index file (`index.html`) by `localhost/`. On the index page, you are required to log in to the system. The application will redirect you to different dashboard pages based on the account type associated with the email. However, you can access different dashboard pages by the following URLs:
+**You should import the `materials/db2_presentation.sql` to the database before checking the application.**
+
+Move all the files in `src` to the *httpd main document root* (if using XAMPP, it should be `htdoc`), and visit the index file (`index.html`) by `localhost/`. On the index page, you are required to log in to the system. The application will redirect you to different dashboard pages based on the account type associated with the email. However, you can access different dashboard pages by the following URLs:
 
 - Admin Dashboard Page: `localhost/admin.php`
 - Instructor Dashboard Page: `localhost/instructor.php?instructor_id=1`
-- Student Dashboard Page: `localhost/student.php?student_id=1`
+- Student Dashboard Page: `localhost/student.php?student_id=0102559623`
 
 ### Student-Proposed Functionalities
 
@@ -61,3 +63,4 @@ The folder structure of the **source directory** is as follows:
 
 - [tasks.md](docs/tasks.md)
 - [tests.md](docs/tests.md)
+- [print_out.md](docs/print_out.md)
