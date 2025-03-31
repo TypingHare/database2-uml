@@ -62,6 +62,7 @@ function get_all_sections_instructor(string $instructor_id): array
     );
     execute($stmt, $data);
 
+    $sections = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $sections[$row['course_id']][] = $row;
     }
@@ -98,7 +99,7 @@ function get_section_records(
     string $section_id,
     string $semester,
     string $year
-) : array {
+): array {
     $data = [
         "course_id" => $course_id,
         "section_id" => $section_id,
@@ -683,9 +684,7 @@ function check_section_availability(
  *
  * @author Alexis Marx
  */
-
-
-function get_grader_sections() : array 
+function get_grader_sections(): array
 {
     $stmt = pdo_instance()->prepare(
         "
