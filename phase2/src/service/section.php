@@ -636,7 +636,7 @@ function get_section_num_enrolled(
     string $section_id,
     string $semester,
     string $year
-): int {
+): array {
     $stmt = pdo_instance()->prepare(
         "
             SELECT COUNT(*) AS seats_filled
@@ -669,7 +669,6 @@ function check_section_availability(
     string $semester,
     string $year
 ): bool {
-    
     $count = get_section_num_enrolled($course_id, $section_id, $semester, $year);
 
     if ($count['seats_filled'] < 15) {
