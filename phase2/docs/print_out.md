@@ -711,7 +711,7 @@ function get_grader_sections() : array
                     AND m.section_id = take.section_id
                     AND m.semester = take.semester
                     AND m.year = take.year
-);
+            );
         "
     );
     execute($stmt);
