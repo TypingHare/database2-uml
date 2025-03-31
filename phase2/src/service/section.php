@@ -693,7 +693,21 @@ function get_grader_sections() : array
             SELECT course_id, section_id, semester, year
             FROM take
             GROUP BY course_id, section_id, semester, year
-            HAVING COUNT(*) BETWEEN 5 AND 10;
+            HAVING COUNT(*) BETWEEN 5 AND 10
+            AND NOT EXISTS (
+                SELECT 1 FROM undergraduategrader u
+                WHERE u.course_id = take.course_id
+                    AND u.section_id = take.section_id
+                    AND u.semester = take.semester
+                    AND u.year = take.year
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM mastergrader m
+                WHERE m.course_id = take.course_id
+                    AND m.section_id = take.section_id
+                    AND m.semester = take.semester
+                    AND m.year = take.year
+);
         "
     );
     execute($stmt);

@@ -309,6 +309,350 @@ function check_instructor_time_slot(
 }
 ```
 
+### 3. Student Browse and Register
+
+```php
+// service/section.php
+
+//Fetches all sections from the database of a specific section and year.
+function get_all_sections_semester_year(string $semester, string $year): array
+{
+    $data = [
+        "semester" => $semester,
+        "year" => $year,
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * FROM section
+            LEFT JOIN instructor ON section.instructor_id = instructor.instructor_id
+            LEFT JOIN time_slot ON section.time_slot_id = time_slot.time_slot_id
+            LEFT JOIN classroom ON section.classroom_id = classroom.classroom_id
+            WHERE section.semester = :semester AND section.year = :year
+        "
+    );
+    execute($stmt, $data);
+
+    return $stmt->fetchAll();
+}
+
+// Returns number of students enrolled in a particular section
+function get_section_num_enrolled(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): int {
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT COUNT(*) AS seats_filled
+            FROM take
+            WHERE course_id = :course_id
+              AND section_id = :section_id
+              AND semester = :semester
+              AND year = :year
+        "
+    );
+    execute($stmt, [
+        'course_id' => $course_id,
+        'section_id' => $section_id,
+        'semester' => $semester,
+        'year' => $year,
+    ]);
+
+    return $stmt->fetch();
+}
+
+// Determines if a section has space to be registered into
+function check_section_availability(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): bool {
+    
+    $count = get_section_num_enrolled($course_id, $section_id, $semester, $year);
+
+    if ($count['seats_filled'] < 15) {
+        return true;
+    }
+    return false;
+}
+
+// service/student.php
+
+//Registers a student in a class if possible
+function register_student(
+    string $student_id,
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): array|null {
+
+    $stmt = pdo_instance()->prepare("
+    SELECT COUNT(*) FROM take 
+    WHERE student_id = ? AND course_id = ? AND section_id = ? AND semester = ? AND year = ?
+");
+    $stmt->execute([$student_id, $course_id, $section_id, $semester, $year]);
+
+    if ($stmt->fetchColumn() > 0) {
+        throw new RunTimeException("You are already registered for this section.");
+    }
+
+
+    if (!has_taken_prerequisites($student_id, $course_id)) {
+        throw new RuntimeException("The required prerequisites have not been taken.");
+    }
+
+    if (!check_section_availability($course_id, $section_id, $semester, $year)) {
+        throw new RuntimeException("This section is full.");
+    }
+
+    pdo_instance()->beginTransaction();
+    $stmt = pdo_instance()->prepare(
+        "
+            INSERT INTO take (
+                student_id,
+                course_id, 
+                section_id, 
+                semester, 
+                year, 
+                grade
+            ) VALUES (
+                :student_id,
+                :course_id, 
+                :section_id,
+                :semester, 
+                :year, 
+                :grade
+            )
+        "
+    );
+    $data = [
+        'student_id' => $student_id,
+        'course_id' => $course_id,
+        'section_id' => $section_id,
+        'semester' => $semester,
+        'year' => $year,
+        'grade' => null,
+    ];
+    $stmt->execute($data);
+
+    pdo_instance()->commit();
+
+    return $data;
+
+}
+
+// Determines if a student has taken a course's prerequisites.
+function has_taken_prerequisites(string $student_id, string $course_id): bool
+{
+    $prerequisites = get_prereqs($course_id);
+    $completed_courses = get_all_completed_courses($student_id);
+
+    foreach ($prerequisites as $prerequisite) {
+        if (!in_array($prerequisite, $completed_courses)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+```
+
+### 5. Instructor Course History
+
+```php
+// service/section.php
+
+// Returns all sections taught by a particular instructor, grouped so that upon displaying, the sections can be organized by course_id
+function get_all_sections_instructor(string $instructor_id): array
+{
+    $data = [
+        "instructor_id" => $instructor_id,
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT DISTINCT course_id, section_id from section
+            WHERE section.instructor_id = :instructor_id
+            GROUP BY course_id, section_id
+        "
+    );
+    execute($stmt, $data);
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $sections[$row['course_id']][] = $row;
+    }
+
+    return $sections;
+}
+
+// Gets all semester/year instances of a course and section that a specific instructor has taught
+function get_section_instances(
+    string $instructor_id,
+    string $course_id,
+    string $section_id,
+): array {
+
+    $data = [
+        "instructor_id" => $instructor_id,
+        "course_id" => $course_id,
+        "section_id" => $section_id
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT semester, year from section
+            WHERE section.instructor_id = :instructor_id AND 
+            section.course_id = :course_id AND
+            section.section_id = :section_id
+        "
+    );
+    execute($stmt, $data);
+
+    return $stmt->fetchAll();
+}
+
+// Gets the ids and grades of all students from a particular section instance
+function get_section_records(
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+) : array {
+    $data = [
+        "course_id" => $course_id,
+        "section_id" => $section_id,
+        "semester" => $semester,
+        "year" => $year
+    ];
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT student_id, grade from take
+            WHERE  take.course_id = :course_id AND
+            take.section_id = :section_id AND
+            take.semester = :semester AND
+            take.year = :year
+        "
+    );
+    execute($stmt, $data);
+
+    return $stmt->fetchAll();
+}
+
+```
+
+### 7. Admin Assigns Graders
+
+```php
+// service/section.php
+
+// Gets all section eligible to be assigned a grader
+function get_grader_sections() : array 
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT course_id, section_id, semester, year
+            FROM take
+            GROUP BY course_id, section_id, semester, year
+            HAVING COUNT(*) BETWEEN 5 AND 10
+            AND NOT EXISTS (
+                SELECT 1 FROM undergraduategrader u
+                WHERE u.course_id = take.course_id
+                    AND u.section_id = take.section_id
+                    AND u.semester = take.semester
+                    AND u.year = take.year
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM mastergrader m
+                WHERE m.course_id = take.course_id
+                    AND m.section_id = take.section_id
+                    AND m.semester = take.semester
+                    AND m.year = take.year
+);
+        "
+    );
+    execute($stmt);
+
+    return $stmt->fetchAll();
+}
+
+// select_grader.php
+
+// Gets all eligible graders for a particular course/section/semester/year
+function get_possible_graders(string $course_id, string $section_id, string $semester, string $year) : array 
+  {
+     $stmt = pdo_instance()->prepare(
+        "
+          SELECT DISTINCT a.student_id
+          FROM (
+              SELECT student_id FROM undergraduate
+              UNION
+              SELECT student_id FROM master
+          ) AS a
+          JOIN take t ON a.student_id = t.student_id
+          WHERE t.course_id = :course_id 
+            AND t.section_id = :section_id 
+            AND t.semester = :semester 
+            AND t.year = :year
+            AND t.grade IN ('A-', 'A')
+            AND NOT EXISTS (
+                SELECT 1 
+                FROM (
+                    SELECT student_id FROM undergraduategrader
+                    UNION
+                    SELECT student_id FROM mastergrader
+                ) as b
+                WHERE b.student_id = a.student_id 
+                AND b.semester = t.semester 
+                AND b.year = t.year
+            );
+
+        "
+    );
+    
+    execute($stmt, [
+      "course_id" => $course_id,
+      "section_id" => $section_id,
+      "semester" => $semester,
+      "year" => $year
+  ]);
+
+    return $stmt->fetchAll();
+  }
+
+  // service/student.php
+
+  // Adds selected grader for selected section to appropriate grader table
+  function add_grader(string $student_id, string $course_id, string $section_id, string $semester, string $year): null
+{
+    if (get_student_type($student_id) == StudentType::UNDERGRADUATE) {
+        $stmt = pdo_instance()->prepare(
+            "
+            INSERT INTO undergraduategrader(student_id, course_id, section_id, semester, year)
+            VALUES (:student_id, :course_id, :section_id, :semester, :year); 
+        "
+        );
+    }
+    else {
+        $stmt = pdo_instance()->prepare(
+            "
+            INSERT INTO mastergrader(student_id, course_id, section_id, semester, year)
+            VALUES (:student_id, :course_id, :section_id, :semester, :year); 
+        "
+        );
+    }
+    
+    execute($stmt, [
+        "student_id" => $student_id,
+        "course_id" => $course_id,
+        "section_id" => $section_id,
+        "semester" => $semester,
+        "year" => $year
+    ]);
+}
+
+```
+
 ### 9. Next Semester Course Suggestion
 
 ```php
