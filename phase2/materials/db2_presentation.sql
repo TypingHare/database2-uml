@@ -505,7 +505,7 @@ VALUES ('1', '0175846026', '2025-01-21', '2025-12-21'),
 INSERT INTO undergraduateGrader
 (student_id, course_id, section_id, semester, year)
 VALUES ('7362819450', 'MATH3010', 'Section202', 'Fall', '2025'),
-       ('7362819450', 'COMP3050', 'Section201', 'Fall', '2025');
+       ('8371948203', 'COMP3050', 'Section201', 'Fall', '2025');
 -- END ADD_UNDERGRADUATE_GRADER_RECORDS
 
 -- BEGIN ADD_UNDERGRADUATE_GRADER_RECORDS
