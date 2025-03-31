@@ -11,6 +11,7 @@ require_once 'minimal.php';
  */
 
 $sections = get_grader_sections();
+var_dump($sections);
 
 function get_assign_url(string $course_id, string $section_id, string $semester, string $year): string
 {

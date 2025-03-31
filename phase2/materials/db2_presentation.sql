@@ -324,7 +324,8 @@ VALUES ('COMP2030', 'Section201', 'Spring', 2025, '3', 'CR1', 'TS4'),
        ('MATH1020', 'Section101', 'Fall', 2024, '2', 'CR4', 'TS1'),
        ('MATH3040', 'Section101', 'Fall', 2024, '3', 'CR5', 'TS2'),
        ('SOC1010', 'Section101', 'Fall', 2025, '1', 'CR5', 'TS2'),
-       ('SOC1020', 'Section101', 'Fall', 2025, '5', 'CR3', 'TS2');
+       ('SOC1020', 'Section101', 'Fall', 2025, '5', 'CR3', 'TS2'),
+       ('SOC1020', 'Section101', 'Fall', 2023, '5', 'CR3', 'TS2');
 -- END ADD_SECTIONS
 
 -- BEGIN ADD_STUDENTS
@@ -487,8 +488,8 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('5519262752', 'SOC1020', 'Section101', 'Fall', 2025, null),
        ('9602837465', 'SOC1020', 'Section101', 'Fall', 2025, null),
        ('9102837565', 'SOC1020', 'Section101', 'Fall', 2025, null),
-       ('9602837461', 'SOC1020', 'Section101', 'Fall', 2025, null);
-
+       ('9602837461', 'SOC1020', 'Section101', 'Fall', 2025, null),
+       ('5519262752', 'SOC1020', 'Section101', 'Fall', 2023, 'A');
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
@@ -516,8 +517,6 @@ VALUES ('7362819450', 'MATH3010', 'Section202', 'Fall', '2025'),
 -- END ADD_UNDERGRADUATE_GRADER_RECORDS
 
 -- BEGIN ADD_UNDERGRADUATE_GRADER_RECORDS
-INSERT INTO masterGrader(student_id, course_id, section_id, semester, year)
-VALUES ('5519262752', 'COMP2010', 'Section201', 'Fall', '2025');
 -- END ADD_UNDERGRADUATE_GRADER_RECORDS
 
 -- BEGIN CREATE_BILL_TABLE
