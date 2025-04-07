@@ -17,7 +17,8 @@ readonly class SuccessResponse
      */
     public function __construct(
         private string $message,
-        private int    $code = 200 // standard response for successful HTTP request
+        private int    $code = 200,
+        private array  $data = []
     ) {
     }
 
@@ -29,10 +30,12 @@ readonly class SuccessResponse
     public function __toString(): string
     {
         http_response_code($this->code);
+        header('Content-Type: application/json');
         return json_encode([
             'status' => 'success',
             'url' => $_SERVER['REQUEST_URI'],
             'message' => $this->message,
+            'data' => $this->data
         ]);
     }
 }
