@@ -12,13 +12,14 @@ readonly class SuccessResponse
 {
     /**
      * @param string $message The success message.
+     * @param array $data data The response data.
      * @param int $code The HTTP status code.
      * @see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
      */
     public function __construct(
         private string $message,
+        private array  $data = [],
         private int    $code = 200,
-        private array  $data = []
     ) {
     }
 
@@ -31,6 +32,7 @@ readonly class SuccessResponse
     {
         http_response_code($this->code);
         header('Content-Type: application/json');
+
         return json_encode([
             'status' => 'success',
             'url' => $_SERVER['REQUEST_URI'],
@@ -49,12 +51,14 @@ readonly class ErrorResponse
 {
     /**
      * @param string $message The error message.
+     * @param array $data data The response data.
      * @param int $code The HTTP status code.
      * @see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
      */
     public function __construct(
         private string $message,
-        private int    $code = 400 // bad request. client error exist
+        private array  $data = [],
+        private int    $code = 400
     ) {
     }
 
@@ -66,10 +70,13 @@ readonly class ErrorResponse
     public function __toString(): string
     {
         http_response_code($this->code);
+        header('Content-Type: application/json');
+
         return json_encode([
             'status' => 'error',
             'url' => $_SERVER['REQUEST_URI'],
             'message' => $this->message,
+            'data' => $this->data
         ]);
     }
 }
