@@ -1,4 +1,4 @@
-package edu.uml.db2phase3.ui.theme
+package edu.uml.db2.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

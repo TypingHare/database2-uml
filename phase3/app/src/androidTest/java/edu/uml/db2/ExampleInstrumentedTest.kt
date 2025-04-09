@@ -1,4 +1,4 @@
-package edu.uml.db2phase3
+package edu.uml.db2
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("edu.uml.db2phase3", appContext.packageName)
+        assertEquals("edu.uml.db2", appContext.packageName)
     }
 }

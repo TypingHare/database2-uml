@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">db2phase3</string>
+    <string name="app_name">db2</string>
+    <string name="backend_root_url">http://10.0.2.2:80/api</string>
 </resources>

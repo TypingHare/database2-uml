@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "db2phase3"
+rootProject.name = "db2"
 include(":app")

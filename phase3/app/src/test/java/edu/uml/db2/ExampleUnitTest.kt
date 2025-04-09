@@ -1,4 +1,4 @@
-package edu.uml.db2phase3
+package edu.uml.db2
 
 import org.junit.Test
 
