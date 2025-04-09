@@ -12,7 +12,7 @@ package:mine level:info -message~:SLF4J -tag~:HWUI -tag~:ziparchive
 
 Here is an example of the response of the `/api/login.php` endpoint. Responses of all endpoints should contain four keys: `status`, `url`, `message`, and `data`:
 
-- `status`: Either `success` or `failure`.
+- `status`: Either `success` or `error`.
 - `url`: The request URL.
 - `message`: The success or failure message about the request.
 - `data`: Extra data that the client side can use. It would be where the **DTO** goes.
@@ -71,3 +71,47 @@ data class InstructorDto(
 ```
 
 ### API Endpoint (PHP)
+
+In Phase 3, we will continue using the PHP backend developed in Phase 2. However, we now need to add endpoints that return JSON responses. To support this, I added the `success_response` and `error_response` to `phase2/src/minimal.php`. All new API endpoint functions will be placed in the `phase2/src/api` directory.
+
+For example, the `phase2/src/api/login.php` serves as a login endpoint. It accepts a `POST` request with two post parameters: `email` and `password`. If there does not exist an account associated with the given `email`, it will execute:
+
+```php
+error_response("Account not found.");
+```
+
+Which will generate and return the following JSON string:
+
+```json
+{
+    "status": "error",
+    "url": "/api/login.php",
+    "message": "Account not found.",
+}
+```
+
+If the account type is `admin` and the password is correct, the following JSON string with be returned:
+
+```json
+{
+    "status": "success",
+    "url": "/api/login.php",
+    "message": "Logged in successfully.",
+    "data": {
+        "email": "admin@uml.edu",
+        "type": "admin"
+    }
+}
+```
+
+> [!IMPORTANT]
+>
+> To make sure the client side, the Android app, decodes the response string correctly, every API endpoint file should return a JSON string no matter what. To achieve this, make sure to add this at the end of the API file:
+>
+> ```php
+> error_response("HTTP method not supported: " . $_SERVER["REQUEST_METHOD"]);
+> ```
+
+> [!NOTE]
+>
+> To comply with the convention, all the keys in the returned object will be converted into `upperCamelCase`. For example, `student_id` will be converted into `studentId`. This would not affect values.

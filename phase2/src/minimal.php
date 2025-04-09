@@ -197,12 +197,11 @@ function success_response(string $message, array $data = [], int $code = 200): v
  * status code.
  *
  * @param string $message The error message to include in the response.
- * @param array $data Additional data to include in the response payload.
  * @param int $code The HTTP status code to return (default is 500).
  * @return void
  */
-function error_response(string $message, array $data = [], int $code = 500): void
+function error_response(string $message, int $code = 500): void
 {
-    echo new ErrorResponse($message, $data, $code);
+    echo new ErrorResponse($message, $code);
     exit(0);
 }

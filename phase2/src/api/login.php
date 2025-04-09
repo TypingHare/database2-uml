@@ -20,7 +20,7 @@ handle(HttpMethod::POST, function (array $data) {
     }
 
     if ($account['password'] !== $password) {
-        error_response("Wrong password.", ['email' => $email]);
+        error_response("Wrong password.");
     }
 
     switch ($account['type']) {
@@ -47,3 +47,5 @@ handle(HttpMethod::POST, function (array $data) {
             ]);
     }
 });
+
+error_response("HTTP method not supported: " . $_SERVER["REQUEST_METHOD"]);
