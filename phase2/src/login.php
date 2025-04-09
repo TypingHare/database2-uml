@@ -34,9 +34,7 @@ handle(HttpMethod::POST, function ($data) {
         );
     }
 
-    // success("Logged in successfully.");
-    echo new SuccessResponse("Logged in successfully.", 200, $account);
-    exit(1);
+    success("Logged in successfully.");
 
     // Redirect the user to different pages based on the account type
     echo $account['type'];
