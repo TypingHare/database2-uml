@@ -17,11 +17,7 @@ import androidx.compose.runtime.setValue
 import edu.uml.db2.common.sendRequest
 import edu.uml.db2.dto.LoginDto
 import edu.uml.db2.dto.Response
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.Parameters
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.InternalSerializationApi
 
 class LoginActivity : ComponentActivity() {
@@ -39,13 +35,8 @@ class LoginActivity : ComponentActivity() {
 fun LoginScreen() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
-    val client = remember {
-        HttpClient(OkHttp) { install(ContentNegotiation) { json() } }
-    }
-
     val handleClickButton = {
-        sendRequest(client, "login.php", Parameters.build {
+        sendRequest("login.php", Parameters.build {
             append("email", email)
             append("password", password)
         }, Response.serializer(LoginDto.serializer())) { res, isSuccess ->
