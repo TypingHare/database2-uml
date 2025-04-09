@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -62,10 +65,29 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 }
 
+val backendPropertiesFile = rootProject.file("backend.properties")
+val backendProperties = Properties().apply { load(FileInputStream(backendPropertiesFile)) }
+val backendRootUrl = backendProperties["rootUrl"] as String
+
 android {
     packaging {
         resources {
             excludes += "META-INF/INDEX.LIST"
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BACKEND_ROOT_URL", "\"$backendRootUrl\"")
+            resValue("string", "BACKEND_ROOT_URL", backendRootUrl)
+        }
+        release {
+            buildConfigField("String", "BACKEND_ROOT_URL", "\"$backendRootUrl\"")
+            resValue("string", "BACKEND_ROOT_URL", backendRootUrl)
         }
     }
 }

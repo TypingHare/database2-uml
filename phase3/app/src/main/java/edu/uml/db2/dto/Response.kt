@@ -26,5 +26,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 @InternalSerializationApi
 data class Response<D>(
-    val status: String, val url: String, val message: String, val data: D
+    val status: String, val url: String, val message: String, val data: D? = null
 )
