@@ -1,6 +1,7 @@
 package edu.uml.db2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import edu.uml.db2.api.getDepartmentList
 import edu.uml.db2.common.finishActivity
 import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppCenterColumn
@@ -41,13 +43,14 @@ fun CreateStudentAccountScreen() {
     var name by remember { mutableStateOf("") }
     var selectedDepartment by remember { mutableStateOf("") }
     var selectedType by remember { mutableStateOf("") }
+    var departments by remember { mutableStateOf(emptyList<String>()) }
 
-    val departments = listOf(
-        "Miner School of Computer & Information Sciences",
-        "Francis College of Engineering",
-        "Zuckerberg College of Health Sciences",
-        "College of Fine Arts, Humanities & Social Sciences"
-    )
+    getDepartmentList { res, isSuccess ->
+        when (isSuccess) {
+            true -> departments = res.data!!.list.map { it.deptName }
+            false -> Log.e("GET_DEPARTMENTS", res.message)
+        }
+    }
 
     val types = listOf("undergraduate", "graduate", "phd")
 

@@ -9,8 +9,8 @@ import kotlinx.serialization.InternalSerializationApi
 
 @OptIn(InternalSerializationApi::class)
 fun login(email: String, password: String, callback: (Response<LoginDto>, Boolean) -> Unit) {
-    Server.post(Endpoint.LOGIN, Parameters.build {
+    Server.post(Endpoint.LOGIN, LoginDto.serializer(), Parameters.build {
         append("email", email)
         append("password", password)
-    }, LoginDto.serializer(), callback)
+    }, callback)
 }
