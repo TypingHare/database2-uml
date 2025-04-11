@@ -14,5 +14,3 @@ handle(HttpMethod::GET, function () {
         "list" => $departments
     ]);
 });
-
-error_response("HTTP method not supported: " . $_SERVER["REQUEST_METHOD"]);
