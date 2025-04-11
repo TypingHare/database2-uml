@@ -17,8 +17,15 @@ import kotlinx.serialization.Serializable
  *         }
  *     }
  *
- * The JSON string will be deserialized into a Response object. The generic type "D" specifies the
+ * The JSON string will be deserialized into a Response object. The generic type `D` specifies the
  * structure of the object associated with the `data` key.
+ *
+ * You can access the deserializer of Response by:
+ *
+ *     Response.deserializer
+ *
+ * You can also access the deserializer of other classes that are annotated by @Serializable in the
+ * same way.
  *
  * @template <D> The generic type of the DTO to wrap.
  * @author James Chen

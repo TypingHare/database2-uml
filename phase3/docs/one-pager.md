@@ -1,8 +1,77 @@
 ## One Pager
 
+### Setup
+
+First, deploy the phase 2 code as we did before. Second, create a `phase3/backend.properties` and write into it the following content:
+
+```ini
+rootUrl=http://10.0.2.2:80/api
+```
+
+This entry will be first read by `build.gradle.kts` when the project is being built:
+
+```kotlin
+val backendPropertiesFile = rootProject.file("backend.properties")
+val backendProperties = Properties().apply { load(FileInputStream(backendPropertiesFile)) }
+val backendRootUrl = backendProperties["rootUrl"] as String
+
+android {
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BACKEND_ROOT_URL", "\"$backendRootUrl\"")
+            resValue("string", "BACKEND_ROOT_URL", backendRootUrl)
+        }
+        release {
+            buildConfigField("String", "BACKEND_ROOT_URL", "\"$backendRootUrl\"")
+            resValue("string", "BACKEND_ROOT_URL", backendRootUrl)
+        }
+    }
+}
+```
+
+Later, we can access the value in the `BuildConfig` object in our app. The `BuildConfig` object is automatically created by gradle when the app is being built.
+
+Let's call this entry the **backend root URL**. This entry is used in the `edu.uml.db2.common.Server` class located the following Kotlin file:
+
+```
+phase3/app/src/main/java/edu/uml/db2/common/Communication.kt
+```
+
+When a request is being sent, the `Server.request` function will *concatenate the backend root URL and the provided `url` argument*, and use it as the URL. For instance, if the backend root URL is `http://10.0.2.2:80/api`, and the provided URL is `login.php`, then the real URL to be used would be:
+
+```text
+http://10.0.2.2:80/api/login.php
+```
+
+This will be dispatched by the Android emulator to:
+
+```text
+http://localhost:80/api/login.php
+```
+
+on your machine. Here, `10.0.2.2` is a special IP address used when running an Android app on an emulator. It is used because the `localhost` inside the emulator refers to the emulator itself instead of the machine that runs the emulator.
+
+> [!IMPORTANT]
+>
+> Configurate the backend root URL based on your environment. Suppose you are accessing the api directory via:
+>
+> ```text
+> http://localhost:80/db2/phase2/src/api
+> ```
+>
+> Then your backend root URL should be:
+>
+> ```text
+> http://10.0.2.2:80/db2/phase2/src/api/
+> ```
+
 ### Logcat
 
-**Logcat** is a module in Android Studio that allows developers to see the logs.
+**Logcat** is a module in Android Studio that allows developers to see the logs. You can open Logcat by clicking the cat icon at the bottom-left of Android Studio. Replace the filter string with the following:
 
 ```text
 package:mine level:info -message~:SLF4J -tag~:HWUI -tag~:ziparchive
@@ -115,3 +184,14 @@ If the account type is `admin` and the password is correct, the following JSON s
 > [!NOTE]
 >
 > To comply with the convention, all the keys in the returned object will be converted into `upperCamelCase`. For example, `student_id` will be converted into `studentId`. This would not affect values.
+
+### Phase 3 Workflow
+
+1. Create an API endpoint in `phase2/src/api`.
+2. Test the API endpoint using [Postman](https://www.postman.com).
+3. Add the endpoint constant to `edu.uml.db2.common.Endpoint`.
+4. Create Dto's in `edu.uml.db2.dto`.
+5. Add functions that send a request to the backend to the `edu.uml.db2.api` package. Please refer to:
+    - `edu.uml.db2.api.getDepartmentList` for a `GET` request
+    - `edu.uml.db2.api.login` for a `POST` request
+6. Create activities in `edu.uml.db2`.

@@ -22,6 +22,9 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
+@OptIn(InternalSerializationApi::class)
+typealias ResponseCallback<D> = (res: Response<D>, isSuccess: Boolean) -> Unit
+
 object Server {
     private val client by lazy {
         HttpClient(OkHttp) {
@@ -31,28 +34,46 @@ object Server {
 
     /**
      * Sends a request to the server, and fire the callback function after receiving the response.
+     *
+     * @param method The HTTP method to use.
+     * @param url The URL portion that will be appended to the backend root URL, which is set in the
+     *            application `build.gradle.kts` file. The key of the backend root url is
+     *            BACKEND_ROOT_URL, which can be found in application BuildConfig.
+     * @param deserializer The deserializer of the data DTO.
+     * @param parameters The post parameters that are sent along with the request. These parameters
+     *                   are sent in the `x-www-form-urlencoded` format.
+     * @param callback The callback function that is fired after the response is received. This
+     *                 function will deserialize JSON string into a `Response` object and extract
+     *                 the `status` from it. When invoking, the response object and a boolean will
+     *                 be passed to the callback, where the boolean indicates if the request is
+     *                 successful.
+     * @see Response
      */
     @OptIn(InternalSerializationApi::class)
     private fun <D> request(
         method: HttpMethod,
         url: String,
-        parameters: Parameters,
         deserializer: KSerializer<D>,
-        callback: (Response<D>, Boolean) -> Unit
+        parameters: Parameters? = null,
+        callback: ResponseCallback<D>
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val httpResponse = client.request("${BuildConfig.BACKEND_ROOT_URL}/$url") {
-                    Log.i("HTTP", "${BuildConfig.BACKEND_ROOT_URL}/$url")
                     this.method = method
                     contentType(ContentType.Application.FormUrlEncoded)
-                    setBody(FormDataContent(parameters))
+                    if (parameters != null) {
+                        setBody(FormDataContent(parameters))
+                    }
                 }
                 val response = Json.decodeFromString(
                     Response.serializer(deserializer), httpResponse.body<String>()
                 )
 
-                Log.i("HTTP_RESPONSE", "[$method] ${response.url} (${response.status}) \"${response.message}\"")
+                Log.i(
+                    "HTTP_RESPONSE",
+                    "[$method] ${response.url} (${response.status}) \"${response.message}\""
+                )
 
                 callback(response, response.status == ResponseStatus.SUCCESS)
             } catch (ex: Exception) {
@@ -64,32 +85,32 @@ object Server {
     @OptIn(InternalSerializationApi::class)
     fun <D> get(
         url: String,
-        parameters: Parameters,
         deserializer: KSerializer<D>,
-        callback: (Response<D>, Boolean) -> Unit
-    ) = request(HttpMethod.Get, url, parameters, deserializer, callback)
+        parameters: Parameters? = null,
+        callback: ResponseCallback<D>
+    ) = request(HttpMethod.Get, url, deserializer, parameters, callback)
 
     @OptIn(InternalSerializationApi::class)
     fun <D> post(
         url: String,
-        parameters: Parameters,
         deserializer: KSerializer<D>,
-        callback: (Response<D>, Boolean) -> Unit
-    ) = request(HttpMethod.Post, url, parameters, deserializer, callback)
+        parameters: Parameters? = null,
+        callback: ResponseCallback<D>
+    ) = request(HttpMethod.Post, url, deserializer, parameters, callback)
 
     @OptIn(InternalSerializationApi::class)
     fun <D> put(
         url: String,
-        parameters: Parameters,
         deserializer: KSerializer<D>,
-        callback: (Response<D>, Boolean) -> Unit
-    ) = request(HttpMethod.Put, url, parameters, deserializer, callback)
+        parameters: Parameters? = null,
+        callback: ResponseCallback<D>
+    ) = request(HttpMethod.Put, url, deserializer, parameters, callback)
 
     @OptIn(InternalSerializationApi::class)
     fun <D> delete(
         url: String,
-        parameters: Parameters,
         deserializer: KSerializer<D>,
-        callback: (Response<D>, Boolean) -> Unit
-    ) = request(HttpMethod.Delete, url, parameters, deserializer, callback)
+        parameters: Parameters? = null,
+        callback: ResponseCallback<D>
+    ) = request(HttpMethod.Delete, url, deserializer, parameters, callback)
 }
