@@ -44,12 +44,29 @@ class LoginActivity : ComponentActivity() {
 @OptIn(InternalSerializationApi::class)
 @Composable
 fun LoginScreen() {
+    // Get the context of the component that is using this composable function
+    // In this case, it refers to an object of the `LoginActivity` class
     val context = LocalContext.current
 
+    // Sets up mutable state variables
+    //
+    // Unlike normal variables, when these variables are changed, this composable function will be
+    // re-rendered, so that the elements displayed are changed
+    //
+    // The value passed to `mutableStateOf` function is the initial value of variable; the initial
+    // value of these three variables are empty string
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
+    // Here's what this function returns: Kotlin is a functional programming language, and the last
+    // value of every function is considered as the returned value
+    //
+    // You can find a bunch of composable functions in `edu.uml.db2.composable` that started with
+    // "App". Since we don't need to make a fancy application in this class, we will stick to the
+    // simplest and cleanest layout, and that is why these "app composable functions" come in handy
+    //
+    // NOTE: Please refer to each composable function for more information
     AppCenterColumn {
         AppSpacedColumn(16.dp) {
             AppTitle("Welcome to UMass Lowell Management System")

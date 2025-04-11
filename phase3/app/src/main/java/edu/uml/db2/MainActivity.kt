@@ -12,7 +12,9 @@ import androidx.activity.enableEdgeToEdge
 //     3. ContentProvider – Shares data between apps
 // In this project, we are only using activity, so activity and component are used interchangeably.
 class MainActivity : ComponentActivity() {
+    // This function is called when the activity is created
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Call the `onCreate` function in the super class (i.e. ComponentActivity)
         super.onCreate(savedInstanceState)
 
         // Configures the app to draw behind system bars (like the status bar or navigation bar)

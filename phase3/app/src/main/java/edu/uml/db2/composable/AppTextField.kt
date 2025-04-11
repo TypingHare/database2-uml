@@ -8,6 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
+/**
+ * This composable function represents a text field with a specified placeholder and value. If the
+ * password is set to true, the characters are replaced with asterisks visually. The `onValueChange`
+ * is fired when the value of the text field is changed.
+ */
 @Composable
 fun AppTextField(
     placeholder: String, value: String, isPassword: Boolean = false, onValueChange: (String) -> Unit
