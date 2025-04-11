@@ -47,5 +47,3 @@ handle(HttpMethod::POST, function (array $data) {
             ]);
     }
 });
-
-error_response("HTTP method not supported: " . $_SERVER["REQUEST_METHOD"]);

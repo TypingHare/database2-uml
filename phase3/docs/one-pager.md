@@ -173,14 +173,6 @@ If the account type is `admin` and the password is correct, the following JSON s
 }
 ```
 
-> [!IMPORTANT]
->
-> To make sure the client side, the Android app, decodes the response string correctly, every API endpoint file should return a JSON string no matter what. To achieve this, make sure to add this at the end of the API file:
->
-> ```php
-> error_response("HTTP method not supported: " . $_SERVER["REQUEST_METHOD"]);
-> ```
-
 > [!NOTE]
 >
 > To comply with the convention, all the keys in the returned object will be converted into `upperCamelCase`. For example, `student_id` will be converted into `studentId`. This would not affect values.
