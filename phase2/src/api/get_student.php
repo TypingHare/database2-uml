@@ -10,10 +10,17 @@ require_once "../minimal.php";
  * @author James
  */
 handle(HttpMethod::GET, function (array $data) {
-    $studentId = $data["studentId"];
+    $studentId = require_field($data, "studentId");
 
     $student = get_student_by_id($studentId);
-    is_null($student) ?
-        error_response("Student not found.") :
-        success_response("Retrieved student.", $student);
+    if (is_null($student)) {
+        error_response("Student not found.");
+    }
+
+    $student_type = get_student_type($student['student_id']);
+    $subclass = get_student_subclass($studentId, $student_type);
+
+    $student['student_type'] = $student_type;
+    $student['subclass'] = $subclass;
+    success_response("Retrieved student.", $student);
 });

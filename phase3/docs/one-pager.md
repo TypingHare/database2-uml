@@ -182,7 +182,7 @@ If the account type is `admin` and the password is correct, the following JSON s
 1. Create an API endpoint in `phase2/src/api`.
 2. Test the API endpoint using [Postman](https://www.postman.com).
 3. Add the endpoint constant to `edu.uml.db2.common.Endpoint`.
-4. Create Dto's in `edu.uml.db2.dto`.
+4. Create Dto's in `edu.uml.db2.common.Dto`.
 5. Add functions that send a request to the backend to the `edu.uml.db2.api` package. Please refer to:
     - `edu.uml.db2.api.getDepartmentList` for a `GET` request
     - `edu.uml.db2.api.login` for a `POST` request

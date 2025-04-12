@@ -10,8 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import edu.uml.db2.api.login
+import edu.uml.db2.common.LoginDto
+import edu.uml.db2.common.User
+import edu.uml.db2.common.UserType
+import edu.uml.db2.common.getUser
+import edu.uml.db2.common.saveUser
 import edu.uml.db2.common.startActivity
 import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppCenterColumn
@@ -30,9 +34,26 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-        setContent {
-            LoginScreen()
+        setContent { LoginScreen() }
+        onResume()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+         getUser(this)?.let { startDashboardActivity(it) }
+    }
+
+    /**
+     * Starts the dashboard based on the type of the user.
+     */
+    fun startDashboardActivity(user: User) {
+        val dashboardActivity = when (user.type) {
+            UserType.ADMIN -> AdminActivity::class
+            UserType.INSTRUCTOR -> InstructorActivity::class
+            UserType.STUDENT -> StudentActivity::class
         }
+        startActivity(this, dashboardActivity, finish = true)
     }
 }
 
@@ -59,6 +80,23 @@ fun LoginScreen() {
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
+    // This is a callback function that handles the login success response
+    val handleLoginSuccess: (LoginDto) -> Unit = { loginDto ->
+        val type = UserType.valueOf(loginDto.type.uppercase())
+        val id = when (type) {
+            UserType.ADMIN -> null
+            UserType.STUDENT -> loginDto.studentId
+            UserType.INSTRUCTOR -> loginDto.instructorId
+        }
+
+        // This would save the user to the internal storage, so that when the user open the App
+        // next time, it can load the user from the storage
+        val user = User(type, id)
+        saveUser(context, user)
+
+        (context as LoginActivity).startDashboardActivity(user)
+    }
+
     // Here's what this function returns: Kotlin is a functional programming language, and the last
     // value of every function is considered as the returned value
     //
@@ -68,16 +106,16 @@ fun LoginScreen() {
     //
     // NOTE: Please refer to each composable function for more information
     AppCenterColumn {
-        AppSpacedColumn(16.dp) {
+        AppSpacedColumn {
             AppTitle("Welcome to UMass Lowell Management System")
             AppTextField("Email", email) { email = it }
             AppTextField("Password", password, isPassword = true) { password = it }
             AppErrorText(errorMessage)
             AppButton("Login") {
-                login(email, password) { response, isSuccess ->
+                login(email, password) { res, isSuccess ->
                     when (isSuccess) {
-                        true -> startActivity(context, StudentActivity::class, finish = true)
-                        false -> errorMessage = response.message
+                        true -> handleLoginSuccess(res.data!!)
+                        false -> errorMessage = res.message
                     }
                 }
             }
