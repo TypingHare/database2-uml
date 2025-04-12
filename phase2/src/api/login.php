@@ -11,8 +11,8 @@ require_once "../minimal.php";
  * @author James
  */
 handle(HttpMethod::POST, function (array $data) {
-    $email = $data['email'];
-    $password = $data['password'];
+    $email = require_field($data, 'email');
+    $password = require_field($data, 'password');
 
     $account = get_account_by_email($email);
     if ($account === null) {
@@ -35,7 +35,7 @@ handle(HttpMethod::POST, function (array $data) {
             success_response("Logged in successfully.", [
                 'email' => $email,
                 'type' => $account['type'],
-                'instructor' => $instructor
+                'instructor_id' => $instructor['instructor_id']
             ]);
             // no break
         case AccountType::STUDENT:
@@ -43,7 +43,7 @@ handle(HttpMethod::POST, function (array $data) {
             success_response("Logged in successfully.", [
                 'email' => $email,
                 'type' => $account['type'],
-                'student' => $student
+                'student_id' => $student['student_id']
             ]);
     }
 });

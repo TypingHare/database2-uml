@@ -2,7 +2,6 @@ package edu.uml.db2.common
 
 import android.util.Log
 import edu.uml.db2.BuildConfig
-import edu.uml.db2.dto.Response
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -20,10 +19,44 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 @OptIn(InternalSerializationApi::class)
 typealias ResponseCallback<D> = (res: Response<D>, isSuccess: Boolean) -> Unit
+
+/**
+ * The wrapper of all data transfer objects (DTOs).
+ *
+ * All the APi endpoints should send back a response in the following JSON format:
+ *
+ *     {
+ *         "status": "success",
+ *         "url": "the_request_url",
+ *         "message": "The message about the result."
+ *         "data": {
+ *             "key": "value"
+ *         }
+ *     }
+ *
+ * The JSON string will be deserialized into a Response object. The generic type `D` specifies the
+ * structure of the object associated with the `data` key.
+ *
+ * You can access the deserializer of Response by:
+ *
+ *     Response.deserializer
+ *
+ * You can also access the deserializer of other classes that are annotated by @Serializable in the
+ * same way.
+ *
+ * @template <D> The generic type of the DTO to wrap.
+ * @author James Chen
+ */
+@Serializable
+@InternalSerializationApi
+data class Response<D>(
+    val status: String, val url: String, val message: String, val data: D? = null
+)
 
 object Server {
     private val client by lazy {
@@ -62,10 +95,27 @@ object Server {
                 val httpResponse = client.request("${BuildConfig.BACKEND_ROOT_URL}/$url") {
                     this.method = method
                     contentType(ContentType.Application.FormUrlEncoded)
-                    if (parameters != null) {
-                        setBody(FormDataContent(parameters))
+                    if (parameters == null) {
+                        return@request
                     }
+
+                    when (method) {
+                        HttpMethod.Get -> {
+                            url {
+                                parameters.forEach { key, values ->
+                                    values.forEach { value ->
+                                        this.parameters.append(key, value)
+                                    }
+                                }
+                            }
+                        }
+
+                        else -> setBody(FormDataContent(parameters))
+                    }
+
+                    Log.i("URL", this.url.toString())
                 }
+
                 val response = Json.decodeFromString(
                     Response.serializer(deserializer), httpResponse.body<String>()
                 )
