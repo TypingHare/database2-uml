@@ -56,37 +56,37 @@ fun StudentScreen(user: User) {
 
     AppContainer {
         AppTitle("Student Dashboard")
-
-        student?.let {
-            AppCard {
-                AppCardRow("Student ID", it.studentId)
-                AppCardRow("Type", it.studentType)
-                AppCardRow("Name", it.name)
-                AppCardRow("Email", it.email)
-                AppCardRow("Department", it.deptName)
-                when (it.studentType) {
-                    StudentType.UNDERGRADUATE -> AppCardRow(
-                        "Class Standing", it.subclass.classStanding!!
-                    )
-
-                    StudentType.PHD -> {
-                        AppCardRow("Qualifier", it.subclass.qualifier ?: "N/A")
-                        AppCardRow(
-                            "Proposal Defense Date",
-                            it.subclass.proposalDefenceDate ?: "N/A"
-                        )
-                        AppCardRow(
-                            "Dissertation Defense Date",
-                            it.subclass.dissertationDefenceDate ?: "N/A"
-                        )
-                    }
-                }
-            }
-        }
-
+        student?.let { StudentCard(it) }
         AppButton("Sign Out") {
             removeUser(context)
             startActivity(context, LoginActivity::class, finish = true)
+        }
+    }
+}
+
+@OptIn(InternalSerializationApi::class)
+@Composable
+fun StudentCard(student: StudentDto) {
+    AppCard {
+        AppCardRow("Student ID", student.studentId)
+        AppCardRow("Type", student.studentType)
+        AppCardRow("Name", student.name)
+        AppCardRow("Email", student.email)
+        AppCardRow("Department", student.deptName)
+        when (student.studentType) {
+            StudentType.UNDERGRADUATE -> AppCardRow(
+                "Class Standing", student.subclass.classStanding!!
+            )
+
+            StudentType.PHD -> {
+                AppCardRow("Qualifier", student.subclass.qualifier ?: "N/A")
+                AppCardRow(
+                    "Proposal Defense Date", student.subclass.proposalDefenceDate ?: "N/A"
+                )
+                AppCardRow(
+                    "Dissertation Defense Date", student.subclass.dissertationDefenceDate ?: "N/A"
+                )
+            }
         }
     }
 }

@@ -19,10 +19,9 @@ import edu.uml.db2.common.UserType
 import edu.uml.db2.common.finishActivity
 import edu.uml.db2.common.saveUser
 import edu.uml.db2.composable.AppButton
-import edu.uml.db2.composable.AppCenterColumn
+import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppDropdownSelector
 import edu.uml.db2.composable.AppErrorText
-import edu.uml.db2.composable.AppSpacedColumn
 import edu.uml.db2.composable.AppTextField
 import edu.uml.db2.composable.AppTitle
 import kotlinx.serialization.InternalSerializationApi
@@ -59,34 +58,32 @@ fun CreateStudentAccountScreen() {
         }
     }
 
-    AppCenterColumn {
-        AppSpacedColumn {
-            AppTitle("Create an Account")
-            AppTextField("Email", email) { email = it }
-            AppTextField("Password", password, isPassword = true) { password = it }
-            AppTextField("Name", name) { name = it }
-            AppDropdownSelector(
-                "Department", departmentList, department
-            ) { department = it }
-            AppDropdownSelector(
-                "Type", studentTypeList, studentType
-            ) { studentType = it }
-            AppErrorText(errorMessage)
-            AppButton("Create") {
-                createStudentAccount(
-                    studentType, email, password, name, department
-                ) { res, isSuccess ->
-                    when (isSuccess) {
-                        true -> {
-                            saveUser(context, User(UserType.STUDENT, res.data!!.studentId))
-                            finishActivity(context)
-                        }
-
-                        false -> errorMessage = res.message
+    AppContainer {
+        AppTitle("Create an Account")
+        AppTextField("Email", email) { email = it }
+        AppTextField("Password", password, isPassword = true) { password = it }
+        AppTextField("Name", name) { name = it }
+        AppDropdownSelector(
+            "Department", departmentList, department
+        ) { department = it }
+        AppDropdownSelector(
+            "Type", studentTypeList, studentType
+        ) { studentType = it }
+        AppErrorText(errorMessage)
+        AppButton("Create") {
+            createStudentAccount(
+                studentType, email, password, name, department
+            ) { res, isSuccess ->
+                when (isSuccess) {
+                    true -> {
+                        saveUser(context, User(UserType.STUDENT, res.data!!.studentId))
+                        finishActivity(context)
                     }
+
+                    false -> errorMessage = res.message
                 }
             }
-            AppButton("Back") { finishActivity(context) }
         }
+        AppButton("Back") { finishActivity(context) }
     }
 }

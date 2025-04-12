@@ -18,9 +18,8 @@ import edu.uml.db2.common.getUser
 import edu.uml.db2.common.saveUser
 import edu.uml.db2.common.startActivity
 import edu.uml.db2.composable.AppButton
-import edu.uml.db2.composable.AppCenterColumn
+import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppErrorText
-import edu.uml.db2.composable.AppSpacedColumn
 import edu.uml.db2.composable.AppTextField
 import edu.uml.db2.composable.AppTitle
 import kotlinx.serialization.InternalSerializationApi
@@ -41,7 +40,7 @@ class LoginActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
 
-         getUser(this)?.let { startDashboardActivity(it) }
+        getUser(this)?.let { startDashboardActivity(it) }
     }
 
     /**
@@ -97,31 +96,30 @@ fun LoginScreen() {
         (context as LoginActivity).startDashboardActivity(user)
     }
 
-    // Here's what this function returns: Kotlin is a functional programming language, and the last
-    // value of every function is considered as the returned value
+    // Here's the construction of UI components
     //
-    // You can find a bunch of composable functions in `edu.uml.db2.composable` that started with
-    // "App". Since we don't need to make a fancy application in this class, we will stick to the
-    // simplest and cleanest layout, and that is why these "app composable functions" come in handy
+    // You can find a bunch of composable functions that start with "App" in the
+    // `edu.uml.db2.composable` package. Since we don't need to make a fancy application in this
+    // class, we will stick to the simplest and cleanest layout, and that is why these standardized
+    // "app composable functions" come in handy
     //
-    // NOTE: Please refer to each composable function for more information
-    AppCenterColumn {
-        AppSpacedColumn {
-            AppTitle("Welcome to UMass Lowell Management System")
-            AppTextField("Email", email) { email = it }
-            AppTextField("Password", password, isPassword = true) { password = it }
-            AppErrorText(errorMessage)
-            AppButton("Login") {
-                login(email, password) { res, isSuccess ->
-                    when (isSuccess) {
-                        true -> handleLoginSuccess(res.data!!)
-                        false -> errorMessage = res.message
-                    }
+    // NOTE: Please refer to each composable function for more information; you should be aware of
+    // how they are encapsulated before using them
+    AppContainer {
+        AppTitle("Welcome to UMass Lowell Management System")
+        AppTextField("Email", email) { email = it }
+        AppTextField("Password", password, isPassword = true) { password = it }
+        AppErrorText(errorMessage)
+        AppButton("Login") {
+            login(email, password) { res, isSuccess ->
+                when (isSuccess) {
+                    true -> handleLoginSuccess(res.data!!)
+                    false -> errorMessage = res.message
                 }
             }
-            AppButton("Create Student Account") {
-                startActivity(context, CreateStudentAccountActivity::class)
-            }
+        }
+        AppButton("Create Student Account") {
+            startActivity(context, CreateStudentAccountActivity::class)
         }
     }
 }
