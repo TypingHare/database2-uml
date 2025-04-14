@@ -37,7 +37,6 @@ function get_possible_graders(string $course_id, string $section_id, string $sem
                 AND b.semester = t.semester 
                 AND b.year = t.year
             );
-
         "
     );
 
