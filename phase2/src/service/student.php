@@ -625,8 +625,13 @@ function register_student(
 
 }
 
-function add_grader(string $student_id, string $course_id, string $section_id, string $semester, string $year): null
-{
+function add_grader(
+    string $student_id,
+    string $course_id,
+    string $section_id,
+    string $semester,
+    string $year
+): void {
     if (get_student_type($student_id) == StudentType::UNDERGRADUATE) {
         $stmt = pdo_instance()->prepare(
             "
@@ -634,8 +639,7 @@ function add_grader(string $student_id, string $course_id, string $section_id, s
             VALUES (:student_id, :course_id, :section_id, :semester, :year); 
         "
         );
-    }
-    else {
+    } else {
         $stmt = pdo_instance()->prepare(
             "
             INSERT INTO mastergrader(student_id, course_id, section_id, semester, year)
@@ -643,7 +647,7 @@ function add_grader(string $student_id, string $course_id, string $section_id, s
         "
         );
     }
-    
+
     execute($stmt, [
         "student_id" => $student_id,
         "course_id" => $course_id,
@@ -653,3 +657,43 @@ function add_grader(string $student_id, string $course_id, string $section_id, s
     ]);
 }
 
+/**
+ * Creates a student account.
+ *
+ * @param string $student_type
+ * @param string $email
+ * @param string $password
+ * @param string $name
+ * @param string $dept_name
+ * @return string Student ID
+ * @author James Chen
+ */
+function create_student_account(
+    string $student_type,
+    string $email,
+    string $password,
+    string $name,
+    string $dept_name
+): string {
+    pdo_instance()->beginTransaction();
+    $account = create_account($email, $password, AccountType::STUDENT);
+    $student = create_student($account['email'], $name, $dept_name);
+    $student_id = $student['student_id'];
+
+    switch ($student_type) {
+        case StudentType::UNDERGRADUATE:
+            create_undergraduate($student_id);
+            break;
+        case StudentType::MASTER:
+            create_master($student_id);
+            break;
+        case StudentType::PHD:
+            create_phd($student_id);
+            break;
+        default:
+            pdo_instance()->rollBack();
+    }
+    pdo_instance()->commit();
+
+    return $student_id;
+}

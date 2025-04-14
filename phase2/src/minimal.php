@@ -155,7 +155,7 @@ function redirect_to_error_page(
  */
 function success(string $message, int $code = 200): void
 {
-    echo new SuccessResponse($message, $code);
+    echo new SuccessResponse($message, [], $code);
 }
 
 /**
@@ -175,4 +175,57 @@ function error(string $message, int $code = 500): void
 {
     echo new ErrorResponse($message, $code);
     redirect_to_error_page($message);
+}
+
+/**
+ * Sends a JSON-formatted success response with a given message, data, and HTTP
+ * status code.
+ *
+ * @param string $message The success message to include in the response.
+ * @param array $data Additional data to include in the response payload.
+ * @param int $code The HTTP status code to return (default is 200).
+ * @return void
+ */
+function success_response(string $message, array $data = [], int $code = 200): void
+{
+    echo new SuccessResponse($message, $data, $code);
+    exit(0);
+}
+
+/**
+ * Sends a JSON-formatted error response with a given message, data, and HTTP
+ * status code.
+ *
+ * @param string $message The error message to include in the response.
+ * @param int $code The HTTP status code to return (default is 500).
+ * @return void
+ */
+function error_response(string $message, int $code = 500): void
+{
+    echo new ErrorResponse($message, $code);
+    exit(0);
+}
+
+/**
+ * Retrieves and validates a required field from an array.
+ *
+ * Ensures the specified field exists and is not empty after trimming.
+ * If the field is missing or empty, a JSON-formatted error response is sent.
+ *
+ * @param array $array The array to extract the field from.
+ * @param string $field The name of the required field.
+ * @return string The trimmed value of the required field.
+ */
+function require_field(array $array, string $field): string
+{
+    if (!isset($array[$field])) {
+        error_response("Required field: $field");
+    }
+
+    $value = trim($array[$field]);
+    if (empty($value)) {
+        error_response("Field cannot be empty: $field");
+    }
+
+    return $value;
 }

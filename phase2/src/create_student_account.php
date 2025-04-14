@@ -42,26 +42,13 @@ handle(HttpMethod::POST, function ($data) {
         throw new RuntimeException('Invalid student type: ' . $student_type);
     }
 
-    pdo_instance()->beginTransaction();
-    $account = create_account($data["email"], $data["password"], AccountType::STUDENT);
-    $student = create_student($account["email"], $data["name"], $data["dept_name"]);
-    switch ($student_type) {
-        case StudentType::UNDERGRADUATE:
-            create_undergraduate($student['student_id']);
-            break;
-        case StudentType::MASTER:
-            create_master($student['student_id']);
-            break;
-        case StudentType::PHD:
-            create_phd($student['student_id']);
-            break;
-        default:
-            pdo_instance()->rollBack();
-    }
-    pdo_instance()->commit();
-    success('Created the account successfully.');
+    $email = $data['email'];
+    $password = $data['password'];
+    $name = $data['name'];
+    $deptName = $data['deptName'];
 
-    redirect(Page::STUDENT, ['student_id' => $student["student_id"]]);
+    $student_id = create_student_account($student_type, $email, $password, $name, $deptName);
+    redirect(Page::STUDENT, ['student_id' => $student_id]);
 });
 
 $departments = get_all_departments();

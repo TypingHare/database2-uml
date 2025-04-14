@@ -4,14 +4,14 @@ require_once 'minimal.php';
 
 /**
  * HTML template @author James Chen
- * 
+ *
  * This page allows students to attempt to register for the selected section
  *
  * @param_get student_id The student ID.
  * @author Alexis Marx
  */
 
- $student_id = $_GET['student_id'];
+$student_id = $_GET['student_id'];
 
 handle(HttpMethod::POST, function (array $data) {
     $student_id = $data['student_id'];
@@ -29,12 +29,12 @@ handle(HttpMethod::POST, function (array $data) {
     );
 
     redirect(Page::REGISTER, [
-      'student_id' => $student_id,
-      'course_id' => $course_id,
-      'section_id' => $section_id,
-      'semester' => $semester,
-      'year' => $year,
-  ]);
+        'student_id' => $student_id,
+        'course_id' => $course_id,
+        'section_id' => $section_id,
+        'semester' => $semester,
+        'year' => $year,
+    ]);
 });
 
 $course_id = $_GET['course_id'];
@@ -79,24 +79,29 @@ $back_url = build_url(Page::BROWSE, ['student_id' => $student_id]);
         <td>Time slot</td>
         <td style="color: grey;">Operation</td>
       </tr>
-          <tr><form action="registration_status.php" method="POST">
+      <tr>
+        <form action="registration_status.php" method="POST">
           <input type="hidden" name="student_id" value="<?= $student_id ?>">
-          <?php var_dump($student_id); ?>
-          <input type="hidden" name="course_id" value="<?= $section['course_id'] ?>">
-          <input type="hidden" name="section_id" value="<?= $section['section_id'] ?>">
-          <input type="hidden" name="semester" value="<?= $section['semester'] ?>">
+            <?php var_dump($student_id); ?>
+          <input type="hidden" name="course_id"
+                 value="<?= $section['course_id'] ?>">
+          <input type="hidden" name="section_id"
+                 value="<?= $section['section_id'] ?>">
+          <input type="hidden" name="semester"
+                 value="<?= $section['semester'] ?>">
           <input type="hidden" name="year" value="<?= $section['year'] ?>">
-            <td><?= $section['course_id'] ?></td>
-            <td><?= $section['section_id'] ?></td>
-            <td><?= $section['semester'] ?></td>
-            <td><?= $section['year'] ?></td>
-            <td><?= $section['instructor_name'] ?></td>
-            <td><?= classroom_to_string($section) ?></td>
-            <td><?= time_slot_to_string($section) ?></td>
-            <td>
-                <button type = "submit">Register</button>
-            </td>
-    </form></tr>
+          <td><?= $section['course_id'] ?></td>
+          <td><?= $section['section_id'] ?></td>
+          <td><?= $section['semester'] ?></td>
+          <td><?= $section['year'] ?></td>
+          <td><?= $section['instructor_name'] ?></td>
+          <td><?= classroom_to_string($section) ?></td>
+          <td><?= time_slot_to_string($section) ?></td>
+          <td>
+            <button type="submit">Register</button>
+          </td>
+        </form>
+      </tr>
     </table>
 
     <div style="display: flex; justify-content: right;">

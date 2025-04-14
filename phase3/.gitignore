@@ -1,0 +1,12 @@
+### Gradle ###
+.gradle
+
+### Android Studio ###
+.idea
+local.properties
+
+### macOS ###
+.DS_Store
+
+### Backend Config ###
+backend.properties

@@ -3,6 +3,26 @@
 
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 
+function to_lower_camel_case(string $string): string
+{
+    return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $string))));
+}
+
+function keys_to_lower_camel_case(array $array): array
+{
+    $result = [];
+    foreach ($array as $key => $value) {
+        $real_key = to_lower_camel_case($key);
+        if (is_array($value)) {
+            $value = keys_to_lower_camel_case($value);
+        }
+
+        $result[$real_key] = $value;
+    }
+
+    return $result;
+}
+
 /**
  * Represents a successful response with a message and an HTTP status code.
  *
@@ -12,12 +32,14 @@ readonly class SuccessResponse
 {
     /**
      * @param string $message The success message.
+     * @param array $data data The response data.
      * @param int $code The HTTP status code.
      * @see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
      */
     public function __construct(
         private string $message,
-        private int    $code = 200 // standard response for successful HTTP request
+        private array  $data = [],
+        private int    $code = 200,
     ) {
     }
 
@@ -29,11 +51,14 @@ readonly class SuccessResponse
     public function __toString(): string
     {
         http_response_code($this->code);
-        return json_encode([
+        header('Content-Type: application/json');
+
+        return json_encode(keys_to_lower_camel_case([
             'status' => 'success',
             'url' => $_SERVER['REQUEST_URI'],
             'message' => $this->message,
-        ]);
+            'data' => $this->data
+        ]));
     }
 }
 
@@ -51,7 +76,7 @@ readonly class ErrorResponse
      */
     public function __construct(
         private string $message,
-        private int    $code = 400 // bad request. client error exist
+        private int    $code = 400
     ) {
     }
 
@@ -63,10 +88,12 @@ readonly class ErrorResponse
     public function __toString(): string
     {
         http_response_code($this->code);
-        return json_encode([
+        header('Content-Type: application/json');
+
+        return json_encode(keys_to_lower_camel_case([
             'status' => 'error',
             'url' => $_SERVER['REQUEST_URI'],
             'message' => $this->message,
-        ]);
+        ]));
     }
 }

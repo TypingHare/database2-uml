@@ -25,7 +25,7 @@ function get_possible_graders(string $course_id, string $section_id, string $sem
             AND t.section_id = :section_id 
             AND t.semester = :semester 
             AND t.year = :year
-            AND t.grade IN ('A-', 'A')
+            AND t.grade IN ('A-', 'A', 'A+')
             AND NOT EXISTS (
                 SELECT 1 
                 FROM (
@@ -123,6 +123,3 @@ $candidates = get_possible_graders($course_id, $section_id, $semester, $year);
 
 </body>
 </html>
-
-
-?>
