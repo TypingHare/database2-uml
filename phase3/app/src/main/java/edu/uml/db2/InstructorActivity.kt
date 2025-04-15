@@ -67,5 +67,9 @@ fun InstructorScreen(user: User) {
 fun InstructorCard(instructor: InstructorDto) {
     AppCard {
         AppCardRow("Instructor ID", instructor.instructorId)
+        AppCardRow("Name", instructor.instructorName)
+        AppCardRow("Email", instructor.email)
+        AppCardRow("Title", instructor.title)
+        AppCardRow("Department", instructor.deptName)
     }
 }

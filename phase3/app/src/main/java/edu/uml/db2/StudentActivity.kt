@@ -72,6 +72,7 @@ fun StudentCard(student: StudentDto) {
         AppCardRow("Name", student.name)
         AppCardRow("Email", student.email)
         AppCardRow("Department", student.deptName)
+
         when (student.studentType) {
             StudentType.UNDERGRADUATE -> AppCardRow(
                 "Class Standing", student.subclass.classStanding!!
