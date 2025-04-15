@@ -16,6 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+/**
+ * Represents a card composable that holds a sequence of rows.
+ *
+ * @author James Chen
+ */
 @Composable
 fun AppCard(content: @Composable ColumnScope.() -> Unit) = Card(
     modifier = Modifier.fillMaxWidth(),
@@ -26,6 +31,11 @@ fun AppCard(content: @Composable ColumnScope.() -> Unit) = Card(
     Column(Modifier.padding(16.dp), content = content)
 }
 
+/**
+ * represents a row in a card composable.
+ *
+ * @author James Chen
+ */
 @Composable
 fun AppCardRow(label: String, value: String) {
     Row(modifier = Modifier.padding(vertical = 4.dp)) {

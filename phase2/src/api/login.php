@@ -8,7 +8,7 @@ require_once "../minimal.php";
  * @param_post email The email of the user account.
  * @param_post password The password of the account.
  * @api
- * @author James
+ * @author James Chen
  */
 handle(HttpMethod::POST, function (array $data) {
     $email = require_field($data, 'email');

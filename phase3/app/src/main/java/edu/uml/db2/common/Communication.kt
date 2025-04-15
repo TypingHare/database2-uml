@@ -59,6 +59,9 @@ data class Response<D>(
 )
 
 object Server {
+    /**
+     * The client that automatically parse the response body as JSON string.
+     */
     private val client by lazy {
         HttpClient(OkHttp) {
             install(ContentNegotiation) { json() }

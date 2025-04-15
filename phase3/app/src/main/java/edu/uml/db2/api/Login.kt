@@ -9,6 +9,9 @@ import kotlinx.serialization.InternalSerializationApi
 
 /**
  * User logins with email and password.
+ *
+ * @see LoginDto
+ * @author James Chen
  */
 @OptIn(InternalSerializationApi::class)
 fun login(email: String, password: String, callback: ResponseCallback<LoginDto>) {

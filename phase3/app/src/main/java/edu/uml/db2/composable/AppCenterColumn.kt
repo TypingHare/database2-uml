@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 /**
  * This composable function represents a column that has 24.dp of padding, and align the content
  * center both vertically and horizontally.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppCenterColumn(content: @Composable ColumnScope.() -> Unit) = Column(

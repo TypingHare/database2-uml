@@ -7,6 +7,12 @@ import edu.uml.db2.common.Server
 import io.ktor.http.Parameters
 import kotlinx.serialization.InternalSerializationApi
 
+/**
+ * Creates a student account.
+ *
+ * @see CreateStudentAccountDto
+ * @author James Chen
+ */
 @OptIn(InternalSerializationApi::class)
 fun createStudentAccount(
     studentType: String,

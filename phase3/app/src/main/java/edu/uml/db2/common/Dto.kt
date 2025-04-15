@@ -53,5 +53,9 @@ data class StudentSubClassDto(
 @Serializable
 @InternalSerializationApi
 data class InstructorDto(
-    val instructorId: String
+    val instructorId: String,
+    val instructorName: String,
+    val title: String,
+    val deptName: String,
+    val email: String,
 )

@@ -25,8 +25,10 @@ import edu.uml.db2.composable.AppTitle
 import kotlinx.serialization.InternalSerializationApi
 
 /**
- * Allows users to sign in to the system.
+ * This activity allows users to sign in to the system.
+ *
  * @see LoginScreen
+ * @author James Chen
  */
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
