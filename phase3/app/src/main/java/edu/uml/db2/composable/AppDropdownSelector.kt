@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
  * This composable function represents a dropdown selector with a specified label and a specified
  * list of options (strings). When any option is selected, the `onOptionSelected` callback function
  * is fired.
+ *
+ * @author James Chen
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

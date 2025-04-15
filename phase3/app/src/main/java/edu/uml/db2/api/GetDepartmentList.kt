@@ -8,6 +8,9 @@ import kotlinx.serialization.InternalSerializationApi
 
 /**
  * Gets a list of departments.
+ *
+ * @see DepartmentListDto
+ * @author James Chen
  */
 @OptIn(InternalSerializationApi::class)
 fun getDepartmentList(callback: ResponseCallback<DepartmentListDto>) {

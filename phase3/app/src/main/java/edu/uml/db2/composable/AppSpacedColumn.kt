@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 /**
  * This composable function represents a column where there is a specified space between every two
  * composable inside the content.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppSpacedColumn(space: Dp = 16.dp, content: @Composable ColumnScope.() -> Unit) =

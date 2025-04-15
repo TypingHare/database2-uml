@@ -6,9 +6,10 @@ import android.content.Intent
 import kotlin.reflect.KClass
 
 /**
- * Finishes the given activity if the context is an instance of [Activity].
+ * Finishes the given activity if the context is an instance of [Activity]. This will remove the
+ * given activity from the activity stack.
  *
- * @param context The context of the current activity to be finished.
+ * @param context The context (which should also be the activity) to be finished.
  * @author James Chen
  */
 fun finishActivity(context: Context) {
@@ -18,7 +19,9 @@ fun finishActivity(context: Context) {
 }
 
 /**
- * Starts a new activity.
+ * Starts a new activity. This will push the new activity onto the activity stack. If `finish` is
+ * true, then the current activity (context) will be removed from the activity stack after the new
+ * activity is created.
  *
  * @param context The context used to start the activity.
  * @param newActivity The class reference of the activity to start.

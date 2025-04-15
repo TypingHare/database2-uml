@@ -8,6 +8,8 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * This composable function represents a standard full width text.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppText(message: String) = Text(
@@ -18,6 +20,8 @@ fun AppText(message: String) = Text(
 /**
  * This composable function represents a standard full width error text. The color of the text is
  * red.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppErrorText(message: String) = Text(

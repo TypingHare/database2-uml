@@ -7,8 +7,10 @@ import androidx.compose.ui.unit.dp
 
 /**
  * A combination of `AppCenterColumn` and `AppSpacedColumn` to reduce nests.
+ *
  * @see AppCenterColumn
  * @see AppSpacedColumn
+ * @author James Chen
  */
 @Composable
 fun AppContainer(space: Dp = 16.dp, content: @Composable ColumnScope.() -> Unit) =

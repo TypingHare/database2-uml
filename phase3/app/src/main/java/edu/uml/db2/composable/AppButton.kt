@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 
 /**
  * This composable function represents a full width button with a specified text.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppButton(text: String, onClick: () -> Unit) =

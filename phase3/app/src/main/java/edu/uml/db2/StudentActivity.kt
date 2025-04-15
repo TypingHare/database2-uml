@@ -27,6 +27,8 @@ import kotlinx.serialization.InternalSerializationApi
 
 /**
  * Student dashboard.
+ *
+ * @author James Chen
  */
 class StudentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +48,7 @@ fun StudentScreen(user: User) {
 
     getStudent(user.id!!) { res, isSuccess ->
         when (isSuccess) {
-            true -> {
-                student = res.data
-            }
-
+            true -> student = res.data
             false -> Log.e("GET_STUDENT", res.message)
         }
     }
