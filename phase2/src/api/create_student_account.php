@@ -3,7 +3,7 @@
 require_once "../minimal.php";
 
 /**
- * Allows users to login.
+ * Allows users to log in.
  *
  * @param_post studentType The type of the student.
  * @param_post email The student email.

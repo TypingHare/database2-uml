@@ -59,3 +59,22 @@ data class InstructorDto(
     val deptName: String,
     val email: String,
 )
+
+@Serializable
+@InternalSerializationApi
+data class StudentBillListDto(
+    val list: List<StudentBillDto>
+)
+
+@Serializable
+@InternalSerializationApi
+data class StudentBillDto(
+    val studentId: String,
+    val name: String,
+    val email: String,
+    val deptName: String,
+    val semester: String,
+    val year: String,
+    val status: String,
+    val scholarship: Int
+)

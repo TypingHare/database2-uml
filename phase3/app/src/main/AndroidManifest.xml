@@ -32,6 +32,8 @@
         <activity android:name=".AdminActivity" />
         <activity android:name=".StudentActivity" />
         <activity android:name=".InstructorActivity" />
+
+        <activity android:name=".BillsActivity" />
     </application>
 
 </manifest>

@@ -17,9 +17,13 @@ import androidx.compose.ui.text.input.VisualTransformation
  */
 @Composable
 fun AppTextField(
-    placeholder: String, value: String, isPassword: Boolean = false, onValueChange: (String) -> Unit
+    placeholder: String,
+    value: String,
+    isPassword: Boolean = false,
+    isFullWidth: Boolean = true,
+    onValueChange: (String) -> Unit
 ) = OutlinedTextField(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
     value = value,
     onValueChange = onValueChange,
     label = { Text(placeholder) },
