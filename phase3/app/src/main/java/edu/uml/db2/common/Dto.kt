@@ -59,3 +59,16 @@ data class InstructorDto(
     val deptName: String,
     val email: String,
 )
+
+@Serializable
+@InternalSerializationApi
+data class CourseHistoryDto(
+    val studentId: String,
+    val courseId: String,
+    val sectionId: String,
+    val semester: String,
+    val year: String,
+    val grade: String? = null,
+    val courseName: String,
+    val credits: String
+)
