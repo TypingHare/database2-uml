@@ -62,6 +62,7 @@ data class InstructorDto(
 
 @Serializable
 @InternalSerializationApi
+<<<<<<< HEAD
 data class StudentBillListDto(
     val list: List<StudentBillDto>
 )
@@ -77,4 +78,15 @@ data class StudentBillDto(
     val year: String,
     val status: String,
     val scholarship: Int
+)
+
+data class CourseHistoryDto(
+    val studentId: String,
+    val courseId: String,
+    val sectionId: String,
+    val semester: String,
+    val year: String,
+    val grade: String? = null,
+    val courseName: String,
+    val credits: String
 )
