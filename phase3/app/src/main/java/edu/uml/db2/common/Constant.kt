@@ -9,6 +9,7 @@ object Endpoint {
     const val CREATE_STUDENT_ACCOUNT = "create_student_account.php"
     const val GET_STUDENT = "get_student.php"
     const val GET_INSTRUCTOR = "get_instructor.php"
+    const val GET_BILLS = "get_bills.php"
     const val GET_COURSE_HISTORY = "get_course_history.php"
 }
 
@@ -41,4 +42,15 @@ object StudentType {
  */
 enum class UserType {
     ADMIN, INSTRUCTOR, STUDENT
+}
+
+/**
+ * Represents the status of bills.
+ *
+ * @author James Chen
+ */
+object BillStatus {
+    const val PAID = "Paid";
+    const val UNPAID = "Unpaid";
+    const val NOT_CREATED = "Not Created";
 }

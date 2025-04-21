@@ -1,0 +1,87 @@
+package edu.uml.db2
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import edu.uml.db2.api.getBills
+import edu.uml.db2.common.StudentBillDto
+import edu.uml.db2.composable.AppButton
+import edu.uml.db2.composable.AppContainer
+import edu.uml.db2.composable.AppSpacedColumn
+import edu.uml.db2.composable.AppSpacedRow
+import edu.uml.db2.composable.AppTable
+import edu.uml.db2.composable.AppTableCell
+import edu.uml.db2.composable.AppText
+import edu.uml.db2.composable.AppTextField
+import kotlinx.serialization.InternalSerializationApi
+
+class BillsActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
+        setContent { BillsScreen() }
+    }
+}
+
+@OptIn(InternalSerializationApi::class)
+@SuppressLint("UnusedBoxWithConstraintsScope")
+@Composable
+fun BillsScreen() {
+    var year by remember { mutableStateOf("2025") }
+    var semester by remember { mutableStateOf("Fall") }
+    var studentBillList by remember { mutableStateOf(listOf<StudentBillDto>()) }
+
+    val handleSet = {
+        getBills(semester, year) { res, isSuccess ->
+            when (isSuccess) {
+                true -> studentBillList = res.data!!.list
+                false -> Log.e("GET_BILLS", res.message)
+            }
+        }
+    }
+
+    val handleRowClick: (Int) -> Unit = { rowIndex -> Log.i("ROW_CLICKED", rowIndex.toString()) }
+
+    handleSet()
+
+    AppContainer {
+        BoxWithConstraints {
+            if (constraints.maxWidth < 1000) {
+                AppSpacedColumn {
+                    AppTextField("Semester", semester) { semester = it }
+                    AppTextField("Year", year) { year = it }
+                    AppButton("Set", onClick = handleSet)
+                }
+            } else {
+                AppSpacedRow {
+                    AppTextField("Semester", semester, isFullWidth = false) { semester = it }
+                    AppTextField("Year", year, isFullWidth = false) { year = it }
+                    AppButton("Set", onClick = handleSet)
+                }
+            }
+        }
+
+        HorizontalDivider()
+        AppTable(
+            listOf("Student ID", "Student Name", "Status", "Scholarship"),
+            studentBillList.size, handleRowClick
+        ) { rowIndex ->
+            val studentBill = studentBillList[rowIndex]
+            AppTableCell { AppText(studentBill.studentId) }
+            AppTableCell { AppText(studentBill.name) }
+            AppTableCell { AppText(studentBill.status) }
+            AppTableCell { AppText("$${studentBill.scholarship}") }
+        }
+    }
+}

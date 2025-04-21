@@ -88,7 +88,6 @@ function get_reward_url(array $student_bill): string
         <th>Scholarship</th>
         <th style="font-weight: normal; color: gray;">Operation</th>
       </tr>
-
         <?php foreach ($student_bills as $record): ?>
           <tr>
             <td><?= $record['student_id'] ?></td>
