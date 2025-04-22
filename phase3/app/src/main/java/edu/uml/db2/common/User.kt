@@ -2,6 +2,7 @@ package edu.uml.db2.common
 
 import android.content.Context
 import android.util.Log
+import java.io.FileNotFoundException
 
 /**
  * The name of the file that is used to store the user information.
@@ -63,8 +64,10 @@ fun getUser(context: Context): User? {
         val id = list.getOrNull(1).takeIf { it != null && it.isNotBlank() }
 
         User(userType, id)
+    } catch (_: FileNotFoundException) {
+        null
     } catch (ex: Exception) {
-        Log.e("GET_USER", ex.toString(), ex)
+        Log.e("GET_USER", ex.toString())
         null
     }
 }

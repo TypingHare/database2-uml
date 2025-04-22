@@ -11,6 +11,7 @@ object Endpoint {
     const val GET_INSTRUCTOR = "get_instructor.php"
     const val GET_BILLS = "get_bills.php"
     const val GET_COURSE_HISTORY = "get_course_history.php"
+    const val GET_STUDENT_BILL = "get_student_bill.php"
 }
 
 /**
@@ -50,7 +51,18 @@ enum class UserType {
  * @author James Chen
  */
 object BillStatus {
-    const val PAID = "Paid";
-    const val UNPAID = "Unpaid";
-    const val NOT_CREATED = "Not Created";
+    const val PAID = "Paid"
+    const val UNPAID = "Unpaid"
+    const val NOT_CREATED = "Not Created"
+}
+
+/**
+ * Represents the keys in the intent extra data.
+ *
+ * @author James Chen
+ */
+object IntentKey {
+    const val STUDENT_ID = "STUDENT_ID"
+    const val SEMESTER = "SEMESTER"
+    const val YEAR = "YEAR"
 }
