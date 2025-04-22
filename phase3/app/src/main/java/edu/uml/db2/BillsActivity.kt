@@ -13,8 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import edu.uml.db2.api.getBills
+import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.StudentBillDto
+import edu.uml.db2.common.finishActivity
+import edu.uml.db2.common.startActivity
 import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppSpacedColumn
@@ -38,6 +42,8 @@ class BillsActivity : ComponentActivity() {
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun BillsScreen() {
+    val context = LocalContext.current
+
     var year by remember { mutableStateOf("2025") }
     var semester by remember { mutableStateOf("Fall") }
     var studentBillList by remember { mutableStateOf(listOf<StudentBillDto>()) }
@@ -51,7 +57,14 @@ fun BillsScreen() {
         }
     }
 
-    val handleRowClick: (Int) -> Unit = { rowIndex -> Log.i("ROW_CLICKED", rowIndex.toString()) }
+    val handleRowClick: (Int) -> Unit = { rowIndex ->
+        val (studentId) = studentBillList[rowIndex]
+        startActivity(context, OperateStudentBillActivity::class) { intent ->
+            intent.putExtra(IntentKey.STUDENT_ID, studentId)
+            intent.putExtra(IntentKey.SEMESTER, semester)
+            intent.putExtra(IntentKey.YEAR, year)
+        }
+    }
 
     handleSet()
 
@@ -72,16 +85,18 @@ fun BillsScreen() {
             }
         }
 
+        AppButton("Back") { finishActivity(context) }
         HorizontalDivider()
         AppTable(
             listOf("Student ID", "Student Name", "Status", "Scholarship"),
-            studentBillList.size, handleRowClick
+            studentBillList.size,
+            handleRowClick
         ) { rowIndex ->
-            val studentBill = studentBillList[rowIndex]
-            AppTableCell { AppText(studentBill.studentId) }
-            AppTableCell { AppText(studentBill.name) }
-            AppTableCell { AppText(studentBill.status) }
-            AppTableCell { AppText("$${studentBill.scholarship}") }
+            val (studentId, name, _, _, _, _, status, scholarship) = studentBillList[rowIndex]
+            AppTableCell { AppText(studentId) }
+            AppTableCell { AppText(name) }
+            AppTableCell { AppText(status) }
+            AppTableCell { AppText("$$scholarship") }
         }
     }
 }

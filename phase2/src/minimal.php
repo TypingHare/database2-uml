@@ -138,6 +138,10 @@ function redirect_to_error_page(
     string $error_message,
     string $error_page = Page::ERROR
 ): void {
+    if (str_starts_with($_SERVER['REQUEST_URI'], '/api')) {
+        $error_page = '../' . $error_page;
+    }
+
     redirect($error_page, ['error_message' => $error_message]);
 }
 

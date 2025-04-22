@@ -26,9 +26,15 @@ fun finishActivity(context: Context) {
  * @param context The context used to start the activity.
  * @param newActivity The class reference of the activity to start.
  * @param finish Whether to finish the current activity after starting the new one.
+ * @param intentUpdater A callback function that updates the
  * @author James Chen
  */
-fun startActivity(context: Context, newActivity: KClass<*>, finish: Boolean = false) {
-    context.startActivity(Intent(context, newActivity.java))
+fun startActivity(
+    context: Context,
+    newActivity: KClass<*>,
+    finish: Boolean = false,
+    intentUpdater: ((intent: Intent) -> Unit)? = null
+) {
+    context.startActivity(Intent(context, newActivity.java).apply { intentUpdater?.invoke(this) })
     if (finish) finishActivity(context)
 }
