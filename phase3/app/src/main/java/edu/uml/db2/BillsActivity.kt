@@ -59,10 +59,10 @@ fun BillsScreen() {
 
     val handleRowClick: (Int) -> Unit = { rowIndex ->
         val (studentId) = studentBillList[rowIndex]
-        startActivity(context, OperateStudentBillActivity::class) { intent ->
-            intent.putExtra(IntentKey.STUDENT_ID, studentId)
-            intent.putExtra(IntentKey.SEMESTER, semester)
-            intent.putExtra(IntentKey.YEAR, year)
+        startActivity(context, OperateStudentBillActivity::class) {
+            putExtra(IntentKey.STUDENT_ID, studentId)
+            putExtra(IntentKey.SEMESTER, semester)
+            putExtra(IntentKey.YEAR, year)
         }
     }
 
