@@ -146,24 +146,42 @@ function get_students_and_bills(string $semester, string $year): array
     $student_bills = [];
 
     foreach ($students as $student) {
-        $student_bill = [...$student, 'semester' => $semester, 'year' => $year];
-
-        // Bill status
-        $bill = get_bill($student['student_id'], $semester, $year);
-        $student_bill['status'] = $bill === null ?
-            BillStatus::NOT_CREATED :
-            $bill['status'];
-
-        // Scholarship
-        $scholarship = get_scholarship($student['student_id'], $semester, $year);
-        $student_bill['scholarship'] = $scholarship === null ?
-            0 :
-            $scholarship['scholarship'];
-
-        $student_bills[] = $student_bill;
+        $student_bills[] = get_student_bill($student, $semester, $year);
     }
 
     return $student_bills;
+}
+
+/**
+ * Gets a student's bill and scholarship information for a given semester and
+ * year.
+ *
+ * This function combines the bill and scholarship information for a student
+ * into a single object.
+ *
+ * @param array $student The student record.
+ * @param string $semester The semester.
+ * @param string $year The year.
+ * @return array
+ * @author James Chen
+ */
+function get_student_bill(array $student, string $semester, string $year): array
+{
+    $student_bill = [...$student, 'semester' => $semester, 'year' => $year];
+
+    // Bill status
+    $bill = get_bill($student['student_id'], $semester, $year);
+    $student_bill['status'] = $bill === null ?
+        BillStatus::NOT_CREATED :
+        $bill['status'];
+
+    // Scholarship
+    $scholarship = get_scholarship($student['student_id'], $semester, $year);
+    $student_bill['scholarship'] = $scholarship === null ?
+        0 :
+        $scholarship['scholarship'];
+
+    return $student_bill;
 }
 
 /**
