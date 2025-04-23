@@ -26,6 +26,11 @@ import edu.uml.db2.composable.AppTextField
 import edu.uml.db2.composable.AppTitle
 import kotlinx.serialization.InternalSerializationApi
 
+/**
+ * This activity allows users to create a student account.
+ *
+ * @author James Chen
+ */
 class CreateStudentAccountActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

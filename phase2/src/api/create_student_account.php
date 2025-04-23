@@ -3,7 +3,7 @@
 require_once "../minimal.php";
 
 /**
- * Allows users to login.
+ * Allows users to log in.
  *
  * @param_post studentType The type of the student.
  * @param_post email The student email.
@@ -11,7 +11,7 @@ require_once "../minimal.php";
  * @param_post name The student's name;
  * @param_post deptName The name of the department.
  * @api
- * @author James
+ * @author James Chen
  */
 handle(HttpMethod::POST, function (array $data) {
     $studentType = require_field($data, 'studentType');

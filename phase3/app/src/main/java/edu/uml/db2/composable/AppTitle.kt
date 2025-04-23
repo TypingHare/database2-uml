@@ -7,6 +7,8 @@ import androidx.compose.ui.unit.sp
 
 /**
  * This composable function represents a title of a specified text.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppTitle(title: String) = Text(

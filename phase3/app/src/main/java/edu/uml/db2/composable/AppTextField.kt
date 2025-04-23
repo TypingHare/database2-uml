@@ -12,12 +12,18 @@ import androidx.compose.ui.text.input.VisualTransformation
  * This composable function represents a text field with a specified placeholder and value. If the
  * password is set to true, the characters are replaced with asterisks visually. The `onValueChange`
  * is fired when the value of the text field is changed.
+ *
+ * @author James Chen
  */
 @Composable
 fun AppTextField(
-    placeholder: String, value: String, isPassword: Boolean = false, onValueChange: (String) -> Unit
+    placeholder: String,
+    value: String,
+    isPassword: Boolean = false,
+    isFullWidth: Boolean = true,
+    onValueChange: (String) -> Unit
 ) = OutlinedTextField(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
     value = value,
     onValueChange = onValueChange,
     label = { Text(placeholder) },

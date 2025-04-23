@@ -7,7 +7,7 @@ require_once "../minimal.php";
  *
  * @param_get studentId The ID of the student to retrieve.
  * @api
- * @author James
+ * @author James Chen
  */
 handle(HttpMethod::GET, function (array $data) {
     $studentId = require_field($data, "studentId");

@@ -25,8 +25,10 @@ import edu.uml.db2.composable.AppTitle
 import kotlinx.serialization.InternalSerializationApi
 
 /**
- * Allows users to sign in to the system.
+ * This activity allows users to sign in to the system.
+ *
  * @see LoginScreen
+ * @author James Chen
  */
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +46,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     /**
-     * Starts the dashboard based on the type of the user.
+     * Starts the dashboard activity based on the type of the user.
      */
     fun startDashboardActivity(user: User) {
         val dashboardActivity = when (user.type) {
@@ -88,7 +90,7 @@ fun LoginScreen() {
             UserType.INSTRUCTOR -> loginDto.instructorId
         }
 
-        // This would save the user to the internal storage, so that when the user open the App
+        // This would save the user to the internal storage, so that when the user open the app
         // next time, it can load the user from the storage
         val user = User(type, id)
         saveUser(context, user)

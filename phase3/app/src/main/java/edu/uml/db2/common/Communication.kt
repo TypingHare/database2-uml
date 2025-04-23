@@ -59,6 +59,9 @@ data class Response<D>(
 )
 
 object Server {
+    /**
+     * The client that automatically parse the response body as JSON string.
+     */
     private val client by lazy {
         HttpClient(OkHttp) {
             install(ContentNegotiation) { json() }
@@ -119,13 +122,20 @@ object Server {
                 val response = Json.decodeFromString(
                     Response.serializer(deserializer), httpResponse.body<String>()
                 )
+                val (status, url, message, _) = response
 
                 Log.i(
                     "HTTP_RESPONSE",
-                    "[$method] ${response.url} (${response.status}) \"${response.message}\""
+                    "[$method] $url ($status) \"$message\""
                 )
 
-                callback(response, response.status == ResponseStatus.SUCCESS)
+                val isSuccess = when (response.status) {
+                    ResponseStatus.SUCCESS -> true
+                    ResponseStatus.ERROR -> false
+                    else -> throw RuntimeException("Invalid response status: $status")
+                }
+
+                callback(response, isSuccess)
             } catch (ex: Exception) {
                 Log.e("HTTP_ERROR", ex.toString())
             }

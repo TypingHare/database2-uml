@@ -53,5 +53,41 @@ data class StudentSubClassDto(
 @Serializable
 @InternalSerializationApi
 data class InstructorDto(
-    val instructorId: String
+    val instructorId: String,
+    val instructorName: String,
+    val title: String,
+    val deptName: String,
+    val email: String,
+)
+
+@Serializable
+@InternalSerializationApi
+data class StudentBillListDto(
+    val list: List<StudentBillDto>
+)
+
+@Serializable
+@InternalSerializationApi
+data class StudentBillDto(
+    val studentId: String,
+    val name: String,
+    val email: String,
+    val deptName: String,
+    val semester: String,
+    val year: String,
+    val status: String,
+    val scholarship: Int
+)
+
+@Serializable
+@InternalSerializationApi
+data class CourseHistoryDto(
+    val studentId: String,
+    val courseId: String,
+    val sectionId: String,
+    val semester: String,
+    val year: String,
+    val grade: String? = null,
+    val courseName: String,
+    val credits: String
 )
