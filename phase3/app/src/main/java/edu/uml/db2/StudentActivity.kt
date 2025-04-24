@@ -63,7 +63,9 @@ fun StudentScreen(user: User) {
             }
         }
         AppButton("Course History") {
-            startActivity(context, CourseHistoryActivity::class)
+            startActivity(context, CourseHistoryActivity::class) {
+                putExtra(IntentKey.STUDENT_ID, student?.studentId)
+            }
         }
         AppButton("Sign Out") {
             removeUser(context)
