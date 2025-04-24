@@ -15,7 +15,7 @@ import kotlinx.serialization.InternalSerializationApi
  * @author James Chen
  */
 @OptIn(InternalSerializationApi::class)
-fun getStudent(
+fun getStudentBill(
     studentId: String,
     semester: String,
     year: String,
