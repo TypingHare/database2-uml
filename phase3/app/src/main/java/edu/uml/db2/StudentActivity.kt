@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import edu.uml.db2.api.getStudent
+import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.StudentDto
 import edu.uml.db2.common.StudentType
 import edu.uml.db2.common.User
@@ -57,8 +58,11 @@ fun StudentScreen(user: User) {
         AppTitle("Student Dashboard")
         student?.let { StudentCard(it) }
 
+
         AppButton("Course History") {
-            startActivity(context, CourseHistoryActivity::class)
+            startActivity(context, CourseHistoryActivity::class) {
+                putExtra(IntentKey.STUDENT_ID, student?.studentId)
+            }
         }
         AppButton("Sign Out") {
             removeUser(context)
