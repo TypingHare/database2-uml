@@ -91,3 +91,13 @@ data class CourseHistoryDto(
     val courseName: String,
     val credits: String
 )
+
+@Serializable
+@InternalSerializationApi
+data class CourseHistoryResponseDto(
+    val currentList: List<CourseHistoryDto>, val completedList: List<CourseHistoryDto>
+)
+
+@Serializable
+@InternalSerializationApi
+data class CreateBillDto(val studentId: String)

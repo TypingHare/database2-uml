@@ -11,6 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import edu.uml.db2.api.createBill
+import edu.uml.db2.api.createScholarship
+import edu.uml.db2.api.getStudentBill
+import edu.uml.db2.common.BillStatus
 import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.StudentBillDto
 import edu.uml.db2.common.finishActivity
@@ -42,7 +46,12 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
 
     var studentBill by remember { mutableStateOf<StudentBillDto?>(null) }
 
-    Log.i("STUDENT_ID", studentId)
+    getStudentBill(studentId, semester, year) { res, isSuccess ->
+        when (isSuccess) {
+            true -> studentBill = res.data!!
+            false -> Log.e("STUDENT_BILL", res.message)
+        }
+    }
 
     AppContainer {
         studentBill?.let {
@@ -56,9 +65,23 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
                 AppCardRow("scholarship", "$" + it.scholarship.toString())
             }
         }
-    }
 
-    AppButton("Create Bill") { }
-    AppButton("Reward") { }
-    AppButton("Back") { finishActivity(context)}
+        AppButton("Create Bill") {
+            createBill(studentId, semester, year) { res, isSuccess ->
+                when (isSuccess) {
+                    true -> studentBill = studentBill!!.copy(status = BillStatus.UNPAID)
+                    false -> Log.e("CREATE_BILL", res.message)
+                }
+            }
+        }
+        AppButton("Reward") {
+            createScholarship(studentId, semester, year) { res, isSuccess ->
+                when (isSuccess) {
+                    true -> studentBill = res.data!!
+                    false -> Log.e("CREATE_SCHOLARSHIP", res.message)
+                }
+            }
+        }
+        AppButton("Back") { finishActivity(context) }
+    }
 }

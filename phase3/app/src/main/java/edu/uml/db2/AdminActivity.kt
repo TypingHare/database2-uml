@@ -32,9 +32,7 @@ fun AdminScreen() {
 
     AppContainer {
         AppTitle("Admin Dashboard")
-        AppButton("View Bills") {
-            startActivity(context, BillsActivity::class)
-        }
+        AppButton("View Bills") { startActivity(context, BillsActivity::class) }
         AppButton("Sign Out") {
             removeUser(context)
             startActivity(context, LoginActivity::class, finish = true)
