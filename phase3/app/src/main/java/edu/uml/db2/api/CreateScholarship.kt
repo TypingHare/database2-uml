@@ -3,14 +3,16 @@ package edu.uml.db2.api
 import edu.uml.db2.common.Endpoint
 import edu.uml.db2.common.ResponseCallback
 import edu.uml.db2.common.Server
-import edu.uml.db2.common.StudentBillListDto
+import edu.uml.db2.common.StudentBillDto
 import io.ktor.http.Parameters
 import kotlinx.serialization.InternalSerializationApi
 
-// API function - sending a request to the server, and process the response with the callback
 @OptIn(InternalSerializationApi::class)
-fun getBills(semester: String, year: String, callback: ResponseCallback<StudentBillListDto>) {
-    Server.get(Endpoint.GET_BILLS, StudentBillListDto.serializer(), Parameters.build {
+fun createScholarship(
+    studentId: String, semester: String, year: String, callback: ResponseCallback<StudentBillDto>
+) {
+    Server.post(Endpoint.CREATE_SCHOLARSHIP, StudentBillDto.serializer(), Parameters.build {
+        append("studentId", studentId)
         append("semester", semester)
         append("year", year)
     }, callback)

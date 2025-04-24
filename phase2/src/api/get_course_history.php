@@ -3,13 +3,14 @@
 require_once "../minimal.php";
 
 /**
- * Retrieves all the departments.
+ * Retrieves all the completed courses and active courses.
  *
+ * @param_get studentId The ID of the student to retrieve.
  * @api
- * @author James Chen
+ * @author Victor Ruest
  */
 handle(HttpMethod::GET, function (array $data) {
-    $studentId =  require_field($data, "studentId");
+    $studentId = require_field($data, "studentId");
 
     $student = get_student_by_id($studentId);
     if (is_null($student)) {
@@ -20,10 +21,7 @@ handle(HttpMethod::GET, function (array $data) {
     $currentCourses = get_all_active_courses($studentId);
 
     success_response("Retrieved all current courses.", [
-        "current_list" => $currentCourses,
-        "completed_list" => $completedCourses
+        "current_list" => array_values($currentCourses),
+        "completed_list" => array_values($completedCourses)
     ]);
-
-
-
 });

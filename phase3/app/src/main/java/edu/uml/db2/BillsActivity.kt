@@ -29,6 +29,8 @@ import edu.uml.db2.composable.AppText
 import edu.uml.db2.composable.AppTextField
 import kotlinx.serialization.InternalSerializationApi
 
+// Activity is self-contained (common design in big projects; purpose is decoupling)
+// Context contain the information of the entire app
 class BillsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +61,17 @@ fun BillsScreen() {
 
     val handleRowClick: (Int) -> Unit = { rowIndex ->
         val (studentId) = studentBillList[rowIndex]
-        startActivity(context, OperateStudentBillActivity::class) { intent ->
-            intent.putExtra(IntentKey.STUDENT_ID, studentId)
-            intent.putExtra(IntentKey.SEMESTER, semester)
-            intent.putExtra(IntentKey.YEAR, year)
+
+//        val intent = Intent(context, OperateStudentBillActivity::class.java)
+//        intent.putExtra(IntentKey.STUDENT_ID, studentId)
+//        intent.putExtra(IntentKey.SEMESTER, semester)
+//        intent.putExtra(IntentKey.YEAR, year)
+//        context.startActivity(intent)
+
+        startActivity(context, OperateStudentBillActivity::class) {
+            putExtra(IntentKey.STUDENT_ID, studentId)
+            putExtra(IntentKey.SEMESTER, semester)
+            putExtra(IntentKey.YEAR, year)
         }
     }
 

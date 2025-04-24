@@ -1,6 +1,7 @@
 package edu.uml.db2.api
 
 import edu.uml.db2.common.CourseHistoryDto
+import edu.uml.db2.common.CourseHistoryResponseDto
 import edu.uml.db2.common.Endpoint
 import edu.uml.db2.common.ResponseCallback
 import edu.uml.db2.common.Server
@@ -12,8 +13,12 @@ import kotlinx.serialization.InternalSerializationApi
  * @see CourseHistoryDto
  * @author Victor Ruest
  */
- 
+
 @OptIn(InternalSerializationApi::class)
-fun getCourseHistory(callback: ResponseCallback<CourseHistoryDto>) {
-    Server.get(Endpoint.GET_COURSE_HISTORY, CourseHistoryDto.serializer(), callback = callback)
+fun getCourseHistory(callback: ResponseCallback<CourseHistoryResponseDto>) {
+    Server.get(
+        Endpoint.GET_COURSE_HISTORY,
+        CourseHistoryResponseDto.serializer(),
+        callback = callback
+    )
 }

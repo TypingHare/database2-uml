@@ -33,7 +33,7 @@ fun startActivity(
     context: Context,
     newActivity: KClass<*>,
     finish: Boolean = false,
-    intentUpdater: ((intent: Intent) -> Unit)? = null
+    intentUpdater: (Intent.() -> Unit)? = null
 ) {
     context.startActivity(Intent(context, newActivity.java).apply { intentUpdater?.invoke(this) })
     if (finish) finishActivity(context)
