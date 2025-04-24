@@ -100,6 +100,7 @@ data class CourseHistoryResponseDto(
 
 @Serializable
 @InternalSerializationApi
+<<<<<<< HEAD
 data class CreateBillDto(val studentId: String)
 
 @Serializable
@@ -143,3 +144,6 @@ data class ScholarshipDto(
 @Serializable
 @InternalSerializationApi
 data class PayBillDto(val status: String)
+=======
+data class CreateBillDto(val studentId: String)
+>>>>>>> 5c3ab7a (finished: billActivity functionalities)
