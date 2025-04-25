@@ -102,34 +102,9 @@ data class CourseHistoryResponseDto(
 
 @Serializable
 @InternalSerializationApi
-<<<<<<< HEAD
-<<<<<<< HEAD
 data class CreateBillDto(val studentId: String)
 
-@Serializable
-@InternalSerializationApi
-data class BillDto(
-    val studentId: String, val semester: String, val year: String, val status: String
-)
-
-@Serializable
-@InternalSerializationApi
-data class BillListDto(val list: List<BillDto>)
-
-@Serializable
-@InternalSerializationApi
-data class SectionDto(
-    val studentId: String,
-    val courseId: String,
-    val sectionId: String,
-    val semester: String,
-    val year: String,
-    val grade: String?,
-    val courseName: String,
-    val credits: String
-=======
-data class CreateBillDto(val studentId: String)
-
+<<<<<<< HEAD
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @InternalSerializationApi
@@ -143,12 +118,38 @@ data class CourseDto(
     val endTime: String,
     val building: String,
     val roomNumber: String
->>>>>>> e708f05 (task 2 implementation)
+=======
+@Serializable
+@InternalSerializationApi
+data class BillDto(
+    val studentId: String, val semester: String, val year: String, val status: String
+>>>>>>> dd22492 (task 5 semi-finished)
 )
 
 @Serializable
 @InternalSerializationApi
 <<<<<<< HEAD
+data class CourseListDto(
+    val list: List<CourseDto>
+)
+=======
+data class BillListDto(val list: List<BillDto>)
+
+@Serializable
+@InternalSerializationApi
+data class SectionDto(
+    val studentId: String,
+    val courseId: String,
+    val sectionId: String,
+    val semester: String,
+    val year: String,
+    val grade: String?,
+    val courseName: String,
+    val credits: String
+)
+
+@Serializable
+@InternalSerializationApi
 data class SectionListDto(
     val sections: List<SectionDto>
 )
@@ -165,11 +166,4 @@ data class ScholarshipDto(
 @Serializable
 @InternalSerializationApi
 data class PayBillDto(val status: String)
-=======
-data class CreateBillDto(val studentId: String)
->>>>>>> 5c3ab7a (finished: billActivity functionalities)
-=======
-data class CourseListDto(
-    val list: List<CourseDto>
-)
->>>>>>> e708f05 (task 2 implementation)
+>>>>>>> dd22492 (task 5 semi-finished)
