@@ -65,6 +65,11 @@ fun StudentScreen(user: User) {
         AppButton("View Courses") {
             startActivity(context, ViewCoursesActivity::class)
         }
+        AppButton("View Bills") {
+            startActivity(context, StudentBillsActivity::class) {
+                putExtra(IntentKey.STUDENT_ID, user.id)
+            }
+        }
         AppButton("Sign Out") {
             removeUser(context)
             startActivity(context, LoginActivity::class, finish = true)
