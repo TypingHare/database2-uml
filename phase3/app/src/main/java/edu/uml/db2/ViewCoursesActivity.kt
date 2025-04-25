@@ -2,59 +2,37 @@ package edu.uml.db2
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import edu.uml.db2.api.getCourseList
-import edu.uml.db2.api.getStudent
+import edu.uml.db2.api.register
 import edu.uml.db2.common.CourseDto
-import edu.uml.db2.common.CourseListDto
 import edu.uml.db2.common.IntentKey
-import edu.uml.db2.common.StudentBillDto
-import edu.uml.db2.common.StudentDto
-import edu.uml.db2.common.StudentType
-import edu.uml.db2.common.User
+import edu.uml.db2.common.RegisterDto
 import edu.uml.db2.common.finishActivity
-import edu.uml.db2.common.getUser
-import edu.uml.db2.common.removeUser
-import edu.uml.db2.common.startActivity
 import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppCard
 import edu.uml.db2.composable.AppCardRow
 import edu.uml.db2.composable.AppContainer
-import edu.uml.db2.composable.AppTable
-import edu.uml.db2.composable.AppTableCell
+import edu.uml.db2.composable.AppErrorText
 import edu.uml.db2.composable.AppText
 import edu.uml.db2.composable.AppTitle
-import kotlinx.coroutines.delay
 import kotlinx.serialization.InternalSerializationApi
-import kotlin.collections.get
-import kotlin.system.exitProcess
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
-import edu.uml.db2.api.login
-import edu.uml.db2.api.register
-import edu.uml.db2.common.LoginDto
-import edu.uml.db2.common.RegisterDto
-import edu.uml.db2.common.UserType
-import edu.uml.db2.common.saveUser
-import edu.uml.db2.composable.AppErrorText
-import edu.uml.db2.composable.AppSpacedRow
 
 /**
  * View courses
@@ -97,7 +75,7 @@ fun CoursesScreen() {
             if (isSuccess) {
                 //Log.d("COURSE_LIST_SUCCESS", "Parsed ${res.data?.list?.size} courses")
                 //res.data?.list?.forEach {
-                    //Log.d("COURSE_ITEM", it.toString())  // or log specific fields
+                //Log.d("COURSE_ITEM", it.toString())  // or log specific fields
                 //}
                 courseList = res.data?.list ?: emptyList()
             } else {
@@ -109,7 +87,8 @@ fun CoursesScreen() {
 
     val handleRegisterSuccess: (RegisterDto) -> Unit = { registerDto ->
         registrationSuccess = true
-        successStr = "You have successfully registered for ${registerDto.courseId} ${registerDto.sectionId}!"
+        successStr =
+            "You have successfully registered for ${registerDto.courseId} ${registerDto.sectionId}!"
     }
 
 
