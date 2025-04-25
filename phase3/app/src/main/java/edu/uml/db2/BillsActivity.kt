@@ -99,7 +99,7 @@ fun BillsScreen() {
         AppTable(
             listOf("Student ID", "Student Name", "Status", "Scholarship"),
             studentBillList.size,
-            handleRowClick
+            rowOnClick = handleRowClick
         ) { rowIndex ->
             val (studentId, name, _, _, _, _, status, scholarship) = studentBillList[rowIndex]
             AppTableCell { AppText(studentId) }

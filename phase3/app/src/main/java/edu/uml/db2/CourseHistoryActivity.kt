@@ -7,8 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -72,21 +75,24 @@ fun CourseHistoryScreen(user: User) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .fillMaxHeight()
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Column {
-                AppTitle("Current Courses")
-                AppTable(
-                    listOf("Course Id", "Course Name", "Credits"),
-                    currentCourses.size
-                ) { rowIndex ->
-                    val course = currentCourses[rowIndex]
-                    AppTableCell { AppText(course.courseId) }
-                    AppTableCell { AppText(course.courseName) }
-                    AppTableCell { AppText(course.credits) }
-                }
-                AppTitle("Completed Courses")
+            AppTitle("Current Courses")
+            AppTable(
+                listOf("Course Id", "Course Name", "Credits"),
+                currentCourses.size,
+                Modifier.heightIn(max = 50.dp)
+            ) { rowIndex ->
+                val course = currentCourses[rowIndex]
+                AppTableCell { AppText(course.courseId) }
+                AppTableCell { AppText(course.courseName) }
+                AppTableCell { AppText(course.credits) }
+            }
+            AppTitle("Completed Courses")
+            Box(Modifier.heightIn(max = 550.dp)) {
+
                 AppTable(
                     listOf("Course Id", "Course Name", "Credits", "Grade"),
                     completedCourses.size
@@ -98,7 +104,7 @@ fun CourseHistoryScreen(user: User) {
                     AppTableCell { AppText(course.grade ?: "-") }//If grade = null, use - instead. Required because
                 }                                                //passing String? to function that requires String
             }
-        }
+
             AppButton("Back") {
                 startActivity(context, StudentActivity::class) {
                     putExtra(IntentKey.STUDENT_ID, user.id)
@@ -106,5 +112,7 @@ fun CourseHistoryScreen(user: User) {
             }
         }
     }
+}
+
 
 
