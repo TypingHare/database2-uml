@@ -20,6 +20,7 @@ object Endpoint {
     const val GET_SCHOLARSHIP = "get_scholarship.php"
     const val PAY_BILL = "pay_bill.php"
     const val REGISTER = "register.php"
+    const val GET_INSTRUCTOR_SECTIONS = "get_instructor_sections.php"
 }
 
 /**
