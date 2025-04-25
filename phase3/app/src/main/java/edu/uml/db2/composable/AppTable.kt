@@ -22,7 +22,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 /**
+ * Represents a table composable.
+ *
  * @see <a>https://mui.com/material-ui/react-table/</a>
+ * @author James Chen
  */
 @Composable
 fun AppTable(
@@ -95,6 +98,11 @@ fun AppTable(
     }
 }
 
+/**
+ * Represents a table cell.
+ *
+ * @author James Chen
+ */
 @Composable
 fun RowScope.AppTableCell(content: @Composable ColumnScope.() -> Unit) {
     Column(
