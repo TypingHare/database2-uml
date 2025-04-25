@@ -80,9 +80,10 @@ fun CoursesScreen() {
     var courseList by remember { mutableStateOf(emptyList<CourseDto>()) }
 
     var successStr by remember { mutableStateOf<String>("") }
-    var errorMessage by remember { mutableStateOf("") }
+    var errorStr by remember { mutableStateOf<String>("") }
 
-    var registrationSuccess by remember { mutableStateOf(false) }
+    var regSuccess by remember { mutableStateOf(false) }
+    var regError by remember { mutableStateOf(false) }
 
     //Log.d("BREADCRUMB", "CoursesScreen started")
     LaunchedEffect(Unit) {
@@ -108,10 +109,14 @@ fun CoursesScreen() {
     }
 
     val handleRegisterSuccess: (RegisterDto) -> Unit = { registerDto ->
-        registrationSuccess = true
+        regSuccess = true
         successStr = "You have successfully registered for ${registerDto.courseId} ${registerDto.sectionId}!"
     }
 
+    val handleRegisterError: (String) -> Unit = { message ->
+        regError = true
+        errorStr = message
+    }
 
     AppContainer {
         AppButton("Back") { finishActivity(context) }
@@ -121,9 +126,15 @@ fun CoursesScreen() {
             AppText("Loading or no courses found.")
         }
 
-        if (registrationSuccess) {
+        if (regSuccess) {
             AppCard {
                 AppCardRow("Notice: ", successStr)
+            }
+        }
+
+        if (regError) {
+            AppCard {
+                AppCardRow("Error: ", errorStr)
             }
         }
 
@@ -136,13 +147,11 @@ fun CoursesScreen() {
 
             items(courseList) { course ->
                 CourseCard(course)
-                AppErrorText(errorMessage)
                 AppButton("Attempt Register", isFullWidth = false) {
                     register(studentId, course.courseId, course.sectionId) { res, isSuccess ->
                         when (isSuccess) {
                             true -> handleRegisterSuccess(res.data!!)
-//                            true -> registrationSuccess = true
-                            false -> errorMessage = res.message
+                            false -> handleRegisterError(res.message)
                         }
                     }
                 }
