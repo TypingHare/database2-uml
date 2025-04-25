@@ -65,6 +65,14 @@ object Server {
     private val client by lazy {
         HttpClient(OkHttp) {
             install(ContentNegotiation) { json() }
+
+            engine {
+                config {
+                    connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                    readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                    writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                }
+            }
         }
     }
 
