@@ -57,13 +57,14 @@ fun StudentScreen(user: User) {
     AppContainer {
         AppTitle("Student Dashboard")
         student?.let { StudentCard(it) }
-
         AppButton("Course History") {
             startActivity(context, CourseHistoryActivity::class) {
                 putExtra(IntentKey.STUDENT_ID, student?.studentId)
             }
         }
-
+        AppButton("View Courses") {
+            startActivity(context, ViewCoursesActivity::class)
+        }
         AppButton("Sign Out") {
             removeUser(context)
             startActivity(context, LoginActivity::class, finish = true)

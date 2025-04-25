@@ -1,7 +1,9 @@
 package edu.uml.db2.common
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 
 @Serializable
 @InternalSerializationApi
@@ -101,3 +103,24 @@ data class CourseHistoryResponseDto(
 @Serializable
 @InternalSerializationApi
 data class CreateBillDto(val studentId: String)
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
+@InternalSerializationApi
+@JsonIgnoreUnknownKeys
+data class CourseDto(
+    val courseId: String,
+    val sectionId: String,
+    val instructorName: String,
+    val day: String,
+    val startTime: String,
+    val endTime: String,
+    val building: String,
+    val roomNumber: String
+)
+
+@Serializable
+@InternalSerializationApi
+data class CourseListDto(
+    val list: List<CourseDto>
+)
