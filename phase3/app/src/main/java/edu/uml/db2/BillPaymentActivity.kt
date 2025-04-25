@@ -5,16 +5,21 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import edu.uml.db2.api.getScholarship
 import edu.uml.db2.api.getStudent
 import edu.uml.db2.api.getStudentSectionBySemester
 import edu.uml.db2.api.payBill
+import edu.uml.db2.common.BillStatus
 import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.SectionDto
 import edu.uml.db2.common.finishActivity
@@ -79,6 +84,24 @@ fun BillPaymentScreen(
     val totalTuition = getTuition(totalCredits)
     val amount = totalTuition - scholarship
 
+    val handlePaymentSuccess = {
+        startActivity(context, PaymentSuccessActivity::class, finish = true) {
+            putExtra(IntentKey.STUDENT_NAME, studentName)
+            putExtra(IntentKey.SEMESTER, semester)
+            putExtra(IntentKey.YEAR, year)
+            putExtra(IntentKey.AMOUNT, amount.toString())
+        }
+    }
+
+    val handlePay = {
+        payBill(studentId, semester, year) { res, isSuccess ->
+            when (isSuccess) {
+                true -> handlePaymentSuccess()
+                false -> Log.e("PAY_BILL", res.message)
+            }
+        }
+    }
+
     AppTopNavBar("Bill Payment") { finishActivity(context) }
 
     AppContainer {
@@ -102,20 +125,11 @@ fun BillPaymentScreen(
             AppCardRow("Amount", "$$amount")
             AppCardRow("Status") { BillStatusText(status) }
         }
-        AppButton("Pay") {
-            payBill(studentId, semester, year) { res, isSuccess ->
-                when (isSuccess) {
-                    true -> startActivity(context, PaymentSuccessActivity::class, finish = true) {
-                        putExtra(IntentKey.STUDENT_NAME, studentName)
-                        putExtra(IntentKey.SEMESTER, semester)
-                        putExtra(IntentKey.YEAR, year)
-                        putExtra(IntentKey.AMOUNT, amount.toString())
-                    }
-
-                    false -> Log.e("PAY_BILL", res.message)
-                }
-            }
-        }
+        Button(
+            onClick = handlePay,
+            enabled = status == BillStatus.UNPAID,
+            modifier = Modifier.fillMaxWidth()
+        ) { Text("Pay") }
         AppButton("Cancel") { finishActivity(context) }
     }
 }
