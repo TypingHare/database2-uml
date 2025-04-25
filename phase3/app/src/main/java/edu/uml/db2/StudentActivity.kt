@@ -56,6 +56,9 @@ fun StudentScreen(user: User) {
     AppContainer {
         AppTitle("Student Dashboard")
         student?.let { StudentCard(it) }
+        AppButton("View Courses") {
+            startActivity(context, ViewCoursesActivity::class)
+        }
         AppButton("Sign Out") {
             removeUser(context)
             startActivity(context, LoginActivity::class, finish = true)

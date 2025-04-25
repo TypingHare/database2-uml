@@ -35,6 +35,8 @@
 
         <activity android:name=".BillsActivity" />
         <activity android:name=".OperateStudentBillActivity" />
+
+        <activity android:name=".ViewCoursesActivity" />
     </application>
 
 </manifest>
