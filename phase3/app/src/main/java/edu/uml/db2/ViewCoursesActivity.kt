@@ -1,0 +1,26 @@
+package edu.uml.db2
+
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import edu.uml.db2.api.getStudent
+import edu.uml.db2.common.StudentDto
+import edu.uml.db2.common.StudentType
+import edu.uml.db2.common.User
+import edu.uml.db2.common.getUser
+import edu.uml.db2.common.removeUser
+import edu.uml.db2.common.startActivity
+import edu.uml.db2.composable.AppButton
+import edu.uml.db2.composable.AppCard
+import edu.uml.db2.composable.AppCardRow
+import edu.uml.db2.composable.AppContainer
+import edu.uml.db2.composable.AppTitle
+import kotlinx.serialization.InternalSerializationApi 
