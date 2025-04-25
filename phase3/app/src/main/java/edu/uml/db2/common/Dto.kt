@@ -129,6 +129,48 @@ data class CourseDto(
 
 @Serializable
 @InternalSerializationApi
+data class BillDto(
+    val studentId: String, val semester: String, val year: String, val status: String
+)
+
+@Serializable
+@InternalSerializationApi
 data class CourseListDto(
     val list: List<CourseDto>
 )
+
+@Serializable
+@InternalSerializationApi
+data class BillListDto(val list: List<BillDto>)
+
+@Serializable
+@InternalSerializationApi
+data class SectionDto(
+    val studentId: String,
+    val courseId: String,
+    val sectionId: String,
+    val semester: String,
+    val year: String,
+    val grade: String?,
+    val courseName: String,
+    val credits: String
+)
+
+@Serializable
+@InternalSerializationApi
+data class SectionListDto(
+    val sections: List<SectionDto>
+)
+
+@Serializable
+@InternalSerializationApi
+data class ScholarshipDto(
+    val studentId: String,
+    val semester: String,
+    val year: String,
+    val scholarship: Int
+)
+
+@Serializable
+@InternalSerializationApi
+data class PayBillDto(val status: String)

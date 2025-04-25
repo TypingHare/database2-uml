@@ -18,6 +18,7 @@ require_once "../minimal.php";
  *         "scholarship": 0
  *     }
  *
+ * @param_get studentId The ID of the student.
  * @param_get semester The semester to retrieve.
  * @param_get year The year to retrieve.
  * @api
