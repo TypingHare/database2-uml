@@ -104,6 +104,14 @@ data class CourseHistoryResponseDto(
 @InternalSerializationApi
 data class CreateBillDto(val studentId: String)
 
+@Serializable
+@InternalSerializationApi
+data class RegisterDto(
+    val studentId: String,
+    val courseId: String,
+    val sectionId: String
+)
+
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @InternalSerializationApi

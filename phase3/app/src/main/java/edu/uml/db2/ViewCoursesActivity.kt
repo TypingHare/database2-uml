@@ -1,7 +1,11 @@
 package edu.uml.db2
 
+import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.activity.compose.setContent
@@ -43,6 +47,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import edu.uml.db2.api.login
+import edu.uml.db2.api.register
+import edu.uml.db2.common.LoginDto
+import edu.uml.db2.common.RegisterDto
+import edu.uml.db2.common.UserType
+import edu.uml.db2.common.saveUser
+import edu.uml.db2.composable.AppErrorText
 import edu.uml.db2.composable.AppSpacedRow
 
 /**
@@ -64,29 +75,43 @@ class ViewCoursesActivity : ComponentActivity() {
 fun CoursesScreen() {
     val context = LocalContext.current
 
+    val studentId = (context as Activity).intent.getStringExtra(IntentKey.STUDENT_ID)
+        ?: throw IllegalStateException("Student Id is required")
     var courseList by remember { mutableStateOf(emptyList<CourseDto>()) }
 
-    Log.d("BREADCRUMB", "CoursesScreen started")
+    var successStr by remember { mutableStateOf<String>("") }
+    var errorMessage by remember { mutableStateOf("") }
+
+    var registrationSuccess by remember { mutableStateOf(false) }
+
+    //Log.d("BREADCRUMB", "CoursesScreen started")
     LaunchedEffect(Unit) {
-        Log.d("BREADCRUMB", "call reached")
+        //Log.d("BREADCRUMB", "call reached")
         getCourseList() { res, isSuccess ->
 //        when (isSuccess) {
 //            //true -> courseList = res.data?.list ?: emptyList()
 //            true -> courseList = res.data!!.list
 //            false -> Log.e("GET_COURSES", res.message)
 //        }
-            Log.d("BREADCRUMB", "getCourseList callback reached")
+            //Log.d("BREADCRUMB", "getCourseList callback reached")
             if (isSuccess) {
-                Log.d("COURSE_LIST_SUCCESS", "Parsed ${res.data?.list?.size} courses")
-                res.data?.list?.forEach {
-                    Log.d("COURSE_ITEM", it.toString())  // or log specific fields
-                }
+                //Log.d("COURSE_LIST_SUCCESS", "Parsed ${res.data?.list?.size} courses")
+                //res.data?.list?.forEach {
+                    //Log.d("COURSE_ITEM", it.toString())  // or log specific fields
+                //}
                 courseList = res.data?.list ?: emptyList()
             } else {
                 Log.e("COURSE_LIST_ERROR", "Failed to get course list: ${res.message}")
             }
         }
+
     }
+
+    val handleRegisterSuccess: (RegisterDto) -> Unit = { registerDto ->
+        registrationSuccess = true
+        successStr = "You have successfully registered for ${registerDto.courseId} ${registerDto.sectionId}!"
+    }
+
 
     AppContainer {
         AppButton("Back") { finishActivity(context) }
@@ -96,15 +121,30 @@ fun CoursesScreen() {
             AppText("Loading or no courses found.")
         }
 
+        if (registrationSuccess) {
+            AppCard {
+                AppCardRow("Notice: ", successStr)
+            }
+        }
+
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+
             items(courseList) { course ->
                 CourseCard(course)
+                AppErrorText(errorMessage)
                 AppButton("Attempt Register", isFullWidth = false) {
-                    startActivity(context, ViewCoursesActivity::class)
+                    register(studentId, course.courseId, course.sectionId) { res, isSuccess ->
+                        when (isSuccess) {
+                            true -> handleRegisterSuccess(res.data!!)
+//                            true -> registrationSuccess = true
+                            false -> errorMessage = res.message
+                        }
+                    }
                 }
             }
         }
