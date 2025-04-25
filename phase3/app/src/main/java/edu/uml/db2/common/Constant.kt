@@ -67,4 +67,7 @@ object IntentKey {
     const val STUDENT_ID = "STUDENT_ID"
     const val SEMESTER = "SEMESTER"
     const val YEAR = "YEAR"
+    const val COURSE_NAME = "COURSE_NAME"
+    const val GRADE = "GRADE"
+    const val CREDITS = "CREDITS"
 }
