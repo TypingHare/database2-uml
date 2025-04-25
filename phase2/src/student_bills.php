@@ -3,7 +3,7 @@
 require_once 'minimal.php';
 
 /**
- * This page display a table of bills that are either paid or unpaid. Each
+ * This page displays a table of bills that are either paid or unpaid. Each
  * semester a student will receive a bill.
  *
  * @param_get student_id The student ID.

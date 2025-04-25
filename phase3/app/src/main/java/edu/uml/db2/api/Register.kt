@@ -14,7 +14,12 @@ import kotlinx.serialization.InternalSerializationApi
  * @author Alexis Marx
  */
 @OptIn(InternalSerializationApi::class)
-fun register(studentId: String, courseId: String, sectionId: String, callback: ResponseCallback<RegisterDto>) {
+fun register(
+    studentId: String,
+    courseId: String,
+    sectionId: String,
+    callback: ResponseCallback<RegisterDto>
+) {
     Server.post(Endpoint.REGISTER, RegisterDto.serializer(), Parameters.build {
         append("studentId", studentId)
         append("courseId", courseId)
