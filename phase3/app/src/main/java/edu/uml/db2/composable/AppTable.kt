@@ -22,14 +22,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 /**
+ * Represents a table composable.
+ *
  * @see <a>https://mui.com/material-ui/react-table/</a>
+ * @author James Chen
  */
 @Composable
 fun AppTable(
     header: List<String>,
     numRow: Int,
-    modifier: Modifier = Modifier,//added this to try and fix an issue. should be kept for flexibility and future proofing?
-    rowOnClick: ((rowIndex: Int) -> Unit)? = null,//had to explicitly call rowOnClick = handleRowClick in bill activity because kotlin uses positioning
+    rowOnClick: ((rowIndex: Int) -> Unit)? = null,
     rowBuilder: @Composable RowScope.(rowIndex: Int) -> Unit,
 ) {
     Column {
@@ -95,6 +97,11 @@ fun AppTable(
     }
 }
 
+/**
+ * Represents a table cell.
+ *
+ * @author James Chen
+ */
 @Composable
 fun RowScope.AppTableCell(content: @Composable ColumnScope.() -> Unit) {
     Column(
