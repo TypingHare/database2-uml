@@ -3,7 +3,8 @@
 require_once "../minimal.php";
 
 /**
- * Attempts to register student for section
+ * Attempts to register a student for a section.
+ *
  * @api
  * @author Alexis Marx
  */
@@ -22,8 +23,7 @@ handle(HttpMethod::POST, function (array $data) {
             $semester,
             $year
         );
-    }
-    catch (RuntimeException $e) {
+    } catch (RuntimeException $e) {
         error_response($e->getMessage());
     }
 
@@ -32,5 +32,4 @@ handle(HttpMethod::POST, function (array $data) {
         'courseId' => $courseId,
         'sectionId' => $sectionId
     ]);
-    
 });
