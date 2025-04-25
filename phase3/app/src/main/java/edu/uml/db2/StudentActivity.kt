@@ -63,7 +63,9 @@ fun StudentScreen(user: User) {
             }
         }
         AppButton("View Courses") {
-            startActivity(context, ViewCoursesActivity::class)
+            startActivity(context, ViewCoursesActivity::class) {
+                putExtra(IntentKey.STUDENT_ID, student?.studentId)
+            }
         }
         AppButton("View Bills") {
             startActivity(context, StudentBillsActivity::class) {
