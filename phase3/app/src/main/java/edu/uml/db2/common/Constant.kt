@@ -23,7 +23,12 @@ object Endpoint {
     const val GET_STUDENT_BILL = "get_student_bill.php"
     const val CREATE_BILL = "create_bill.php"
     const val CREATE_SCHOLARSHIP = "create_scholarship.php"
+<<<<<<< HEAD
 >>>>>>> 5c3ab7a (finished: billActivity functionalities)
+=======
+
+    const val GET_COURSE_LIST = "get_course_list.php"
+>>>>>>> e708f05 (task 2 implementation)
 }
 
 /**

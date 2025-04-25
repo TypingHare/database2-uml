@@ -16,9 +16,9 @@ handle(HttpMethod::POST, function (array $data) {
 
     try {
         register_student(
-            $student_id,
-            $course_id,
-            $section_id,
+            $studentId,
+            $courseId,
+            $sectionId,
             $semester,
             $year
         );

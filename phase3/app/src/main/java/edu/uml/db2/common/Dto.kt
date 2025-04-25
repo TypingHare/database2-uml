@@ -1,7 +1,9 @@
 package edu.uml.db2.common
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 
 @Serializable
 @InternalSerializationApi
@@ -101,6 +103,7 @@ data class CourseHistoryResponseDto(
 @Serializable
 @InternalSerializationApi
 <<<<<<< HEAD
+<<<<<<< HEAD
 data class CreateBillDto(val studentId: String)
 
 @Serializable
@@ -124,10 +127,28 @@ data class SectionDto(
     val grade: String?,
     val courseName: String,
     val credits: String
+=======
+data class CreateBillDto(val studentId: String)
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
+@InternalSerializationApi
+@JsonIgnoreUnknownKeys
+data class CourseDto(
+    val courseId: String,
+    val sectionId: String,
+    val instructorName: String,
+    val day: String,
+    val startTime: String,
+    val endTime: String,
+    val building: String,
+    val roomNumber: String
+>>>>>>> e708f05 (task 2 implementation)
 )
 
 @Serializable
 @InternalSerializationApi
+<<<<<<< HEAD
 data class SectionListDto(
     val sections: List<SectionDto>
 )
@@ -147,3 +168,8 @@ data class PayBillDto(val status: String)
 =======
 data class CreateBillDto(val studentId: String)
 >>>>>>> 5c3ab7a (finished: billActivity functionalities)
+=======
+data class CourseListDto(
+    val list: List<CourseDto>
+)
+>>>>>>> e708f05 (task 2 implementation)

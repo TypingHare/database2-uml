@@ -38,6 +38,7 @@
         <activity android:name=".StudentBillsActivity" />
         <activity android:name=".BillPaymentActivity" />
         <activity android:name=".CourseHistoryActivity" />
+        <activity android:name=".ViewCoursesActivity" />
     </application>
 
 </manifest>
