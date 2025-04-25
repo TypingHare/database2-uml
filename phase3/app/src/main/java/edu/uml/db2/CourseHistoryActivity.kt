@@ -6,13 +6,8 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,19 +46,20 @@ fun CourseHistoryScreen(user: User) {
     val context = LocalContext.current
 
     val studentId = (context as Activity).intent.getStringExtra(IntentKey.STUDENT_ID)
-        //sugar syntax for throw exception if null.
+    //sugar syntax for throw exception if null.
         ?: throw IllegalStateException("Student Id is required")
 
-    var currentCourses by remember { mutableStateOf(listOf<CourseHistoryDto>())}
-    var completedCourses by remember { mutableStateOf(listOf<CourseHistoryDto>())}
+    var currentCourses by remember { mutableStateOf(listOf<CourseHistoryDto>()) }
+    var completedCourses by remember { mutableStateOf(listOf<CourseHistoryDto>()) }
 
     val handleSet = {
         getCourseHistory(studentId) { res, isSuccess ->
             when (isSuccess) {
                 true -> {
                     currentCourses = res.data!!.currentList
-                    completedCourses = res.data!!.completedList
+                    completedCourses = res.data.completedList
                 }
+
                 false -> Log.e("Get_COURSE_HISTORY", res.message)
             }
         }
@@ -72,43 +68,37 @@ fun CourseHistoryScreen(user: User) {
     handleSet()
 
     AppContainer {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            AppTitle("Current Courses")
+        AppTitle("Current Courses")
+        AppTable(
+            listOf("Course Id", "Course Name", "Credits"),
+            currentCourses.size,
+        ) { rowIndex ->
+            val course = currentCourses[rowIndex]
+            AppTableCell { AppText(course.courseId) }
+            AppTableCell { AppText(course.courseName) }
+            AppTableCell { AppText(course.credits) }
+        }
+        AppTitle("Completed Courses")
+        Box(Modifier.heightIn(max = 550.dp)) {
+
             AppTable(
-                listOf("Course Id", "Course Name", "Credits"),
-                currentCourses.size,
-                Modifier.heightIn(max = 50.dp)
+                listOf("Course Id", "Course Name", "Credits", "Grade"), completedCourses.size
             ) { rowIndex ->
-                val course = currentCourses[rowIndex]
+                val course = completedCourses[rowIndex]
                 AppTableCell { AppText(course.courseId) }
                 AppTableCell { AppText(course.courseName) }
                 AppTableCell { AppText(course.credits) }
-            }
-            AppTitle("Completed Courses")
-            Box(Modifier.heightIn(max = 550.dp)) {
-
-                AppTable(
-                    listOf("Course Id", "Course Name", "Credits", "Grade"),
-                    completedCourses.size
-                ) { rowIndex ->
-                    val course = completedCourses[rowIndex]
-                    AppTableCell { AppText(course.courseId) }
-                    AppTableCell { AppText(course.courseName) }
-                    AppTableCell { AppText(course.credits) }
-                    AppTableCell { AppText(course.grade ?: "-") }//If grade = null, use - instead. Required because
-                }                                                //passing String? to function that requires String
-            }
-
-            AppButton("Back") {
-                startActivity(context, StudentActivity::class) {
-                    putExtra(IntentKey.STUDENT_ID, user.id)
+                AppTableCell {
+                    AppText(
+                        course.grade ?: "-"
+                    )
                 }
+            }
+        }
+
+        AppButton("Back") {
+            startActivity(context, StudentActivity::class) {
+                putExtra(IntentKey.STUDENT_ID, user.id)
             }
         }
     }
