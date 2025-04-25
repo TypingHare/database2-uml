@@ -14,7 +14,6 @@ import kotlinx.serialization.InternalSerializationApi
  * @see CourseHistoryDto
  * @author Victor Ruest
  */
-
 @OptIn(InternalSerializationApi::class)
 fun getCourseHistory(studentId: String, callback: ResponseCallback<CourseHistoryResponseDto>) {
     Server.get(
