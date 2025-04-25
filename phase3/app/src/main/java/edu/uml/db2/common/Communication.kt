@@ -76,8 +76,10 @@ object Server {
      *            application `build.gradle.kts` file. The key of the backend root url is
      *            BACKEND_ROOT_URL, which can be found in application BuildConfig.
      * @param deserializer The deserializer of the data DTO.
-     * @param parameters The post parameters that are sent along with the request. These parameters
-     *                   are sent in the `x-www-form-urlencoded` format.
+     * @param parameters The parameters that are sent along with the request. If the HTTP method is
+     *                   `GET`, then these parameters are concatenated to the query string in the
+     *                   URL; otherwise, these parameters are sent in the `x-www-form-urlencoded`
+     *                   format.
      * @param callback The callback function that is fired after the response is received. This
      *                 function will deserialize JSON string into a `Response` object and extract
      *                 the `status` from it. When invoking, the response object and a boolean will
