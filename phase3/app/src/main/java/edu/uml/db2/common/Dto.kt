@@ -104,7 +104,6 @@ data class CourseHistoryResponseDto(
 @InternalSerializationApi
 data class CreateBillDto(val studentId: String)
 
-<<<<<<< HEAD
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @InternalSerializationApi
@@ -118,21 +117,22 @@ data class CourseDto(
     val endTime: String,
     val building: String,
     val roomNumber: String
-=======
-@Serializable
-@InternalSerializationApi
-data class BillDto(
-    val studentId: String, val semester: String, val year: String, val status: String
->>>>>>> dd22492 (task 5 semi-finished)
 )
 
 @Serializable
 @InternalSerializationApi
-<<<<<<< HEAD
+data class BillDto(
+    val studentId: String, val semester: String, val year: String, val status: String
+)
+
+@Serializable
+@InternalSerializationApi
 data class CourseListDto(
     val list: List<CourseDto>
 )
-=======
+
+@Serializable
+@InternalSerializationApi
 data class BillListDto(val list: List<BillDto>)
 
 @Serializable
@@ -166,4 +166,3 @@ data class ScholarshipDto(
 @Serializable
 @InternalSerializationApi
 data class PayBillDto(val status: String)
->>>>>>> dd22492 (task 5 semi-finished)

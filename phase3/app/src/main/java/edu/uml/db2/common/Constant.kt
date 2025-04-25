@@ -14,15 +14,11 @@ object Endpoint {
     const val GET_BILL = "get_bill.php"
     const val CREATE_BILL = "create_bill.php"
     const val CREATE_SCHOLARSHIP = "create_scholarship.php"
-<<<<<<< HEAD
-
     const val GET_COURSE_LIST = "get_course_list.php"
-=======
     const val GET_STUDENT_ALL_BILLS = "get_student_all_bills.php"
     const val GET_STUDENT_SECTION_BY_SEMESTER = "get_student_section_by_semester.php"
     const val GET_SCHOLARSHIP = "get_scholarship.php"
     const val PAY_BILL = "pay_bill.php"
->>>>>>> dd22492 (task 5 semi-finished)
 }
 
 /**
