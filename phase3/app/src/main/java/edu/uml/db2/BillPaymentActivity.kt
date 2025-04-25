@@ -26,7 +26,7 @@ import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppTable
 import edu.uml.db2.composable.AppTableCell
 import edu.uml.db2.composable.AppText
-import edu.uml.db2.composable.AppTitle
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 class BillPaymentActivity : ComponentActivity() {
@@ -79,8 +79,9 @@ fun BillPaymentScreen(
     val totalTuition = getTuition(totalCredits)
     val amount = totalTuition - scholarship
 
+    AppTopNavBar("Bill Payment") { finishActivity(context) }
+
     AppContainer {
-        AppTitle("Bill Payment")
         AppCard {
             AppCardRow("Student ID", studentId)
             AppCardRow("Semester", semester)

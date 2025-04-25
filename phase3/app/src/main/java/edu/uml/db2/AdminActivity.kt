@@ -10,7 +10,7 @@ import edu.uml.db2.common.removeUser
 import edu.uml.db2.common.startActivity
 import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppContainer
-import edu.uml.db2.composable.AppTitle
+import edu.uml.db2.composable.AppTopNavBar
 
 /**
  * Admin dashboard.
@@ -30,8 +30,9 @@ class AdminActivity : ComponentActivity() {
 fun AdminScreen() {
     val context = LocalContext.current
 
+    AppTopNavBar("Admin Dashboard", false)
+
     AppContainer {
-        AppTitle("Admin Dashboard")
         AppButton("View Bills") { startActivity(context, BillsActivity::class) }
         AppButton("Sign Out") {
             removeUser(context)

@@ -20,12 +20,11 @@ import edu.uml.db2.common.BillStatus
 import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.finishActivity
 import edu.uml.db2.common.startActivity
-import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppTable
 import edu.uml.db2.composable.AppTableCell
 import edu.uml.db2.composable.AppText
-import edu.uml.db2.composable.AppTitle
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 class StudentBillsActivity : ComponentActivity() {
@@ -73,15 +72,15 @@ fun StudentBillsScreen(studentId: String, refreshKey: Long) {
         }
     }
 
+    AppTopNavBar("My Bills") { finishActivity(context) }
+
     AppContainer {
-        AppTitle("My Bills")
         AppTable(listOf("Semester", "Year", "Status"), bills.size, handleRowClick) { rowIndex ->
             val (_, semester, year, status) = bills[rowIndex]
             AppTableCell { AppText(semester) }
             AppTableCell { AppText(year) }
             AppTableCell { BillStatusText(status) }
         }
-        AppButton("Back") { finishActivity(context) }
     }
 }
 
