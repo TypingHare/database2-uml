@@ -28,7 +28,8 @@ import androidx.compose.ui.unit.dp
 fun AppTable(
     header: List<String>,
     numRow: Int,
-    rowOnClick: ((rowIndex: Int) -> Unit)? = null,
+    modifier: Modifier = Modifier,//added this to try and fix an issue. should be kept for flexibility and future proofing?
+    rowOnClick: ((rowIndex: Int) -> Unit)? = null,//had to explicitly call rowOnClick = handleRowClick in bill activity because kotlin uses positioning
     rowBuilder: @Composable RowScope.(rowIndex: Int) -> Unit,
 ) {
     Column {
