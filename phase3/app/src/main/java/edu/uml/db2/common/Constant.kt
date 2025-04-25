@@ -11,9 +11,13 @@ object Endpoint {
     const val GET_INSTRUCTOR = "get_instructor.php"
     const val GET_BILLS = "get_bills.php"
     const val GET_COURSE_HISTORY = "get_course_history.php"
-    const val GET_STUDENT_BILL = "get_student_bill.php"
+    const val GET_BILL = "get_bill.php"
     const val CREATE_BILL = "create_bill.php"
     const val CREATE_SCHOLARSHIP = "create_scholarship.php"
+    const val GET_STUDENT_ALL_BILLS = "get_student_all_bills.php"
+    const val GET_STUDENT_SECTION_BY_SEMESTER = "get_student_section_by_semester.php"
+    const val GET_SCHOLARSHIP = "get_scholarship.php"
+    const val PAY_BILL = "pay_bill.php"
 }
 
 /**

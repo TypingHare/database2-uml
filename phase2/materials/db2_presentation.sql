@@ -539,7 +539,7 @@ VALUES ('0102559623', 'Spring', 2024, 'Unpaid'),
 -- END CREATE_BILL_TABLE
 
 -- BEGIN CREATE_SCHOLARSHIP_TABLE
--- @desc Represents a collection of scholarship.
+-- @desc Represents a collection of scholarships.
 -- @author James Chen
 CREATE TABLE scholarship
 (

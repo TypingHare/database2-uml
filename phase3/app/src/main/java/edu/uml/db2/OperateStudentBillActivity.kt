@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import edu.uml.db2.api.createBill
 import edu.uml.db2.api.createScholarship
-import edu.uml.db2.api.getStudentBill
+import edu.uml.db2.api.getBill
 import edu.uml.db2.common.BillStatus
 import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.StudentBillDto
@@ -46,7 +46,7 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
 
     var studentBill by remember { mutableStateOf<StudentBillDto?>(null) }
 
-    getStudentBill(studentId, semester, year) { res, isSuccess ->
+    getBill(studentId, semester, year) { res, isSuccess ->
         when (isSuccess) {
             true -> studentBill = res.data!!
             false -> Log.e("STUDENT_BILL", res.message)
