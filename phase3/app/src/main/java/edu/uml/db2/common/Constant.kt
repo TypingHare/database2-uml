@@ -61,7 +61,6 @@ enum class UserType {
 object BillStatus {
     const val PAID = "Paid"
     const val UNPAID = "Unpaid"
-    const val NOT_CREATED = "Not Created"
 }
 
 /**
@@ -73,10 +72,6 @@ object IntentKey {
     const val STUDENT_ID = "STUDENT_ID"
     const val SEMESTER = "SEMESTER"
     const val YEAR = "YEAR"
-    const val COURSE_NAME = "COURSE_NAME"
-    const val GRADE = "GRADE"
-    const val CREDITS = "CREDITS"
-
     const val STUDENT_NAME = "STUDENT_NAME"
     const val AMOUNT = "AMOUNT"
     const val BILL_STATUS = "BILL_STATUS"
