@@ -38,10 +38,13 @@ fun AppCard(content: @Composable ColumnScope.() -> Unit) = Card(
  */
 @Composable
 fun AppCardRow(label: String, value: String) {
+    AppCardRow(label) { Text(text = value) }
+}
+
+@Composable
+fun AppCardRow(label: String, content: @Composable ColumnScope.() -> Unit) {
     Row(modifier = Modifier.padding(vertical = 4.dp)) {
-        Text(
-            text = label, fontWeight = FontWeight.Bold, modifier = Modifier.width(100.dp)
-        )
-        Text(text = value)
+        Text(text = label, fontWeight = FontWeight.Bold, modifier = Modifier.width(100.dp))
+        Column { content() }
     }
 }

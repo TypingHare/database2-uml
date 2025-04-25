@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import edu.uml.db2.api.getScholarship
+import edu.uml.db2.api.getStudent
 import edu.uml.db2.api.getStudentSectionBySemester
 import edu.uml.db2.api.payBill
 import edu.uml.db2.common.IntentKey
@@ -37,19 +38,21 @@ class BillPaymentActivity : ComponentActivity() {
         val studentId = intent.getStringExtra(IntentKey.STUDENT_ID)!!
         val semester = intent.getStringExtra(IntentKey.SEMESTER)!!
         val year = intent.getStringExtra(IntentKey.YEAR)!!
-        setContent { BillPaymentScreen(studentId, semester, year) }
+        val status = intent.getStringExtra(IntentKey.BILL_STATUS)!!
+        setContent { BillPaymentScreen(studentId, semester, year, status) }
     }
 }
 
 @OptIn(InternalSerializationApi::class)
 @Composable
 fun BillPaymentScreen(
-    studentId: String, semester: String, year: String
+    studentId: String, semester: String, year: String, status: String
 ) {
     val context = LocalContext.current
 
     var sections by remember { mutableStateOf(listOf<SectionDto>()) }
     var scholarship by remember { mutableStateOf(0) }
+    var studentName by remember { mutableStateOf("") }
 
     getStudentSectionBySemester(studentId, semester, year) { res, isSuccess ->
         when (isSuccess) {
@@ -65,8 +68,16 @@ fun BillPaymentScreen(
         }
     }
 
+    getStudent(studentId) { res, isSuccess ->
+        when (isSuccess) {
+            true -> studentName = res.data!!.name
+            false -> Log.e("GET_STUDENT", res.message)
+        }
+    }
+
     val totalCredits = sections.sumOf { it.credits.toInt() }
     val totalTuition = getTuition(totalCredits)
+    val amount = totalTuition - scholarship
 
     AppContainer {
         AppTitle("Bill Payment")
@@ -85,16 +96,21 @@ fun BillPaymentScreen(
             AppTableCell { AppText('$' + getTuition(credits.toInt()).toString()) }
         }
         AppCard {
-            AppCardRow("Total Tuition", totalTuition.toString())
+            AppCardRow("Total Tuition", "$$totalTuition")
             AppCardRow("Scholarship", "-$$scholarship")
-            AppCardRow("Amount", (totalTuition - scholarship).toString())
-            AppCardRow("Status", "Paid")
+            AppCardRow("Amount", "$$amount")
+            AppCardRow("Status") { BillStatusText(status) }
         }
         AppButton("Pay") {
             payBill(studentId, semester, year) { res, isSuccess ->
                 when (isSuccess) {
-                    // TODO: This should be PaymentSuccessActivity
-                    true -> startActivity(context, BillPaymentActivity::class)
+                    true -> startActivity(context, PaymentSuccessActivity::class, finish = true) {
+                        putExtra(IntentKey.STUDENT_NAME, studentName)
+                        putExtra(IntentKey.SEMESTER, semester)
+                        putExtra(IntentKey.YEAR, year)
+                        putExtra(IntentKey.AMOUNT, amount.toString())
+                    }
+
                     false -> Log.e("PAY_BILL", res.message)
                 }
             }
