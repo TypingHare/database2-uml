@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import edu.uml.db2.api.getInstructor
 import edu.uml.db2.common.InstructorDto
+import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.User
 import edu.uml.db2.common.getUser
 import edu.uml.db2.common.removeUser
@@ -55,6 +56,11 @@ fun InstructorScreen(user: User) {
     AppContainer {
         AppTitle("Instructor Dashboard")
         instructor?.let { InstructorCard(it) }
+        AppButton("Course History") {
+            startActivity(context, InstructorHistoryActivity::class) {
+                putExtra(IntentKey.INSTRUCTOR_ID, instructor?.instructorId)
+            }
+        }
         AppButton("Sign Out") {
             removeUser(context)
             startActivity(context, LoginActivity::class, finish = true)
