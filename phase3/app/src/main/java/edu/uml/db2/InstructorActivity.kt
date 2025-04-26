@@ -22,7 +22,7 @@ import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppCard
 import edu.uml.db2.composable.AppCardRow
 import edu.uml.db2.composable.AppContainer
-import edu.uml.db2.composable.AppTitle
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 /**
@@ -53,8 +53,9 @@ fun InstructorScreen(user: User) {
         }
     }
 
+    AppTopNavBar("Instructor Dashboard", false)
+
     AppContainer {
-        AppTitle("Instructor Dashboard")
         instructor?.let { InstructorCard(it) }
         AppButton("Course History") {
             startActivity(context, InstructorHistoryActivity::class) {
