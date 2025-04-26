@@ -18,7 +18,7 @@ fun getInstructorSections(instructorId: String, callback: ResponseCallback<Instr
     Server.get(
         Endpoint.GET_INSTRUCTOR_SECTIONS,
         InstructorSectionsDto.serializer(),
-        Parameters.build { append("instructorId", instructorId) },
+        Parameters.build { append("instructor_id", instructorId) },
         callback = callback
     )
 }
