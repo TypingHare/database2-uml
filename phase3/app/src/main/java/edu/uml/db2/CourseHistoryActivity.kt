@@ -6,28 +6,30 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import edu.uml.db2.api.getCourseHistory
 import edu.uml.db2.common.CourseHistoryDto
 import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.User
+import edu.uml.db2.common.finishActivity
 import edu.uml.db2.common.getUser
-import edu.uml.db2.common.startActivity
-import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppTable
 import edu.uml.db2.composable.AppTableCell
 import edu.uml.db2.composable.AppText
 import edu.uml.db2.composable.AppTitle
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 
@@ -52,7 +54,20 @@ fun CourseHistoryScreen(user: User) {
     var currentCourses by remember { mutableStateOf(listOf<CourseHistoryDto>()) }
     var completedCourses by remember { mutableStateOf(listOf<CourseHistoryDto>()) }
 
-    val handleSet = {
+//    val handleSet = {
+//        getCourseHistory(studentId) { res, isSuccess ->
+//            when (isSuccess) {
+//                true -> {
+//                    currentCourses = res.data!!.currentList
+//                    completedCourses = res.data.completedList
+//                }
+//
+//                false -> Log.e("Get_COURSE_HISTORY", res.message)
+//            }
+//        }
+//    }
+
+    LaunchedEffect(studentId) {
         getCourseHistory(studentId) { res, isSuccess ->
             when (isSuccess) {
                 true -> {
@@ -60,45 +75,51 @@ fun CourseHistoryScreen(user: User) {
                     completedCourses = res.data.completedList
                 }
 
-                false -> Log.e("Get_COURSE_HISTORY", res.message)
+                false -> Log.e("GET_COURSE_HISTORY", res.message)
             }
         }
     }
 
-    handleSet()
 
-    AppContainer {
-        AppTitle("Current Courses")
-        AppTable(
-            listOf("Course Id", "Course Name", "Credits"),
-            currentCourses.size,
-        ) { rowIndex ->
-            val course = currentCourses[rowIndex]
-            AppTableCell { AppText(course.courseId) }
-            AppTableCell { AppText(course.courseName) }
-            AppTableCell { AppText(course.credits) }
+    Scaffold (
+        topBar = {
+            AppTopNavBar("Course History") { finishActivity(context) }
         }
-        AppTitle("Completed Courses")
-        Box(Modifier.heightIn(max = 550.dp)) {
+    ) { innerPadding ->
+        Column(modifier = Modifier.padding(innerPadding)) {
+            AppContainer (
+            ) {
+                Column (
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    AppTitle("Current Courses")
+                    AppTable(
+                        listOf("Course Id", "Course Name", "Credits"),
+                        currentCourses.size,
+                    ) { rowIndex ->
+                        val course = currentCourses[rowIndex]
+                        AppTableCell { AppText(course.courseId) }
+                        AppTableCell { AppText(course.courseName) }
+                        AppTableCell { AppText(course.credits) }
+                    }
+                    AppTitle("Completed Courses")
 
-            AppTable(
-                listOf("Course Id", "Course Name", "Credits", "Grade"), completedCourses.size
-            ) { rowIndex ->
-                val course = completedCourses[rowIndex]
-                AppTableCell { AppText(course.courseId) }
-                AppTableCell { AppText(course.courseName) }
-                AppTableCell { AppText(course.credits) }
-                AppTableCell {
-                    AppText(
-                        course.grade ?: "-"
-                    )
+
+                    AppTable(
+                        listOf("Course Id", "Course Name", "Credits", "Grade"), completedCourses.size
+                    ) { rowIndex ->
+                        val course = completedCourses[rowIndex]
+                        AppTableCell { AppText(course.courseId) }
+                        AppTableCell { AppText(course.courseName) }
+                        AppTableCell { AppText(course.credits) }
+                        AppTableCell {
+                            AppText(
+                                course.grade ?: "-"
+                            )
+                        }
+                    }
                 }
-            }
-        }
-
-        AppButton("Back") {
-            startActivity(context, StudentActivity::class) {
-                putExtra(IntentKey.STUDENT_ID, user.id)
             }
         }
     }
