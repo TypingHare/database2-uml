@@ -15,6 +15,9 @@ handle(HttpMethod::GET, function (array $data) {
     $year = require_field($data, 'year');
 
     $scholarship = get_scholarship($studentId, $semester, $year);
+    if ($scholarship === null) {
+        error_response("Scholarship record not found.");
+    }
 
     success_response("Retrieved scholarship.", $scholarship);
 });

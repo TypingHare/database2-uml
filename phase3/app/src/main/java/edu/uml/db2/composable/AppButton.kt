@@ -12,7 +12,12 @@ import androidx.compose.ui.Modifier
  * @author James Chen
  */
 @Composable
-fun AppButton(text: String, isFullWidth: Boolean = true, onClick: () -> Unit) =
-    Button(onClick = onClick, modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier) {
-        Text(text)
-    }
+fun AppButton(
+    text: String, isFullWidth: Boolean = true, enabled: Boolean = true, onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier
+    ) { Text(text) }
+}

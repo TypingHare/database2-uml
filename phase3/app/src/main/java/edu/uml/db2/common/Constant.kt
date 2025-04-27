@@ -62,6 +62,7 @@ enum class UserType {
 object BillStatus {
     const val PAID = "Paid"
     const val UNPAID = "Unpaid"
+    const val NOT_CREATED = "Not Created"
 }
 
 /**

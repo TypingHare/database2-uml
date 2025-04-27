@@ -78,7 +78,8 @@ data class StudentBillDto(
     val semester: String,
     val year: String,
     val status: String,
-    val scholarship: Int
+    val scholarship: Int,
+    val hasScholarship: Boolean? = null
 )
 
 @Serializable
@@ -174,10 +175,11 @@ data class ScholarshipDto(
 @Serializable
 @InternalSerializationApi
 data class PayBillDto(val status: String)
+
 // instructor id, course id, section id student name, student id, grade
 @Serializable
 @InternalSerializationApi
-data class InstructorSectionsDto (
+data class InstructorSectionsDto(
     val courseId: String,
     val sectionId: String,
     val semester: String,
