@@ -146,7 +146,10 @@ function get_students_and_bills(string $semester, string $year): array
     $student_bills = [];
 
     foreach ($students as $student) {
-        $student_bills[] = get_student_bill($student, $semester, $year);
+        $student_bill = get_student_bill($student, $semester, $year);
+        $scholarship = get_scholarship($student['student_id'], $semester, $year);
+        $student_bill['has_scholarship'] = $scholarship !== null;
+        $student_bills[] = $student_bill;
     }
 
     return $student_bills;
@@ -217,7 +220,7 @@ function create_bill(string $student_id, string $semester, string $year): void
 /**
  * Create a scholarship record for a student based on their cumulative GPA.
  *
- * This method first finds the cumulative GPA of the student, and find the
+ * This method first finds the cumulative GPA of the student and finds the
  * scholarship it can have with the scholarship table. If the applicable
  * scholarship is greater than 0, a scholarship record will be created.
  *
@@ -225,6 +228,7 @@ function create_bill(string $student_id, string $semester, string $year): void
  * @param string $semester The semester.
  * @param string $year The academic year.
  * @return void
+ * @throws Exception
  * @see SCHOLARSHIP_TABLE
  */
 function create_scholarship(
@@ -234,7 +238,7 @@ function create_scholarship(
 ): void {
     $scholarship = get_scholarship($student_id, $semester, $year);
     if ($scholarship !== null) {
-        return;
+        throw new Exception('Scholarship already exists');
     }
 
     $cumulative_gpa = get_cumulative_gpa($student_id);
@@ -244,10 +248,6 @@ function create_scholarship(
             $rewarded_scholarship = $scholarship;
             break;
         }
-    }
-
-    if ($rewarded_scholarship === 0) {
-        return;
     }
 
     $stmt = pdo_instance()->prepare(
