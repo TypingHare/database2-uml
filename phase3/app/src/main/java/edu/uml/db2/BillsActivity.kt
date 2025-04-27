@@ -7,13 +7,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import edu.uml.db2.api.getBills
 import edu.uml.db2.common.IntentKey
 import edu.uml.db2.common.StudentBillDto
@@ -27,6 +34,7 @@ import edu.uml.db2.composable.AppTable
 import edu.uml.db2.composable.AppTableCell
 import edu.uml.db2.composable.AppText
 import edu.uml.db2.composable.AppTextField
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 class BillsActivity : ComponentActivity() {
@@ -34,12 +42,6 @@ class BillsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-        setContent { BillsScreen() }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
         setContent { BillsScreen() }
     }
 }
@@ -72,37 +74,58 @@ fun BillsScreen() {
         }
     }
 
-    handleSet()
-
-    AppContainer {
-        BoxWithConstraints {
-            if (constraints.maxWidth < 1000) {
-                AppSpacedColumn {
-                    AppTextField("Semester", semester) { semester = it }
-                    AppTextField("Year", year) { year = it }
-                    AppButton("Set", onClick = handleSet)
-                }
-            } else {
-                AppSpacedRow {
-                    AppTextField("Semester", semester, isFullWidth = false) { semester = it }
-                    AppTextField("Year", year, isFullWidth = false) { year = it }
-                    AppButton("Set", onClick = handleSet)
-                }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                handleSet()
             }
         }
 
-        AppButton("Back") { finishActivity(context) }
-        HorizontalDivider()
-        AppTable(
-            listOf("Student ID", "Student Name", "Status", "Scholarship"),
-            studentBillList.size,
-            rowOnClick = handleRowClick
-        ) { rowIndex ->
-            val (studentId, name, _, _, _, _, status, scholarship) = studentBillList[rowIndex]
-            AppTableCell { AppText(studentId) }
-            AppTableCell { AppText(name) }
-            AppTableCell { AppText(status) }
-            AppTableCell { AppText("$$scholarship") }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    Column {
+        AppTopNavBar("Student Bills") { finishActivity(context) }
+
+        AppContainer {
+            BoxWithConstraints {
+                if (constraints.maxWidth < 1000) {
+                    AppSpacedColumn {
+                        AppTextField("Semester", semester) { semester = it }
+                        AppTextField("Year", year) { year = it }
+                        AppButton("Set", onClick = handleSet)
+                    }
+                } else {
+                    AppSpacedRow {
+                        AppTextField("Semester", semester, isFullWidth = false) { semester = it }
+                        AppTextField("Year", year, isFullWidth = false) { year = it }
+                        AppButton("Set", onClick = handleSet)
+                    }
+                }
+            }
+
+            HorizontalDivider()
+
+            AppTable(
+                listOf("Student ID", "Student Name", "Status", "Scholarship"),
+                studentBillList.size,
+                rowOnClick = handleRowClick
+            ) { rowIndex ->
+                val (studentId, name, _, _, _, _, status, scholarship, hasScholarship) = studentBillList[rowIndex]
+                AppTableCell { AppText(studentId) }
+                AppTableCell { AppText(name) }
+                AppTableCell { BillStatusText(status) }
+                AppTableCell { ScholarshipText(scholarship, hasScholarship ?: false) }
+            }
         }
     }
+}
+
+@Composable
+fun ScholarshipText(scholarship: Int, hasScholarship: Boolean) {
+    Text(
+        text = "$$scholarship", color = if (hasScholarship) Color(0xFF06D6A0) else Color.Black
+    )
 }
