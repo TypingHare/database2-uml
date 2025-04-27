@@ -14,7 +14,7 @@ This application requires the following environment requirements:
 * MariaDB - `>= 15.x`
 * Apache (httpd) - `>= 2.4.x`
 
-**You should import the `materials/db2_presentation.sql` to the database before checking the application.**
+**You should import the `materials/db2_presentation.sql` to the database before checking the application using phpMyAdmin or other tools.**
 
 Move all the files in `src` to the *httpd main document root* (if using XAMPP, it should be `htdoc`), and visit the index file (`index.html`) by `localhost/`. On the index page, you are required to log in to the system. The application will redirect you to different dashboard pages based on the account type associated with the email. However, you can access different dashboard pages by the following URLs:
 
