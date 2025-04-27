@@ -177,7 +177,7 @@ data class PayBillDto(val status: String)
 // instructor id, course id, section id student name, student id, grade
 @Serializable
 @InternalSerializationApi
-data class InstructorSectionsDto (
+data class InstructorSectionDto (
     val courseId: String,
     val sectionId: String,
     val semester: String,
@@ -185,4 +185,10 @@ data class InstructorSectionsDto (
     val studentId: String,
     val name: String,
     val grade: String,
+)
+
+@Serializable
+@InternalSerializationApi
+data class InstructorSectionListDto (
+    val sections: List<InstructorSectionDto>
 )
