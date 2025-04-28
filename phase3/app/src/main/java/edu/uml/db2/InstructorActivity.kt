@@ -57,7 +57,7 @@ fun InstructorScreen(user: User) {
 
     AppContainer {
         instructor?.let { InstructorCard(it) }
-        AppButton("Course History") {
+        AppButton("Course Records") {
             startActivity(context, InstructorHistoryActivity::class) {
                 putExtra(IntentKey.INSTRUCTOR_ID, instructor?.instructorId)
             }

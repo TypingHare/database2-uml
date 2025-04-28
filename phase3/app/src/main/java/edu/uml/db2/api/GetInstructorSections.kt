@@ -11,7 +11,7 @@ import kotlinx.serialization.InternalSerializationApi
  * Gets instructor's sections.
  *
  * @see InstructorSectionListDto
- * @author Victor Ruest
+ * @author Victor Ruest, Alexis Marx
  */
 @OptIn(InternalSerializationApi::class)
 fun getInstructorSections(instructorId: String, callback: ResponseCallback<InstructorSectionListDto>) {

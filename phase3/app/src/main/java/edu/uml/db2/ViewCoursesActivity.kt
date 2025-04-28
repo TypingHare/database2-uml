@@ -55,6 +55,7 @@ import edu.uml.db2.common.UserType
 import edu.uml.db2.common.saveUser
 import edu.uml.db2.composable.AppErrorText
 import edu.uml.db2.composable.AppSpacedRow
+import edu.uml.db2.composable.AppTopNavBar
 
 /**
  * View courses
@@ -118,10 +119,8 @@ fun CoursesScreen() {
         errorStr = message
     }
 
+    AppTopNavBar("Fall 2025 Courses") { finishActivity(context) }
     AppContainer {
-        AppButton("Back") { finishActivity(context) }
-        AppTitle("Fall 2025 Courses")
-
         if (courseList.isEmpty()) {
             AppText("Loading or no courses found.")
         }
