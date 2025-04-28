@@ -66,6 +66,7 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
                 AppCardRow("email", it.email)
                 AppCardRow("semester", it.semester)
                 AppCardRow("year", it.year)
+                AppCardRow("GPA", it.cumulativeGpa.toString())
                 AppCardRow("status") { BillStatusText(it.status) }
                 AppCardRow("scholarship") {
                     ScholarshipText(it.scholarship, it.hasScholarship ?: false)

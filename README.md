@@ -7,8 +7,8 @@ This repository houses the coursework for the Database II course at UMass Lowell
 **Group Members**:
 
 - [James Chen](zhuojian_chen@student.uml.edu)
-- [Victor Reust]()
-- [Alexis Marx]()
+- [Victor Reust](Victor_Ruest@student.uml.edu)
+- [Alexis Marx](Alexis_Marx@student.uml.edu)
 
 ## Environment Requirements
 
