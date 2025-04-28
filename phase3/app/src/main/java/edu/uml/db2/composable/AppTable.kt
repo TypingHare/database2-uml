@@ -32,6 +32,7 @@ fun AppTable(
     header: List<String>,
     numRow: Int,
     rowOnClick: ((rowIndex: Int) -> Unit)? = null,
+    scrollable: Boolean = true,
     rowBuilder: @Composable RowScope.(rowIndex: Int) -> Unit,
 ) {
     Column {
@@ -56,42 +57,50 @@ fun AppTable(
             }
         }
 
-        LazyColumn {
-            items(numRow) { rowIndex ->
-                val bgColor = if (rowIndex % 2 == 0) Color.White else Color(0xFFF5F5F5)
-                val rowModifier = Modifier
-                    .fillMaxWidth()
-                    .background(bgColor)
-                    .drawBehind {
-                        drawLine(
-                            color = Color.LightGray,
-                            start = Offset(0f, 0f),
-                            end = Offset(0f, size.height),
-                            strokeWidth = 1.dp.toPx()
-                        )
-                        drawLine(
-                            color = Color.LightGray,
-                            start = Offset(size.width, 0f),
-                            end = Offset(size.width, size.height),
-                            strokeWidth = 1.dp.toPx()
-                        )
-                    }
-                    .padding(vertical = 12.dp, horizontal = 8.dp)
-
-                val clickableModifier = if (rowOnClick != null) {
-                    rowModifier.clickable { rowOnClick(rowIndex) }
-                } else {
-                    rowModifier
+        val tableRow: @Composable (Int) -> Unit = { rowIndex ->
+            val bgColor = if (rowIndex % 2 == 0) Color.White else Color(0xFFF5F5F5)
+            val rowModifier = Modifier
+                .fillMaxWidth()
+                .background(bgColor)
+                .drawBehind {
+                    drawLine(
+                        color = Color.LightGray,
+                        start = Offset(0f, 0f),
+                        end = Offset(0f, size.height),
+                        strokeWidth = 1.dp.toPx()
+                    )
+                    drawLine(
+                        color = Color.LightGray,
+                        start = Offset(size.width, 0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = 1.dp.toPx()
+                    )
                 }
+                .padding(vertical = 12.dp, horizontal = 8.dp)
 
-                Row(modifier = clickableModifier) {
-                    rowBuilder(rowIndex)
-                }
+            val clickableModifier = if (rowOnClick != null) {
+                rowModifier.clickable { rowOnClick(rowIndex) }
+            } else {
+                rowModifier
+            }
 
-                HorizontalDivider(
-                    color = Color.LightGray,
-                    thickness = 1.dp,
-                )
+            Row(modifier = clickableModifier) {
+                rowBuilder(rowIndex)
+            }
+
+            HorizontalDivider(
+                color = Color.LightGray,
+                thickness = 1.dp,
+            )
+        }
+
+        if (scrollable) {
+            LazyColumn {
+                items(numRow) { tableRow(it) }
+            }
+        } else {
+            Column {
+                (0..<numRow).forEach { tableRow(it) }
             }
         }
     }
