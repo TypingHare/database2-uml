@@ -100,7 +100,7 @@ defined('SCHOLARSHIP_TABLE') || define('SCHOLARSHIP_TABLE', [
 readonly class Page
 {
     // The error page; when the application encounters an exception, the user
-    // will be redirected to this page with error message displayed
+    // will be redirected to this page with an error message displayed
     public const ERROR = 'error.php';
 
     // The admin page
@@ -115,11 +115,11 @@ readonly class Page
     //   - Navigate to the change password page
     public const STUDENT = 'student.php';
 
-    // User can create a student account in this page; after creating an
+    // User can create a student account on this page; after creating an
     // account, the user will be redirected to the student dashboard page
     public const CREATE_STUDENT_ACCOUNT = 'create_student_account.php';
 
-    // User can change their account password in this page. After resetting the
+    // User can change their account password on this page. After resetting the
     // password, the user will be redirected back to the dashboard page. The
     // user can also cancel the process by clicking the "cancel" button
     public const CHANGE_PASSWORD = 'change_password.php';
@@ -127,13 +127,13 @@ readonly class Page
     // Student can edit their information, such as name and department.
     public const EDIT_STUDENT = 'edit_student.php';
 
-    // Admin can review all sections in this page.
+    // Admin can review all sections on this page.
     public const SECTION = 'section.php';
 
-    // Admin can create a course section in this page.
+    // Admin can create a course section on this page.
     public const CREATE_SECTION = 'create_section.php';
 
-    // Admin can edit a course section in this page.
+    // Admin can edit a course section on this page.
     public const EDIT_SECTION = 'edit_section.php';
 
     // Display the student's course history.
@@ -164,10 +164,10 @@ readonly class Page
     // This page allows admin to create a bill for a student.
     public const BILLS = 'bills.php';
 
-    // This page allows admin to select PhD student for TA role.
+    // This page allows admin to select a PhD student for a TA role.
     public const SELECT_PHD = 'select_phd_student.php';
 
-    // This page allows admin to select section for TA.
+    // This page allows admin to select a section for TA.
     public const SELECT_TA_SECTION = 'select_ta_section.php';
 
     //This page shows all selected info for admin to submit.
@@ -176,7 +176,8 @@ readonly class Page
     //This page shows Admin all created TAs.
     public const VIEW_TA = 'view_ta.php';
 
-    // This page allows a student to browse currently offered classes and register
+    // This page allows a student to browse currently offered classes and
+    // register
     public const BROWSE = 'student_browse.php';
 
     //This page displays the status of a registration request
@@ -185,22 +186,26 @@ readonly class Page
     //This page confirms a registration request by a student has succeeded
     public const REGISTER_SUCCESS = 'registration_success.php';
 
-    //This page allows an instructor to view a list of all sections they've taught
+    // This page allows an instructor to view a list of all sections they've
+    // taught
     public const INSTRUCTOR_RECORDS = 'instructor_records.php';
 
-    //This pages lists the student records and data for a single section, past and present
+    // This page lists the student records and data for a single section, past
+    // and present
     public const RECORD = 'section_record.php';
 
     // This page displays several suggested courses that the student can sign up
     // for the next semester.
     public const SUGGESTED_COURSES = 'suggested_courses.php';
 
-    // This page allows admin to select a section eligible to be assigned a grader
+    // This page allows admin to select a section eligible to be assigned a
+    // grader
     public const SELECT_GRADER_SECTION = 'select_grader_section.php';
 
     // This page allows admin to select a student to be a grader for a section
     public const SELECT_GRADER = 'select_grader.php';
 
-    // This page allows admin to assign a selected student as a grader to a selected section
+    // This page allows admin to assign a selected student as a grader to a
+    // selected section
     public const ASSIGN_GRADER = 'assign_grader.php';
 }

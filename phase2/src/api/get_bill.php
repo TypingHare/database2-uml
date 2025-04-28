@@ -35,5 +35,8 @@ handle(HttpMethod::GET, function (array $data) {
     }
 
     $student_bill = get_student_bill($student, $semester, $year);
+    $scholarship = get_scholarship($studentId, $semester, $year);
+    $student_bill['has_scholarship'] = $scholarship !== null;
+
     success_response("Retrieved student bill.", $student_bill);
 });

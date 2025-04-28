@@ -36,6 +36,24 @@ import kotlinx.serialization.InternalSerializationApi
 
 
 
+
+import kotlin.collections.get
+import kotlin.system.exitProcess
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import edu.uml.db2.api.login
+import edu.uml.db2.api.register
+import edu.uml.db2.common.LoginDto
+import edu.uml.db2.common.RegisterDto
+import edu.uml.db2.common.UserType
+import edu.uml.db2.common.saveUser
+import edu.uml.db2.composable.AppErrorText
+import edu.uml.db2.composable.AppSpacedRow
+import edu.uml.db2.composable.AppTopNavBar
+
+
 /**
  * View courses
  *
@@ -117,10 +135,8 @@ fun CoursesScreen() {
         errorStr = message
     }
 
+    AppTopNavBar("Fall 2025 Courses") { finishActivity(context) }
     AppContainer {
-        AppButton("Back") { finishActivity(context) }
-        AppTitle("Fall 2025 Courses")
-
         if (courseList.isEmpty()) {
             AppText("Loading or no courses found.")
         }
