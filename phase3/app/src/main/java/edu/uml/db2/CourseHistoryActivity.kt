@@ -94,29 +94,36 @@ fun CourseHistoryScreen(user: User) {
                         .fillMaxSize()
                 ) {
                     AppTitle("Current Courses")
-                    AppTable(
-                        listOf("Course Id", "Course Name", "Credits"),
-                        currentCourses.size,
-                    ) { rowIndex ->
-                        val course = currentCourses[rowIndex]
-                        AppTableCell { AppText(course.courseId) }
-                        AppTableCell { AppText(course.courseName) }
-                        AppTableCell { AppText(course.credits) }
+                    if (currentCourses.isEmpty()) {
+                        AppText("No courses registered")
+                    } else {
+                        AppTable(
+                            listOf("Course Id", "Course Name", "Credits"),
+                            currentCourses.size,
+                        ) { rowIndex ->
+                            val course = currentCourses[rowIndex]
+                            AppTableCell { AppText(course.courseId) }
+                            AppTableCell { AppText(course.courseName) }
+                            AppTableCell { AppText(course.credits) }
+                        }
                     }
+
                     AppTitle("Completed Courses")
-
-
-                    AppTable(
-                        listOf("Course Id", "Course Name", "Credits", "Grade"), completedCourses.size
-                    ) { rowIndex ->
-                        val course = completedCourses[rowIndex]
-                        AppTableCell { AppText(course.courseId) }
-                        AppTableCell { AppText(course.courseName) }
-                        AppTableCell { AppText(course.credits) }
-                        AppTableCell {
-                            AppText(
-                                course.grade ?: "-"
-                            )
+                    if (completedCourses.isEmpty()) {
+                        AppText("No completed courses")
+                    } else {
+                        AppTable(
+                            listOf("Course Id", "Course Name", "Credits", "Grade"), completedCourses.size
+                        ) { rowIndex ->
+                            val course = completedCourses[rowIndex]
+                            AppTableCell { AppText(course.courseId) }
+                            AppTableCell { AppText(course.courseName) }
+                            AppTableCell { AppText(course.credits) }
+                            AppTableCell {
+                                AppText(
+                                    course.grade ?: "-"
+                                )
+                            }
                         }
                     }
                 }

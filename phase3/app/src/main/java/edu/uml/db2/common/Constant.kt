@@ -72,6 +72,8 @@ object BillStatus {
  */
 object IntentKey {
     const val STUDENT_ID = "STUDENT_ID"
+
+    const val INSTRUCTOR_ID = "INSTRUCTOR_ID"
     const val SEMESTER = "SEMESTER"
     const val YEAR = "YEAR"
     const val STUDENT_NAME = "STUDENT_NAME"
