@@ -491,7 +491,39 @@ VALUES ('0102559623', 'COMP1010', 'Section101', 'Fall', 2023, 'A+'),
        ('9102837565', 'SOC1020', 'Section101', 'Fall', 2025, null),
        ('9602837461', 'SOC1020', 'Section101', 'Fall', 2025, null),
        ('0102559623', 'SOC1020', 'Section101', 'Fall', 2025, null),
-       ('5519262752', 'SOC1020', 'Section101', 'Fall', 2023, 'A');
+       ('5519262752', 'SOC1020', 'Section101', 'Fall', 2023, 'A'),
+
+       ('3149703500', 'MATH3010', 'Section202', 'Spring', 2025, 'A'),
+       ('5519262752', 'MATH3010', 'Section202', 'Spring', 2025, 'B+'),
+       ('0175846026', 'MATH3010', 'Section202', 'Spring', 2025, 'B'),
+       ('2983746590', 'MATH3010', 'Section202', 'Spring', 2025, 'A'),
+       ('3498752311', 'MATH3010', 'Section202', 'Spring', 2025, 'B-'),
+       ('1123581321', 'MATH3010', 'Section202', 'Spring', 2025, 'A'),
+       ('8374659201', 'MATH3010', 'Section202', 'Spring', 2025, 'B+'),
+       ('8371948203', 'MATH3010', 'Section202', 'Spring', 2025, 'A-'),
+       ('0102559623', 'MATH3010', 'Section202', 'Spring', 2025, 'A'),
+
+       ('5647382910', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('7362819450', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('9102837465', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('1029384756', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('9102817465', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('9602837465', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('9102837565', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('9602837461', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+       ('9182736450', 'MATH3010', 'Section202', 'Fall', 2025, NULL),
+
+       ('3149703500', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('5519262752', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('0175846026', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('2983746590', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('3498752311', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('1123581321', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('8374659201', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('8371948203', 'SOC1010', 'Section101', 'Fall', 2025, NULL),
+       ('9182736450', 'SOC1010', 'Section101', 'Fall', 2025, NULL);
+
+
 -- END ADD_TAKES_RECORDS
 
 -- BEGIN ADD_PREREQUISITES_RECORDS
