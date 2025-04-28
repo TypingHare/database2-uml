@@ -7,7 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import edu.uml.db2.api.getCourseHistory
 import edu.uml.db2.common.CourseHistoryDto
 import edu.uml.db2.common.IntentKey
@@ -94,6 +97,7 @@ fun CourseHistoryScreen(user: User) {
                         .fillMaxSize()
                 ) {
                     AppTitle("Current Courses")
+                    Spacer(modifier = Modifier.height(16.dp))
                     if (currentCourses.isEmpty()) {
                         AppText("No courses registered")
                     } else {
@@ -107,8 +111,9 @@ fun CourseHistoryScreen(user: User) {
                             AppTableCell { AppText(course.credits) }
                         }
                     }
-
+                    Spacer(modifier = Modifier.height(32.dp))
                     AppTitle("Completed Courses")
+                    Spacer(modifier = Modifier.height(16.dp))
                     if (completedCourses.isEmpty()) {
                         AppText("No completed courses")
                     } else {
