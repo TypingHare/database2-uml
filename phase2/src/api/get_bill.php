@@ -36,7 +36,9 @@ handle(HttpMethod::GET, function (array $data) {
 
     $student_bill = get_student_bill($student, $semester, $year);
     $scholarship = get_scholarship($studentId, $semester, $year);
+    $cumulative_gpa = get_cumulative_gpa($studentId);
     $student_bill['has_scholarship'] = $scholarship !== null;
+    $student_bill['cumulative_gpa'] = $cumulative_gpa;
 
     success_response("Retrieved student bill.", $student_bill);
 });

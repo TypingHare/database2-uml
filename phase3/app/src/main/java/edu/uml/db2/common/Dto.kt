@@ -79,7 +79,8 @@ data class StudentBillDto(
     val year: String,
     val status: String,
     val scholarship: Int,
-    val hasScholarship: Boolean? = null
+    val hasScholarship: Boolean? = null,
+    val cumulativeGpa: Float? = null
 )
 
 @Serializable
