@@ -7,9 +7,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import edu.uml.db2.api.getCourseHistory
@@ -31,28 +36,8 @@ import edu.uml.db2.composable.AppCard
 import edu.uml.db2.composable.AppCardRow
 import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppText
-import edu.uml.db2.composable.AppTitle
-import kotlinx.serialization.InternalSerializationApi
-
-
-
-
-import kotlin.collections.get
-import kotlin.system.exitProcess
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
-import edu.uml.db2.api.login
-import edu.uml.db2.api.register
-import edu.uml.db2.common.LoginDto
-import edu.uml.db2.common.RegisterDto
-import edu.uml.db2.common.UserType
-import edu.uml.db2.common.saveUser
-import edu.uml.db2.composable.AppErrorText
-import edu.uml.db2.composable.AppSpacedRow
 import edu.uml.db2.composable.AppTopNavBar
-
+import kotlinx.serialization.InternalSerializationApi
 
 /**
  * View courses
@@ -135,50 +120,65 @@ fun CoursesScreen() {
         errorStr = message
     }
 
-    AppTopNavBar("Fall 2025 Courses") { finishActivity(context) }
-    AppContainer {
-        if (courseList.isEmpty()) {
-            AppText("Loading or no courses found.")
+    Scaffold (
+        topBar = {
+            AppTopNavBar("Fall 2025 Courses") { finishActivity(context) }
         }
+    ){ innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)) {
+            AppContainer (
+            ) {
 
-        if (regSuccess) {
-            AppCard {
-                AppCardRow("Notice: ", successStr)
-            }
-        }
+                if (courseList.isEmpty()) {
+                    AppText("Loading or no courses found.")
+                }
 
-        if (regError) {
-            AppCard {
-                AppCardRow("Error: ", errorStr)
-            }
-        }
+                if (regSuccess) {
+                    AppCard {
+                        AppCardRow("Notice: ", successStr)
+                    }
+                }
 
-        LazyColumn(
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                if (regError) {
+                    AppCard {
+                        AppCardRow("Error: ", errorStr)
+                    }
+                }
+
+                LazyColumn(
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
 
-            items(courseList) { course ->
-                CourseCard(course)
-                AppButton("Attempt Register", isFullWidth = false) {
-                    if (passedCourseIds.contains(course.courseId)) {
-                        handleRegisterError("You have already passed ${course.courseId}.")
-                    } else {
-                        register(studentId, course.courseId, course.sectionId) { res, isSuccess ->
-                            when (isSuccess) {
-                                true -> handleRegisterSuccess(res.data!!)
-                                false -> handleRegisterError(res.message)
+                    items(courseList) { course ->
+                        CourseCard(course)
+                        AppButton("Attempt Register", isFullWidth = false) {
+                            if (passedCourseIds.contains(course.courseId)) {
+                                handleRegisterError("You have already passed ${course.courseId}.")
+                            } else {
+                                register(studentId, course.courseId, course.sectionId) { res, isSuccess ->
+                                    when (isSuccess) {
+                                        true -> handleRegisterSuccess(res.data!!)
+                                        false -> handleRegisterError(res.message)
+                                    }
+                                }
                             }
+
                         }
                     }
-
                 }
+
             }
         }
 
     }
+
+
 }
 
 @OptIn(InternalSerializationApi::class)
