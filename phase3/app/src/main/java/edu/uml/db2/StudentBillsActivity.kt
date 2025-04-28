@@ -41,7 +41,6 @@ class StudentBillsActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
 
-        Log.e("STUDENT_BILLS_ACTIVITY", "onResume")
         setContent { StudentBillsScreen(studentId, System.currentTimeMillis()) }
     }
 }
@@ -86,6 +85,11 @@ fun StudentBillsScreen(studentId: String, refreshKey: Long) {
 
 @Composable
 fun BillStatusText(status: String) {
-    val color = if (status == BillStatus.PAID) Color(0xFF06D6A0) else Color(0xFFEF476F)
+    val color = when (status) {
+        BillStatus.PAID -> Color(0xFF06D6A0)
+        BillStatus.UNPAID -> Color(0xFFEF476F)
+        BillStatus.NOT_CREATED -> Color.Black
+        else -> Color.Black
+    }
     Text(text = status, color = color)
 }

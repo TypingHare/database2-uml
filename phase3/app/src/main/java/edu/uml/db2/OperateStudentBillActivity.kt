@@ -22,6 +22,7 @@ import edu.uml.db2.composable.AppButton
 import edu.uml.db2.composable.AppCard
 import edu.uml.db2.composable.AppCardRow
 import edu.uml.db2.composable.AppContainer
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 class OperateStudentBillActivity : ComponentActivity() {
@@ -53,6 +54,10 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
         }
     }
 
+    AppTopNavBar("Create Bill/Reward") { finishActivity(context) }
+
+    val rewardedScholarship = studentBill?.hasScholarship ?: false
+
     AppContainer {
         studentBill?.let {
             AppCard {
@@ -61,8 +66,10 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
                 AppCardRow("email", it.email)
                 AppCardRow("semester", it.semester)
                 AppCardRow("year", it.year)
-                AppCardRow("status", it.status)
-                AppCardRow("scholarship", "$" + it.scholarship.toString())
+                AppCardRow("status") { BillStatusText(it.status) }
+                AppCardRow("scholarship") {
+                    ScholarshipText(it.scholarship, it.hasScholarship ?: false)
+                }
             }
         }
 
@@ -74,7 +81,7 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
                 }
             }
         }
-        AppButton("Reward") {
+        AppButton("Reward", enabled = !rewardedScholarship) {
             createScholarship(studentId, semester, year) { res, isSuccess ->
                 when (isSuccess) {
                     true -> studentBill = res.data!!
@@ -82,6 +89,5 @@ fun OperateStudentBillScreen(studentId: String, semester: String, year: String) 
                 }
             }
         }
-        AppButton("Back") { finishActivity(context) }
     }
 }

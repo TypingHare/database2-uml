@@ -174,6 +174,7 @@ data class ScholarshipDto(
 @Serializable
 @InternalSerializationApi
 data class PayBillDto(val status: String)
+
 // instructor id, course id, section id student name, student id, grade
 @Serializable
 @InternalSerializationApi

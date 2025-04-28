@@ -23,7 +23,7 @@ import edu.uml.db2.composable.AppContainer
 import edu.uml.db2.composable.AppDropdownSelector
 import edu.uml.db2.composable.AppErrorText
 import edu.uml.db2.composable.AppTextField
-import edu.uml.db2.composable.AppTitle
+import edu.uml.db2.composable.AppTopNavBar
 import kotlinx.serialization.InternalSerializationApi
 
 /**
@@ -63,8 +63,9 @@ fun CreateStudentAccountScreen() {
         }
     }
 
+    AppTopNavBar("Create Account") { finishActivity(context) }
+
     AppContainer {
-        AppTitle("Create an Account")
         AppTextField("Email", email) { email = it }
         AppTextField("Password", password, isPassword = true) { password = it }
         AppTextField("Name", name) { name = it }
