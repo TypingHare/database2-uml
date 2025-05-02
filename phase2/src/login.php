@@ -6,9 +6,9 @@ require_once 'minimal.php';
  * User authentication endpoint.
  *
  * This API validates user credentials and redirects to the appropriate
- * dashboard based on account type (admin, instructor, or student). The function
- * verifies that the email exists in the system and that the provided password
- * matches the stored credentials before performing redirection.
+ * dashboard based on the account type (admin, instructor, or student). The
+ * function verifies that the email exists in the system and that the provided
+ * password matches the stored credentials before performing redirection.
  *
  * @api
  * @example

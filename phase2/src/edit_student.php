@@ -11,9 +11,11 @@ require_once 'minimal.php';
 
 /**
  * Update the information of a student. A student can update their name and
- * department.
+ * department. A PhD student can update their proposal defence date and
+ * dissertation defence date.
  *
  * @api
+ * @author James Chen
  */
 handle(HttpMethod::POST, function (array $data) {
     $student_id = $data['student_id'];
