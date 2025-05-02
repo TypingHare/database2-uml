@@ -30,7 +30,7 @@ $back_page_url = match ($account['type']) {
 /**
  * Change account password.
  *
- * This API allows user to change the password.
+ * This API allows the user to change the password.
  *
  * @api
  * @param_post email The email of the user.

@@ -65,8 +65,8 @@ fun CoursesScreen() {
     var courseList by remember { mutableStateOf(emptyList<CourseDto>()) }
     var passedCourseIds by remember { mutableStateOf(setOf<String>()) }
 
-    var successStr by remember { mutableStateOf<String>("") }
-    var errorStr by remember { mutableStateOf<String>("") }
+    var successStr by remember { mutableStateOf("") }
+    var errorStr by remember { mutableStateOf("") }
 
     var regSuccess by remember { mutableStateOf(false) }
     var regError by remember { mutableStateOf(false) }

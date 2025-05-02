@@ -10,7 +10,9 @@ import kotlinx.serialization.InternalSerializationApi
 /**
  * User logins with email and password.
  *
- * @see LoginDto
+ * @param email The email associated with account.
+ * @param password The password of the account.
+ * @param callback The response callback function.
  * @author James Chen
  */
 @OptIn(InternalSerializationApi::class)
