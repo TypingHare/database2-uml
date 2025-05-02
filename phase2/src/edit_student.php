@@ -27,7 +27,11 @@ handle(HttpMethod::POST, function (array $data) {
     if (get_student_type($student_id) === StudentType::PHD) {
         $proposal_defence_date = $data['proposal_defence_date'];
         $dissertation_defence_date = $data['dissertation_defence_date'];
-        update_phd_info($student_id, $proposal_defence_date, $dissertation_defence_date);
+        update_phd_info(
+            $student_id,
+            $proposal_defence_date,
+            $dissertation_defence_date
+        );
     }
 
     redirect(Page::STUDENT, ['student_id' => $student_id]);
