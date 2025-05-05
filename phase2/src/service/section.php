@@ -712,3 +712,28 @@ function get_grader_sections(): array
 
     return $stmt->fetchAll();
 }
+
+function get_ta_section(string $student_id): array
+{
+    $stmt = pdo_instance()->prepare(
+        "
+            SELECT * 
+            FROM (SELECT course_id, section_id, semester, year  
+                FROM take
+                GROUP BY course_id, section_id, semester, year
+                HAVING COUNT(*) > 10
+            ) AS a 
+            WHERE NOT EXISTS ( SELECT 1
+                FROM (SELECT year, semester                     
+                    FROM TA
+                    WHERE student_id = :student_id
+                    ) AS b 
+                WHERE a.semester = b.semester
+                AND a.year = b.year
+            );
+        "
+    );
+    execute($stmt, ['student_id' => $student_id]);
+
+    return $stmt->fetchAll();
+}
