@@ -1,22 +1,26 @@
 # [Database II Coursework](https://github.com/TypingHare/database2-uml)
 
-This repository houses the coursework for the Database II course at UMass Lowell.
+This repository houses the coursework for the **Database II** course at UMass Lowell.
 
-**Date**: Jan 28, 2025 ~ ongoing
+**Date**: Jan 28, 2025 ~ May 8, 2025
 
 **Group Members**:
 
-- [James Chen](zhuojian_chen@student.uml.edu)
-- [Victor Reust](Victor_Ruest@student.uml.edu)
-- [Alexis Marx](Alexis_Marx@student.uml.edu)
+- James Chen (zhuojian_chen@student.uml.edu)
+- Victor Reust (Victor_Ruest@student.uml.edu)
+- Alexis Marx (Alexis_Marx@student.uml.edu)
 
-## Environment Requirements
+### Delpoyment Instructions
 
-* PHP - `8.2.x`
-* MariaDB - `15.x`
-* Apache (httpd) - `2.4.x`
-* GNU Make - `3.x`
-* PHP CS Fixer - `3.70.x`
+- [Phase 2 Deployment Instructions](phase2/README.md)
+- [Phase 3 Development Instructions](phase3/README.md)
+
+### More Documentations
+
+* [Git and GitHub](docs/git_and_github.md)
+* [MySQL](docs/mysql.md)
+* [Phase 2 Tasks](phase2/docs/tasks.md)
+* [Phase 3 One-pager](phase3/docs/one-pager.md)
 
 ## Contribution Guidelines
 
